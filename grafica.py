@@ -13,15 +13,11 @@ from wx import media
 import wx
 import wx.adv
 
+from config import *
 from controlador import Controlador 
 from editar import Editar
 
 
-
-nombre_app= 'CUE Genesis'
-autor_app= 'Crisspro'
-lisencia_app= 'GPL-3.0'
-version_app= 'v0.1'
 
 
 
@@ -361,9 +357,3 @@ class Programa(wx.Frame):
 		for i in Pista.lista:
 			print(i)
 
-
-
-App= wx.App()
-controlador = Controlador()
-Programa(None, title= 'CUE Genesis', controlador=controlador)
-App.MainLoop()
