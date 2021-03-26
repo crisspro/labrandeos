@@ -162,9 +162,9 @@ class Programa(wx.Frame):
 		self.SetAcceleratorTable(self.tabla_atajos)
 
 # Construcción de lista
-		self.lista= wx.ListCtrl(panel2, -1, style= wx.LC_REPORT)
-		self.columna1= self.lista.InsertColumn(0, 'Título')
-		self.columna2= self.lista.InsertColumn(1, 'Autor')
+		self.lista= wx.ListBox(panel2, -1, style= wx.LC_REPORT)
+		self.columna1= self.lista.Append('Título')
+		self.columna2= self.lista.Append('Autor')
 
 #estado de los controles
 		bt_generar.Enable(True)
