@@ -15,6 +15,9 @@ class Data():
 	# limpia la lista de marcas.
 	def limpiar (self):
 		self.lista_marcas.clear()
+	
+	def getMarcas(self):
+		return self.lista_marcas
 
 
 class Marca():

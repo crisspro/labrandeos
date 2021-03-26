@@ -8,5 +8,6 @@ from grafica import Programa
 
 App= wx.App()
 controlador = Controlador()
+controlador.load()
 Programa(None, title= 'CUE Genesis', controlador=controlador)
 App.MainLoop()

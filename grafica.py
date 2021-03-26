@@ -163,8 +163,12 @@ class Programa(wx.Frame):
 
 # Construcción de lista
 		self.lista= wx.ListBox(panel2, -1, style= wx.LC_REPORT)
-		self.columna1= self.lista.Append('Título')
-		self.columna2= self.lista.Append('Autor')
+		#self.columna1= self.lista.Append('Título')
+		#self.columna2= self.lista.Append('Autor')
+		# cargamos marcas:
+		for marca in self.controlador.getMarcas():
+			self.lista.Append(str(marca))
+		
 
 #estado de los controles
 		bt_generar.Enable(True)
