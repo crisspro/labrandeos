@@ -3,23 +3,27 @@ class Data():
 		self.titulo= 'Sin título'
 		self.autor= 'Sin autor'
 		self.tiempo_inicio = 0
-
-# lista con diccionarios para guardar datos de marcas.
+		
+		# lista de  marcas.
 		self.lista_marcas= []
+	
+	# añade una nueva marca a la lista.
+	def agregarMarca(self, marca):
+		self.lista_marcas.append(marca)
 
-# añade una nueva marca a la lista.
-	def añadir (self, pista):
-		self.lista_marcas.append({
-		'numero': numero,
-		'título': titulo,
-		'autor': autor,
-		'tiempo_inicio': tiempo_inicio})
 
-# limpia la lista de marcas.
+	# limpia la lista de marcas.
 	def limpiar (self):
 		self.lista_marcas.clear()
 
 
 class Marca():
-	pass
-	#numero, titulo, autor, tiempo_inicio
+	def __init__(self, titulo, autor, tiempo_inicio):
+		self.titulo = titulo
+		self.autor = autor
+		self.inicio = tiempo_inicio
+
+	def __str__(self):
+		return "{titulo} ({autor})".format(titulo=self.titulo, autor=self.autor)
+
+

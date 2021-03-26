@@ -7,6 +7,7 @@ import os
 import webbrowser
 
 import accessible_output2.outputs.auto
+import pandas
 import pymediainfo
 from wx import media
 import wx
@@ -35,14 +36,7 @@ class Programa(wx.Frame):
 
 
 
-#creación de controles
-	def graficar(self):
-
-# creación de lector
-		self.lector= accessible_output2.outputs.auto.Auto()
-
-
-# verifica si hay nueva versión del programa.
+	def verificarNuevaVersion(self):
 		try:
 			link= 'https://api.github.com/repos/crisspro/cuegenesis/releases/latest'
 			coneccion= requests.get(link, timeout= 5)
@@ -60,9 +54,16 @@ class Programa(wx.Frame):
 						dw= i['browser_download_url']
 					webbrowser.open(dw)
 					self.Close()
-
-
-#ID personalizados
+	
+	#creación de controles
+	def graficar(self):
+# creación de lector
+		self.lector= accessible_output2.outputs.auto.Auto()
+		
+		# verifica si hay nueva versión del programa.
+		#self.verificarNuevaVersion()
+		
+		#ID personalizados
 		self.id_bt_marcar= wx.NewIdRef()
 		self.id_bt_detener= wx.NewIdRef()
 		self.id_bt_reproducir= wx.NewIdRef()
@@ -208,9 +209,9 @@ class Programa(wx.Frame):
 		panel2.SetSizer (sz1)
 
 
-# arma la lista
-	def listar (self, event):
-		pass
+# arma la lista	def listar (self, event):
+	pass
+
 
 	def generar (self, event):
 		if self.in_autor.GetValue() == '' and self.in_album.GetValue() == '':
@@ -349,7 +350,16 @@ class Programa(wx.Frame):
 	def vn_editar(self):
 		dlg = Editar(self, title= 'Editar')
 		if dlg.ShowModal() == wx.ID_OK:
-			PRINT
+			marca = self.controlador.crearMarca(dlg.getTitulo(),
+				dlg.getAutor(),
+				dlg.getTiempoInicio())
+			self.lista.Append(str(marca))
+			
+
+# lista las marcas en el control lista.
+	def listar (self, event):
+		for i in Pista.lista:
+			print(i)
 
 
 
