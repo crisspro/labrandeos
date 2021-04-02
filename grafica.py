@@ -1,13 +1,12 @@
 #título: CUE Genesis
 #autor: Crisspro
-#lisencia: GPL-3.0.
+#lisencia: GPL-3.0
 
 import requests
 import os
 import webbrowser
 
 import accessible_output2.outputs.auto
-import pandas
 import pymediainfo
 from wx import media
 import wx
@@ -75,8 +74,12 @@ class Programa(wx.Frame):
 		menu1= wx.Menu()
 		archivo= barrademenu.Append(menu1,"&Archivo")
 		nuevo= menu1.Append(-1, '&Nuevo')
-		abrir= menu1.Append(-1, '&Cargar audio')
-		self.Bind(wx.EVT_MENU, self.abrir_archivo, abrir)
+		mn_cargar_audio = menu1.Append(-1, '&Cargar audio')
+		self.Bind(wx.EVT_MENU, self.abrir_archivo, mn_cargar_audio)
+		mn_abrir_proyecto = menu1.Append(-1, '&Abrir proyecto')
+		self.Bind(wx.EVT_MENU, self.abrir_proyecto, mn_abrir_proyecto)
+		mn_guardar_proyecto = menu1.Append(-1, '&Guardar proyecto')
+		self.Bind(wx.EVT_MENU, self.guardar_proyecto, mn_guardar_proyecto)
 		mn_generar= menu1.Append(-1, '&Generar CUE')
 		self.Bind(wx.EVT_MENU, self.generar, mn_generar)
 		salir= menu1.Append(-1, '&Salir')
@@ -265,6 +268,24 @@ class Programa(wx.Frame):
 			self.reproductor.Load(self.path)
 			self.l_instrucciones.SetFocus()
 
+	#abre un proyecto existente
+	def abrir_proyecto(self, event):
+		self.dialogo_abrir_proyecto = wx.FileDialog(self, 'Abrir proyecto', style=wx.FD_OPEN, wildcard= '*.CGP')
+		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
+			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
+				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia', style= wx.YES_NO)
+				if mensaje == wx.ID_OK:
+					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
+					self.controlador.load()
+
+
+	#guarda el proyecto en una ruta específica
+	def guardar_proyecto(self, event):
+		self.dialogo_guardar = wx.FileDialog(self, 'Guardar proyecto', style=wx.FD_SAVE, wildcard= '*.CGP')
+		if self.dialogo_guardar.ShowModal() == wx.ID_OK:
+			self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
+			self.controlador.save()
+ 
 
 
 
