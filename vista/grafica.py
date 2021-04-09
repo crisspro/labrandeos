@@ -377,7 +377,9 @@ class Programa(wx.Frame):
 			marca = self.controlador.crearMarca(dlg.getTitulo(),
 				dlg.getAutor(),
 				dlg.getTiempoInicio())
-			self.lista.Append(str(marca))
+			id=self.lista.GetItemCount()
+			self.lista.InsertStringItem(id, marca.titulo)
+			self.lista.SetStringItem(id, 1, marca.autor)
 			
 
 # lista las marcas en el control lista.
