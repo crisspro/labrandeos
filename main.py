@@ -3,8 +3,9 @@
 #lisencia: GPL-3.0.
 
 import wx
+
 from controlador import Controlador 
-from grafica import Programa
+from vista.grafica import Programa
 
 App= wx.App()
 controlador = Controlador()

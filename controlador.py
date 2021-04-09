@@ -1,5 +1,7 @@
-from marca import *
 import pickle
+
+from modelo.marca import *
+from modelo.tiempo import Tiempo
 
 class Controlador():
 	def __init__(self):
@@ -29,4 +31,5 @@ class Controlador():
 		f = open(self.ruta_proyecto , 'wb')
 		pickle.dump(self.data, f)
 		f.close()
-		
+
+

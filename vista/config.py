@@ -1,6 +1,6 @@
 #título: CUE Genesis
 #autor: Crisspro
-#lisencia: GPL-3.0.
+#lisencia: GPL-3.0
 
 nombre_app= 'CUE Genesis'
 autor_app= 'Crisspro'

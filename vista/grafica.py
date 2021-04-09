@@ -12,7 +12,7 @@ from wx import media
 import wx
 import wx.adv
 
-from config import *
+from .config import *
 from controlador import Controlador 
 from editar import Editar
 
