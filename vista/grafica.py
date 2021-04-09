@@ -14,7 +14,7 @@ import wx.adv
 
 from .config import *
 from controlador import Controlador 
-from editar import Editar
+from .editar import Editar
 
 
 
@@ -165,12 +165,15 @@ class Programa(wx.Frame):
 		self.SetAcceleratorTable(self.tabla_atajos)
 
 # Construcción de lista
-		self.lista= wx.ListBox(panel2, -1, style= wx.LC_REPORT)
-		#self.columna1= self.lista.Append('Título')
-		#self.columna2= self.lista.Append('Autor')
+		self.lista= wx.ListCtrl(panel2, -1, style= wx.LC_REPORT)
+		self.lista.InsertColumn(0, 'Título')
+		self.lista.InsertColumn(1, 'Autor')
 		# cargamos marcas:
+		id = self.lista.GetItemCount()
 		for marca in self.controlador.getMarcas():
-			self.lista.Append(str(marca))
+			self.lista.InsertStringItem(id, marca.titulo)
+			self.lista.SetStringItem(id, 1, marca.autor)
+			id+=1
 		
 
 #estado de los controles
