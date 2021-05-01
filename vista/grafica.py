@@ -31,33 +31,11 @@ class Programa(wx.Frame):
 
 
 
-	def verificarNuevaVersion(self):
-		try:
-			link= 'https://api.github.com/repos/crisspro/cuegenesis/releases/latest'
-			coneccion= requests.get(link, timeout= 5)
-		except(requests.ConectionError, requests.Timeout):
-			print('No hay conección')
-		else:
-			print('Hay conección')
-			v= coneccion.json() ['tag_name']
-			if v != version_app:
-				wx.adv.Sound.PlaySound(os.path.join('sounds', 'nueva_version.wav'))
-				resp= wx.MessageBox('Hay disponible una nueva versión de ' + nombre_app + '(' + v + ')' + '. ¿Quieres descargarla ahora?', caption= 'Aviso', style= wx.YES_NO)
-				if resp == wx.YES:
-					dw= coneccion.json() ['assets']
-					for i in dw:
-						dw= i['browser_download_url']
-					webbrowser.open(dw)
-					self.Close()
-	
 	#creación de controles
 	def graficar(self):
 # creación de lector
 		self.lector= accessible_output2.outputs.auto.Auto()
-		
-		# verifica si hay nueva versión del programa.
-		#self.verificarNuevaVersion()
-		
+
 		#ID personalizados
 		self.id_bt_marcar= wx.NewIdRef()
 		self.id_bt_detener= wx.NewIdRef()
@@ -245,7 +223,7 @@ class Programa(wx.Frame):
 		archivo.write("FILE " + '"' +self.dialogo.GetFilename() + '"' + " ")
 		archivo.close()
 		if os.path.isfile(os.path.join(self.dialogo.GetDirectory(), nombre_cue)):
-			wx.adv.Sound.PlaySound(os.path.join('sounds', 'ok.wav'))
+			wx.adv.Sound.PlaySound(os.path.join('vista', 'sounds', 'ok.wav'))
 			resp= wx.MessageBox('El archivo "CUE" ha sido guardado con éxito. ¿Deseas abrir la carpeta de destino?', caption= 'Listo', style= wx.YES_NO)
 			if resp == wx.YES:
 				os.startfile(self.dialogo.GetDirectory())
@@ -367,7 +345,7 @@ class Programa(wx.Frame):
 
 	def marcar (self, event):
 		self.reproductor.Pause()
-		wx.adv.Sound.PlaySound( os.path.join('sounds', 'marca.wav'))
+		wx.adv.Sound.PlaySound( os.path.join('vista', 'sounds', 'marca.wav'))
 		self.lector.output('Marcado')
 		self.vn_editar()
 
