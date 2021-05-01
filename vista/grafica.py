@@ -142,10 +142,14 @@ class Programa(wx.Frame):
 		self.tabla_atajos= wx.AcceleratorTable(self.entradas_atajos)
 		self.SetAcceleratorTable(self.tabla_atajos)
 
+		self.Bind(wx.EVT_CLOSE, self.cerrar)
 # Construcción de lista
 		self.lista= wx.ListCtrl(panel2, -1, style= wx.LC_REPORT)
 		self.lista.InsertColumn(0, 'Título')
 		self.lista.InsertColumn(1, 'Autor')
+		self.lista.InsertColumn(2, 'Inicio')
+		self.lista.InsertColumn(3, 'Duración')
+
 		# cargamos marcas:
 		id = self.lista.GetItemCount()
 		for marca in self.controlador.getMarcas():
@@ -193,6 +197,8 @@ class Programa(wx.Frame):
 		panel2.SetSizer (sz1)
 
 
+
+
 # arma la lista	def listar (self, event):
 	pass
 
@@ -231,7 +237,13 @@ class Programa(wx.Frame):
 			wx.MessageBox('Ha ocurrido un error. No se ha podido guardar el archivo CUE.', caption= 'Mensaje', style= wx.ICON_ERROR)
 
 	def cerrar (self, event):
-		self.Close()
+		if os.path.exists('temp.proyecto.cgp'):
+			resp = wx.MessageBox('El programa se cerrará. Los cambios que hayas echo no se guardarán. \n ¿Deseas continuar?', 'Advertencia.', style= wx.YES_NO|wx.NO_DEFAULT)
+			if resp == wx.YES:
+				self.controlador.limpiar_temporal()
+				self.Destroy()
+		else:
+			self.Destroy()
 
 	def abrir_archivo (self, event):
 		self.dialogo= wx.FileDialog(self, 'Abrir archivo', style=wx.FD_OPEN)
@@ -245,7 +257,7 @@ class Programa(wx.Frame):
 					self.path= ''
 					break
 			if self.path == '':
-				wx.MessageBox('No es posible cargar el fichero, sólo se admiten archivos de audio.', caption= 'Mensaje', style= wx.ICON_ERROR)
+				wx.MessageBox('No es posible cargar el fichero, sólo se admiten archivos de audio.', caption= 'Atención.', style= wx.ICON_ERROR)
 			self.reproductor.Load(self.path)
 			self.l_instrucciones.SetFocus()
 
@@ -254,7 +266,7 @@ class Programa(wx.Frame):
 		self.dialogo_abrir_proyecto = wx.FileDialog(self, 'Abrir proyecto', style=wx.FD_OPEN, wildcard= '*.CGP')
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
-				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia', style= wx.YES_NO)
+				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia.', style= wx.YES_NO| wx.NO_DEFAULT)
 				if mensaje == wx.ID_OK:
 					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
 					self.controlador.load()
@@ -266,6 +278,7 @@ class Programa(wx.Frame):
 		if self.dialogo_guardar.ShowModal() == wx.ID_OK:
 			self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
 			self.controlador.save()
+			self.controlador.limpiar_temporal()
  
 
 

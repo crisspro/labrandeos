@@ -1,3 +1,4 @@
+import os
 import pickle
 
 from modelo.marca import *
@@ -32,4 +33,6 @@ class Controlador():
 		pickle.dump(self.data, f)
 		f.close()
 
-
+	def limpiar_temporal(self):
+		if os.path.exists('temp.proyecto.cgp'):
+			os.remove('temp.proyecto.cgp')
