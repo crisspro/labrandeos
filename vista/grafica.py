@@ -15,6 +15,8 @@ import wx.adv
 from .config import *
 from controlador import Controlador 
 from .editar import Editar
+from .acerca_de import Acerca_de
+
 
 
 
@@ -56,7 +58,7 @@ class Programa(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, mn_cargar_audio)
 		mn_abrir_proyecto = menu1.Append(-1, '&Abrir proyecto')
 		self.Bind(wx.EVT_MENU, self.abrir_proyecto, mn_abrir_proyecto)
-		mn_guardar_proyecto = menu1.Append(-1, '&Guardar proyecto')
+		mn_guardar_proyecto = menu1.Append(-1, '&Guardar proyecto como...')
 		self.Bind(wx.EVT_MENU, self.guardar_proyecto, mn_guardar_proyecto)
 		mn_generar= menu1.Append(-1, '&Generar CUE')
 		self.Bind(wx.EVT_MENU, self.generar, mn_generar)
@@ -67,6 +69,8 @@ class Programa(wx.Frame):
 		menu2= wx.Menu()
 		ayuda= barrademenu.Append(menu2, 'A&yuda')
 		manual= menu2.Append(-1, 'Manual')
+		self.mn_buscar_actualizacion = menu2.Append(-1, '&Buscar  actualizaciones')
+		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
 		acercade= menu2.Append(-1, 'Acerca de')
 		self.Bind(wx.EVT_MENU, self.mg_acerca, acercade)
 
@@ -156,7 +160,7 @@ class Programa(wx.Frame):
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
 			id+=1
-		
+
 
 #estado de los controles
 		bt_generar.Enable(True)
@@ -199,8 +203,9 @@ class Programa(wx.Frame):
 
 
 
-# arma la lista	def listar (self, event):
-	pass
+	# arma la lista
+	def listar (self):
+		pass
 
 
 	def generar (self, event):
@@ -238,7 +243,7 @@ class Programa(wx.Frame):
 
 	def cerrar (self, event):
 		if os.path.exists('temp.proyecto.cgp'):
-			resp = wx.MessageBox('El programa se cerrará. Los cambios que hayas echo no se guardarán. \n ¿Deseas continuar?', 'Advertencia.', style= wx.YES_NO|wx.NO_DEFAULT)
+			resp = wx.MessageBox('Estás a punto de cerrar el programa. Los cambios que hayas echo no se guardarán. \n ¿Deseas continuar?', 'Advertencia.', style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
 			if resp == wx.YES:
 				self.controlador.limpiar_temporal()
 				self.Destroy()
@@ -266,10 +271,12 @@ class Programa(wx.Frame):
 		self.dialogo_abrir_proyecto = wx.FileDialog(self, 'Abrir proyecto', style=wx.FD_OPEN, wildcard= '*.CGP')
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
-				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia.', style= wx.YES_NO| wx.NO_DEFAULT)
+				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia.', style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
 				if mensaje == wx.ID_OK:
 					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
+					self.controlador.limpiar_temporal()
 					self.controlador.load()
+					self.listar()
 
 
 	#guarda el proyecto en una ruta específica
@@ -281,12 +288,17 @@ class Programa(wx.Frame):
 			self.controlador.limpiar_temporal()
  
 
-
+	#busca actualizaciones
+	def buscar_actualizacion(self, event):
+		self.controlador.verificarNuevaVersion()
 
 
 # muestra información acerca del programa
 	def mg_acerca(self, event):
-		wx.MessageBox('Versión: ' + version_app + '\n' + 'autor: ' + autor_app + '\n' + 'Licencia: ' + lisencia_app, caption= 'Acerca de ' + nombre_app)
+		dlg = Acerca_de(self, title= 'Acerca de...')
+		if dlg.ShowModal() == wx.ID_OK:
+			dlg.close()
+
 
 # reproduce o pausa la pista.
 	def reproducir_pausar (self, event):
@@ -373,8 +385,4 @@ class Programa(wx.Frame):
 			self.lista.SetStringItem(id, 1, marca.autor)
 			
 
-# lista las marcas en el control lista.
-	def listar (self, event):
-		for i in Pista.lista:
-			print(i)
 
