@@ -2,26 +2,30 @@ import os
 import pickle
 import requests
 import webbrowser
-
+import wx
 from modelo.marca import *
 from modelo.tiempo import Tiempo
-
+ 
 class Controlador():
 	def __init__(self):
 		self.data  = None
 		self.ruta_proyecto = 'temp.proyecto.cgp'
+		self.actualizado = True
 
 
 	def verificarNuevaVersion(self):
 		try:
-			link= 'https://api.github.com/repos/crisspro/cuegenesis/releases/latest'
+			link= 'https://api.github.com/repos/crisspro/keyzoneclassic-ahk/releases/latest'
 			coneccion= requests.get(link, timeout= 5)
 		except(requests.ConectionError, requests.Timeout):
 			print('No hay conección')
 		else:
-			print('Hay conección')
-			v= coneccion.json() ['tag_name']
-			if v != version_app:
+			try:
+				v= coneccion.json() ['tag_name']
+			except KeyError:
+				print('No se ha podido establecer la conexión', 'Error.')
+			if v != '0.2':
+				self.actualizado = False
 				wx.adv.Sound.PlaySound(os.path.join('vista', 'sounds', 'nueva_version.wav'))
 				resp= wx.MessageBox('Hay disponible una nueva versión de ' + nombre_app + '(' + v + ')' + '. ¿Quieres descargarla ahora?', caption= 'Aviso', style= wx.YES_NO)
 				if resp == wx.YES:
@@ -30,6 +34,8 @@ class Controlador():
 						dw= i['browser_download_url']
 					webbrowser.open(dw)
 					self.Close()
+			else:
+				self.actualizado = True
 
 	def crearMarca(self, *args, **kwargs):
 		marca = Marca(*args, **kwargs)

@@ -5,7 +5,7 @@
 import requests
 import os
 import webbrowser
-
+import pdb
 import accessible_output2.outputs.auto
 import pymediainfo
 from wx import media
@@ -154,12 +154,7 @@ class Programa(wx.Frame):
 		self.lista.InsertColumn(2, 'Inicio')
 		self.lista.InsertColumn(3, 'Duración')
 
-		# cargamos marcas:
-		id = self.lista.GetItemCount()
-		for marca in self.controlador.getMarcas():
-			self.lista.InsertStringItem(id, marca.titulo)
-			self.lista.SetStringItem(id, 1, marca.autor)
-			id+=1
+
 
 
 #estado de los controles
@@ -203,9 +198,13 @@ class Programa(wx.Frame):
 
 
 
-	# arma la lista
-	def listar (self):
-		pass
+	# carga marcas en  la lista
+	def listar(self):
+		id = self.lista.GetItemCount()
+		for marca in self.controlador.getMarcas():
+			self.lista.InsertStringItem(id, marca.titulo)
+			self.lista.SetStringItem(id, 1, marca.autor)
+			id+=1
 
 
 	def generar (self, event):
@@ -272,7 +271,8 @@ class Programa(wx.Frame):
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
 				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia.', style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
-				if mensaje == wx.ID_OK:
+#				pdb.set_trace()
+				if mensaje == 2:
 					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
 					self.controlador.limpiar_temporal()
 					self.controlador.load()
@@ -291,6 +291,8 @@ class Programa(wx.Frame):
 	#busca actualizaciones
 	def buscar_actualizacion(self, event):
 		self.controlador.verificarNuevaVersion()
+		if self.controlador.actualizado == True:
+			wx.MessageBox('No hay ninguna nueva versión disponible', 'Aviso.')
 
 
 # muestra información acerca del programa

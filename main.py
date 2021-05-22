@@ -12,7 +12,7 @@ from vista.grafica import Programa
 
 
 
-#verificarNuevaVersion()
+#Controlador.verificarNuevaVersion(None)
 
 
 App= wx.App()
