@@ -6,6 +6,7 @@ import requests
 import os
 import webbrowser
 import pdb
+
 import accessible_output2.outputs.auto
 import pymediainfo
 from wx import media
@@ -102,8 +103,7 @@ class Programa(wx.Frame):
 		self.reproductor.Show(False)
 
 
-		bt_generar= wx.Button(panel2, -1, '&Generar CUE')
-		self.Bind(wx.EVT_BUTTON, self.generar, bt_generar)
+
 		self.valores= '0:0:0:0'
 		self.l_reloj= wx.StaticText(panel2, -1, self.valores)
 		self.font_reloj= self.l_reloj.GetFont()
@@ -154,11 +154,16 @@ class Programa(wx.Frame):
 		self.lista.InsertColumn(2, 'Inicio')
 		self.lista.InsertColumn(3, 'Duración')
 
+		self.bt_borrar = wx.Button(panel2, -1, '&Borrar')
+		self.Bind(wx.EVT_BUTTON, self.borrar_item, self.bt_borrar)
+		self.bt_editar = wx.Button(panel2, -1, '&Editar')
+		self.bt_generar= wx.Button(panel2, -1, '&GENERAR CUE')
+		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
 
 
 
 #estado de los controles
-		bt_generar.Enable(True)
+		self.bt_generar.Enable(True)
 		l_abrir.SetFocus() #pone el foco del cursor al abrir la aplicación.
 
 #creación de sizers
@@ -179,7 +184,6 @@ class Programa(wx.Frame):
 		sz1.Add(l_comentarios)
 		sz1.Add(self.in_comentarios)
 		sz1.Add(self.reproductor)
-		sz1.Add(bt_generar)
 		sz1.Add(self.l_reloj)
 		sz1.Add(self.pista)
 
@@ -192,6 +196,9 @@ class Programa(wx.Frame):
 		sz2.Add(self.bt_marcar)
 
 		sz1.Add(self.lista, wx.EXPAND|wx.RIGHT)
+		sz1.Add(self.bt_borrar)
+		sz1.Add(self.bt_editar)
+		sz1.Add(self.bt_generar)
 
 		panel2.SetSizer (sz1)
 
@@ -206,6 +213,10 @@ class Programa(wx.Frame):
 			self.lista.SetStringItem(id, 1, marca.autor)
 			id+=1
 
+	def borrar_item(self, event):
+		item = self.lista.GetFocusedItem()
+		self.lista.DeleteItem(item)
+		
 
 	def generar (self, event):
 		if self.in_autor.GetValue() == '' and self.in_album.GetValue() == '':
@@ -271,7 +282,6 @@ class Programa(wx.Frame):
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
 				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia.', style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
-#				pdb.set_trace()
 				if mensaje == 2:
 					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
 					self.controlador.limpiar_temporal()
@@ -374,7 +384,9 @@ class Programa(wx.Frame):
 		self.reproductor.Pause()
 		wx.adv.Sound.PlaySound( os.path.join('vista', 'sounds', 'marca.wav'))
 		self.lector.output('Marcado')
+		self.controlador.temporizar(self.reproductor.Tell())
 		self.vn_editar()
+
 
 	def vn_editar(self):
 		dlg = Editar(self, title= 'Editar')
@@ -385,6 +397,6 @@ class Programa(wx.Frame):
 			id=self.lista.GetItemCount()
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
-			
+
 
 

@@ -9,6 +9,7 @@ from modelo.tiempo import Tiempo
 class Controlador():
 	def __init__(self):
 		self.data  = None
+		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
 		self.actualizado = True
 
@@ -65,3 +66,15 @@ class Controlador():
 		if os.path.exists('temp.proyecto.cgp'):
 			os.remove('temp.proyecto.cgp')
 
+
+	def temporizar(self, milesimas):
+		self.tiempo.convertir(milesimas)
+
+
+	def cargar_tiempo(self):
+		milesimas = self.tiempo.milesimas
+		marcos = self.tiempo.marcos
+		segundos = self.tiempo.segundos
+		minutos = self.tiempo.minutos
+		horas = self.tiempo.horas
+		return (horas, minutos, segundos, marcos, milesimas)
