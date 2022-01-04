@@ -68,7 +68,6 @@ class Controlador():
 
 
 	def temporizar(self, milesimas):
-		self.tiempo.milesimas = milesimas
 		self.tiempo.convertir(milesimas)
 
 

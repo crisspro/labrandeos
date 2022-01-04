@@ -386,6 +386,7 @@ class Programa(wx.Frame):
 
 	def vn_editar(self):
 		dlg = Editar(self, title= 'Editar')
+#		dlg.tiempo_actual = self.reproductor.Tell()
 		dlg.getTiempo(self.reproductor.Tell())
 		if dlg.ShowModal() == wx.ID_OK:
 			marca = self.controlador.crearMarca(dlg.getTitulo(),
