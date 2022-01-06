@@ -1,7 +1,3 @@
-#título: CUE Genesis
-#autor: Crisspro
-#lisencia: GPL-3.0
-
 import requests
 import os
 import webbrowser
@@ -82,17 +78,22 @@ class Programa(wx.Frame):
 		l_autor= wx.StaticText(panel2, -1, 'Autor:')
 		self.in_autor= wx.TextCtrl(panel2, -1)
 		self.in_autor.SetMaxLength(80)
+		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_autor)
 		l_album= wx.StaticText(panel2, -1, 'Título del álbum:')
 		self.in_album= wx.TextCtrl(panel2, -1)
 		self.in_album.SetMaxLength(80)
+		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_album)
 		l_fecha= wx.StaticText(panel2, -1, 'Año:')
 		self.in_fecha= wx.TextCtrl(panel2, -1)
 		self.in_fecha.SetMaxLength(4)
+		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_fecha)
 		l_genero= wx.StaticText(panel2, -1, 'Género:')
 		self.in_genero= wx.TextCtrl(panel2, -1)
 		self.in_genero.SetMaxLength(80)
+		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_genero)
 		l_comentarios= wx.StaticText(panel2, -1, 'Comentarios:')
 		self.in_comentarios= wx.TextCtrl(panel2, -1, style= wx.TE_MULTILINE)
+		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_comentarios)
 		backend= ''
 		self.reproductor= wx.media.MediaCtrl()
 		self.reproductor.Create(panel2, style=wx.SIMPLE_BORDER, szBackend=backend)
@@ -147,8 +148,8 @@ class Programa(wx.Frame):
 		self.lista= wx.ListCtrl(panel2, -1, style= wx.LC_REPORT)
 		self.lista.InsertColumn(0, 'Título')
 		self.lista.InsertColumn(1, 'Autor')
-		self.lista.InsertColumn(2, 'Inicio')
-		self.lista.InsertColumn(3, 'Duración')
+		self.lista.InsertColumn(2, 'Tiempo de inicio')
+
 
 		self.bt_borrar = wx.Button(panel2, -1, '&Borrar')
 		self.Bind(wx.EVT_BUTTON, self.borrar_item, self.bt_borrar)
@@ -207,6 +208,7 @@ class Programa(wx.Frame):
 		for marca in self.controlador.getMarcas():
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
+			self.lista.SetStringItem(id, 2,marca.tiempo_inicio)
 			id+=1
 
 	def borrar_item(self, event):
@@ -255,6 +257,10 @@ class Programa(wx.Frame):
 				self.Destroy()
 		else:
 			self.Destroy()
+
+	def guardar_disco(self, event):
+		controlador.crear_disco(self.in_album.GetValue(), self.in_autor.GetValue(), self.in_genero.GetValue(), self.in_fecha.GetValue(), self.in_comentarios.GetValue())
+
 
 	def abrir_archivo (self, event):
 		self.dialogo= wx.FileDialog(self, 'Abrir archivo', style=wx.FD_OPEN)
@@ -380,12 +386,12 @@ class Programa(wx.Frame):
 		self.reproductor.Pause()
 		wx.adv.Sound.PlaySound( os.path.join('vista', 'sounds', 'marca.wav'))
 		self.lector.output('Marcado')
-#		pdb.set_trace()
 		self.vn_editar()
 
 
 	def vn_editar(self):
 		dlg = Editar(self, title= 'Editar')
+		dlg.in_autor.SetValue(controlador.consultar_autor())
 		dlg.getTiempo(self.reproductor.Tell())
 		if dlg.ShowModal() == wx.ID_OK:
 			marca = self.controlador.crearMarca(dlg.getTitulo(),
@@ -394,6 +400,7 @@ class Programa(wx.Frame):
 			id=self.lista.GetItemCount()
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
+			self.lista.SetStringItem(id, 2, marca.tiempo_inicio)
 
 
 

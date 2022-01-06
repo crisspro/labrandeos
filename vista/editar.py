@@ -15,7 +15,7 @@ class Editar(wx.Dialog):
 		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
 		self.l_autor= wx.StaticText(panel1, -1, 'Autor:')
 		self.in_autor= wx.TextCtrl(panel1, -1)
-		self.Bind (wx.EVT_TEXT, self.evento_texto, self.in_autor)		
+		self.Bind (wx.EVT_TEXT, self.evento_texto, self.in_autor)
 		self.l_horas= wx.StaticText(panel1, -1, 'Horas')
 		self.in_horas= wx.SpinCtrl(panel1)
 		self.in_horas.SetRange(0,24)
@@ -44,7 +44,7 @@ class Editar(wx.Dialog):
 		return self.in_titulo.GetValue()
 	
 	def getTiempoInicio(self):
-		return (self.in_horas.GetValue(), self.in_minutos.GetValue(), self.in_segundos.GetValue(), self.in_marcos.GetValue())	
+		return '{0} horas {1} minutos {2} segundos {3} marcos'.format (self.in_horas.GetValue(), self.in_minutos.GetValue(), self.in_segundos.GetValue(), self.in_marcos.GetValue())
 
 	def alertar(self):
 		if self.in_autor.GetValue() == '':

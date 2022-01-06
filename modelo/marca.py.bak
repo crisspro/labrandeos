@@ -27,6 +27,6 @@ class Marca():
 		self.tiempo_inicio = tiempo_inicio
 
 	def __str__(self):
-		return "{titulo} ({autor}) {tiempo_inicio}".format(titulo=self.titulo, autor=self.autor, tiempo_inicio= self.tiempo_inicio)
+		return "{titulo} ({autor}) ({tiempo_inicio})".format(titulo=self.titulo, autor=self.autor, tiempo_inicio= self.tiempo_inicio)
 
 

@@ -3,12 +3,14 @@ import pickle
 import requests
 import webbrowser
 import wx
+from modelo.disco import Disco
 from modelo.marca import *
 from modelo.tiempo import Tiempo
  
 class Controlador():
 	def __init__(self):
 		self.data  = None
+		self.disco = Disco()
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
 		self.actualizado = True
@@ -37,6 +39,18 @@ class Controlador():
 					self.Close()
 			else:
 				self.actualizado = True
+
+	def crear_disco(self, titulo, autor, genero, ano, comentario):
+		self.disco.titulo = titulo
+		self.disco.autor = autor
+		self.disco.genero = genero
+		self.disco.ano = ano
+		self.disco.comentario = comentario
+
+
+	def consultar_autor (sself):
+		autor = self.disco.autor
+		return autor
 
 	def crearMarca(self, *args, **kwargs):
 		marca = Marca(*args, **kwargs)
@@ -68,6 +82,7 @@ class Controlador():
 
 
 	def temporizar(self, milesimas):
+		self.tiempo.milesimas = milesimas
 		self.tiempo.convertir(milesimas)
 
 
