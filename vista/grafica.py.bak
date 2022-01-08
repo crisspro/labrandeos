@@ -208,7 +208,7 @@ class Programa(wx.Frame):
 		for marca in self.controlador.getMarcas():
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
-			self.lista.SetStringItem(id, 2,'{0} horas {1} minutos {2} segundos {3} marcos'.format (marca.tiempo_inicio))
+			self.lista.SetStringItem(id, 2,marca.tiempo_inicio)
 			id+=1
 
 	def borrar_item(self, event):
@@ -393,6 +393,8 @@ class Programa(wx.Frame):
 		dlg = Editar(self, title= 'Editar')
 		dlg.in_autor.SetValue(controlador.consultar_autor())
 		dlg.getTiempo(self.reproductor.Tell())
+		dlg.tiempo_actual = self.reproductor.Tell()
+		dlg.pista = self.path
 		if dlg.ShowModal() == wx.ID_OK:
 			marca = self.controlador.crearMarca(dlg.getTitulo(),
 				dlg.getAutor(),

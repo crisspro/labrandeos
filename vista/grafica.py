@@ -1,6 +1,5 @@
 import requests
 import os
-import webbrowser
 import pdb
 
 import accessible_output2.outputs.auto
@@ -393,6 +392,8 @@ class Programa(wx.Frame):
 		dlg = Editar(self, title= 'Editar')
 		dlg.in_autor.SetValue(controlador.consultar_autor())
 		dlg.getTiempo(self.reproductor.Tell())
+		dlg.tiempo_actual = self.reproductor.Tell()
+		dlg.pista = self.path
 		if dlg.ShowModal() == wx.ID_OK:
 			marca = self.controlador.crearMarca(dlg.getTitulo(),
 				dlg.getAutor(),

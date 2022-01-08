@@ -9,12 +9,11 @@ from vista.grafica import Programa
 
 
 
-
+Controlador.verificarNuevaVersion(Controlador)
 
 
 App= wx.App()
 controlador = Controlador()
-controlador.verificarNuevaVersion()
 controlador.load()
 Programa(None, title= 'CUE Genesis', controlador = controlador)
 App.MainLoop()

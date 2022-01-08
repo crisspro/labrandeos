@@ -1,4 +1,3 @@
-
 import wx
 
 from controlador import Controlador
@@ -25,3 +24,5 @@ class Acerca_de(wx.Dialog):
 
 	def visitar_sitio(self, event):
 		wx.LaunchDefaultBrowser('https://github.com/crisspro/cuegenesis')
+		
+controlador = Controlador()
