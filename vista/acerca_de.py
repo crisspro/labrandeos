@@ -22,6 +22,8 @@ class Acerca_de(wx.Dialog):
 
 		panel.SetSizer(sz1)
 
+#Funciones
+
 	def visitar_sitio(self, event):
 		wx.LaunchDefaultBrowser('https://github.com/crisspro/cuegenesis')
 

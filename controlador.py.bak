@@ -12,7 +12,7 @@ class Controlador():
 		self.nombre_app= 'CUE Genesis'
 		self.autor_app= 'Crisspro'
 		self.lisencia_app= 'GPL-3.0'
-		self.version_app= 'v0.1'
+		self.version_app= 'v1.1'
 
 		self.data  = None
 		self.disco = Disco()
@@ -64,6 +64,7 @@ class Controlador():
 		return marca
 
 	def getMarcas(self):
+		print(self.data.getMarcas())
 		return self.data.getMarcas()
 	
 	def load(self):

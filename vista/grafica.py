@@ -213,7 +213,7 @@ class Programa(wx.Frame):
 	def borrar_item(self, event):
 		item = self.lista.GetFocusedItem()
 		self.lista.DeleteItem(item)
-		
+
 
 	def generar (self, event):
 		if self.in_autor.GetValue() == '' and self.in_album.GetValue() == '':
@@ -250,7 +250,7 @@ class Programa(wx.Frame):
 
 	def cerrar (self, event):
 		if os.path.exists('temp.proyecto.cgp'):
-			resp = wx.MessageBox('Estás a punto de cerrar el programa. Los cambios que hayas echo no se guardarán. \n ¿Deseas continuar?', 'Advertencia.', style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
+			resp = wx.MessageBox('Estás a punto de cerrar el programa. Los cambios que hayas echo al proyecto no se guardarán. \n ¿Deseas salir?', 'Advertencia.', style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
 			if resp == wx.YES:
 				self.controlador.limpiar_temporal()
 				self.Destroy()
@@ -383,6 +383,7 @@ class Programa(wx.Frame):
 
 	def marcar (self, event):
 		self.reproductor.Pause()
+		self.bt_reproducir.SetLabel('&Reproducir')
 		wx.adv.Sound.PlaySound( os.path.join('vista', 'sounds', 'marca.wav'))
 		self.lector.output('Marcado')
 		self.vn_editar()
@@ -402,6 +403,7 @@ class Programa(wx.Frame):
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
 			self.lista.SetStringItem(id, 2, marca.tiempo_inicio)
+
 
 
 

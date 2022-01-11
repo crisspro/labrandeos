@@ -1,6 +1,5 @@
 import requests
 import os
-import webbrowser
 import pdb
 
 import accessible_output2.outputs.auto
@@ -214,7 +213,7 @@ class Programa(wx.Frame):
 	def borrar_item(self, event):
 		item = self.lista.GetFocusedItem()
 		self.lista.DeleteItem(item)
-		
+
 
 	def generar (self, event):
 		if self.in_autor.GetValue() == '' and self.in_album.GetValue() == '':
@@ -384,6 +383,7 @@ class Programa(wx.Frame):
 
 	def marcar (self, event):
 		self.reproductor.Pause()
+		self.bt_reproducir.SetLabel('&Reproducir')
 		wx.adv.Sound.PlaySound( os.path.join('vista', 'sounds', 'marca.wav'))
 		self.lector.output('Marcado')
 		self.vn_editar()
@@ -403,6 +403,7 @@ class Programa(wx.Frame):
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
 			self.lista.SetStringItem(id, 2, marca.tiempo_inicio)
+
 
 
 

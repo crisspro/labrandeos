@@ -47,7 +47,37 @@ class Editar(wx.Dialog):
 		self.reproductor.Show(False)
 		self.timer= wx.Timer(self)
 		self.timer.Start(self.reproductor.Length())
-		
+
+
+#sizers
+
+		sz1 = wx.BoxSizer(wx.VERTICAL)
+
+		sz1.Add(self.l_titulo)
+		sz1.Add(self.in_titulo)
+		sz1.Add(self.l_autor)
+		sz1.Add(self.in_autor)
+
+		sz2 = wx.BoxSizer(wx.HORIZONTAL)
+
+		sz1.Add(sz2)
+		sz2.Add(self.l_horas)
+		sz2.Add(self.in_horas)
+		sz2.Add(self.l_minutos)
+		sz2.Add(self.in_minutos)
+		sz2.Add(self.l_segundos)
+		sz2.Add(self.in_segundos)
+		sz2.Add(self.l_marcos)
+		sz2.Add(self.in_marcos)
+
+		sz3 = wx.BoxSizer(wx.HORIZONTAL)
+
+		sz1.Add(sz3)
+		sz3.Add(self.bt_reproducir)
+		sz3.Add(self.bt_aceptar)
+		sz3.Add(self.bt_cancelar)
+
+		panel1.SetSizer(sz1)
 
 # funciones
 
