@@ -109,7 +109,7 @@ class Editar(wx.Dialog):
 	def evento_texto (self, event):
 		self.evalua_llenado()
 
-	#evalúa el correcto llenado del formulario
+	#evalúa el  llenado de los cuadros de edición
 	def evalua_llenado(self):
 		if self.in_autor.GetValue() != '' and self.in_titulo.GetValue() != '':
 			self.bt_aceptar.Enable(True)

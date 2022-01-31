@@ -16,4 +16,10 @@ class Tiempo():
 		self.total_minutos= int(total_marcos/60/75)
 		self.horas= int(total_marcos/60/60/75)
 
-
+	def reconvertir(self, tiempo):
+		horas = int(int(tiempo[0]) *60*60*1000)
+		minutos = int(int(tiempo[1]) *60*1000)
+		segundos = int(int(tiempo[2]) *1000)
+		marcos = int(int(tiempo[3]) *13)
+		resto_marcos = int(1000%marcos)
+		return horas+minutos+segundos+marcos+resto_marcos

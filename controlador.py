@@ -11,7 +11,7 @@ class Controlador():
 	def __init__(self):
 		self.nombre_app= 'CUE Genesis'
 		self.autor_app= 'Crisspro'
-		self.lisencia_app= 'GPL-3.0'
+		self.licencia_app= 'GPL-3.0'
 		self.version_app= 'v1.1'
 
 		self.data  = None

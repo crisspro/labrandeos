@@ -325,6 +325,13 @@ class Programa(wx.Frame):
 			self.reproductor.Pause()
 			self.bt_reproducir.SetLabel('&Reproducir')
 
+#pausa la reproducción
+	def pausar(self, evento):
+		self.estado= self.reproductor.GetState()
+		if self.estado == 2:
+			self.reproductor.Pause()
+			self.bt_reproducir.SetLabel('&Reproducir')
+
 # detiene la reproducción
 	def detener (self, event):
 		self.estado= self.reproductor.GetState()
@@ -395,7 +402,9 @@ class Programa(wx.Frame):
 		dlg.getTiempo(self.reproductor.Tell())
 		dlg.tiempo_actual = self.reproductor.Tell()
 		dlg.pista = self.path
+		dlg.Bind(wx.EVT_BUTTON, self.reproducir_pausar, dlg.bt_reproducir)
 		if dlg.ShowModal() == wx.ID_OK:
+			self.detener(None)
 			marca = self.controlador.crearMarca(dlg.getTitulo(),
 				dlg.getAutor(),
 				dlg.getTiempoInicio())
@@ -403,6 +412,8 @@ class Programa(wx.Frame):
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
 			self.lista.SetStringItem(id, 2, marca.tiempo_inicio)
+		else:
+			self.detener(None)
 
 
 
