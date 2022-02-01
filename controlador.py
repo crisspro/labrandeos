@@ -98,3 +98,7 @@ class Controlador():
 		minutos = self.tiempo.minutos
 		horas = self.tiempo.horas
 		return (horas, minutos, segundos, marcos, milesimas)
+
+	def reconvertir(self, t):
+		tiempo =self.tiempo.reconvertir(t)
+		return tiempo

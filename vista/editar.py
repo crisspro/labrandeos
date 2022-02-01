@@ -24,15 +24,19 @@ class Editar(wx.Dialog):
 		self.l_horas= wx.StaticText(panel1, -1, 'Horas')
 		self.in_horas= wx.SpinCtrl(panel1)
 		self.in_horas.SetRange(0,24)
+		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_horas)
 		self.l_minutos= wx.StaticText(panel1, -1, 'Minutos')
 		self.in_minutos= wx.SpinCtrl(panel1)
 		self.in_minutos.SetRange(0,59)
+		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_minutos)
 		self.l_segundos= wx.StaticText(panel1, -1, 'Segundos')
 		self.in_segundos= wx.SpinCtrl(panel1)
 		self.in_segundos.SetRange(0,59)
+		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_segundos)
 		self.l_marcos= wx.StaticText(panel1, -1, 'Marcos')
 		self.in_marcos= wx.SpinCtrl(panel1)
 		self.in_marcos.SetRange(0,74)
+		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_marcos)
 		self.bt_reproducir= wx.Button(panel1, -1, '&Reproducir')
 		self.Bind (wx.EVT_BUTTON, self.reproducir, self.bt_reproducir)
 		self.bt_aceptar= wx.Button(panel1, wx.ID_OK, '&Aceptar')
@@ -121,9 +125,12 @@ class Editar(wx.Dialog):
 		self.reproductor.Seek(self.tiempo_actual)
 		self.reproductor.Play()
 
+	def retomar_tiempo(self, event):
+		tiempo = (self.in_horas.GetValue(), self.in_minutos.GetValue(), self.in_segundos.GetValue(), self.in_marcos.GetValue())
+		self.tiempo_actual = controlador.reconvertir(tiempo)
 
 
 
-
+# creación de instancias
 
 controlador =Controlador()
