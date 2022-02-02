@@ -8,8 +8,8 @@ from wx import media
 import wx
 import wx.adv
 
-from .config import *
-from controlador import Controlador 
+import vista.opciones
+from controlador.controlador import Controlador 
 from .editar import Editar
 from .acerca_de import Acerca_de
 
@@ -57,13 +57,19 @@ class Programa(wx.Frame):
 		salir= menu1.Append(-1, '&Salir')
 		self.Bind(wx.EVT_MENU, self.cerrar, salir)
 
-	#creación del menú ayuda
+	# creación del menú herramientas
 		menu2= wx.Menu()
-		ayuda= barrademenu.Append(menu2, 'A&yuda')
-		manual= menu2.Append(-1, 'Manual')
-		self.mn_buscar_actualizacion = menu2.Append(-1, '&Buscar  actualizaciones')
+		herramientas =  barrademenu.Append(menu2,"&Herramientas")
+		opciones = menu2.Append(-1, '&Opciones')
+		self.Bind(wx.EVT_MENU, self.abrir_opciones, opciones)
+
+	#creación del menú ayuda
+		menu3= wx.Menu()
+		ayuda= barrademenu.Append(menu3, 'A&yuda')
+		manual= menu3.Append(-1, 'Manual')
+		self.mn_buscar_actualizacion = menu3.Append(-1, '&Buscar  actualizaciones')
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
-		acercade= menu2.Append(-1, 'Acerca de')
+		acercade= menu3.Append(-1, 'Acerca de')
 		self.Bind(wx.EVT_MENU, self.mg_acerca, acercade)
 
 
@@ -241,7 +247,7 @@ class Programa(wx.Frame):
 		archivo.write("FILE " + '"' +self.dialogo.GetFilename() + '"' + " ")
 		archivo.close()
 		if os.path.isfile(os.path.join(self.dialogo.GetDirectory(), nombre_cue)):
-			wx.adv.Sound.PlaySound(os.path.join('vista', 'sounds', 'ok.wav'))
+			wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'ok.wav'))
 			resp= wx.MessageBox('El archivo "CUE" ha sido guardado con éxito. ¿Deseas abrir la carpeta de destino?', caption= 'Listo', style= wx.YES_NO)
 			if resp == wx.YES:
 				os.startfile(self.dialogo.GetDirectory())
@@ -297,7 +303,13 @@ class Programa(wx.Frame):
 			self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
 			self.controlador.save()
 			self.controlador.limpiar_temporal()
- 
+
+	#abre la ventana de opciones
+	def abrir_opciones(self, event):
+		vn_opciones = vista.opciones.Opciones(self, 'Opciones')
+		if vn_opciones.ShowModal() == wx.ID_OK:
+			pass
+
 
 	#busca actualizaciones
 	def buscar_actualizacion(self, event):
@@ -312,6 +324,10 @@ class Programa(wx.Frame):
 		if dlg.ShowModal() == wx.ID_OK:
 			dlg.close()
 
+#retorna al tiempo de la pista indicado
+	def retornar(self, event ):
+		self.reproductor.Seek(Editar.tiempo_actual)
+		self.reproducir_pausar(None)
 
 # reproduce o pausa la pista.
 	def reproducir_pausar (self, event):
@@ -391,7 +407,7 @@ class Programa(wx.Frame):
 	def marcar (self, event):
 		self.reproductor.Pause()
 		self.bt_reproducir.SetLabel('&Reproducir')
-		wx.adv.Sound.PlaySound( os.path.join('vista', 'sounds', 'marca.wav'))
+		wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'marca.wav'))
 		self.lector.output('Marcado')
 		self.vn_editar()
 
@@ -402,7 +418,7 @@ class Programa(wx.Frame):
 		dlg.getTiempo(self.reproductor.Tell())
 		dlg.tiempo_actual = self.reproductor.Tell()
 		dlg.pista = self.path
-		dlg.Bind(wx.EVT_BUTTON, self.reproducir_pausar, dlg.bt_reproducir)
+		dlg.Bind(wx.EVT_BUTTON, self.retornar, dlg.bt_reproducir)
 		if dlg.ShowModal() == wx.ID_OK:
 			self.detener(None)
 			marca = self.controlador.crearMarca(dlg.getTitulo(),

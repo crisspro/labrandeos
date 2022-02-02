@@ -2,7 +2,7 @@ import pdb
 import wx
 import wx.adv
 
-from controlador import Controlador
+from controlador.controlador import Controlador
 
 class Editar(wx.Dialog):
 	def __init__(self, parent, title):
@@ -11,6 +11,7 @@ class Editar(wx.Dialog):
 #		self.controlador = Controlador()
 		self.tiempo_actual = 0
 		self.pista = ''
+		self.reproduciendo = False
 
 # controles
 		panel1= wx.Panel(self)
@@ -133,4 +134,4 @@ class Editar(wx.Dialog):
 
 # creación de instancias
 
-controlador =Controlador()
+controlador = Controlador()

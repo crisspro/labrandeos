@@ -1,3 +1,4 @@
+import configparser
 import os
 import pickle
 import requests
@@ -102,3 +103,9 @@ class Controlador():
 	def reconvertir(self, t):
 		tiempo =self.tiempo.reconvertir(t)
 		return tiempo
+
+
+
+# Creación de instancias
+
+configparser = configparser.ConfigParser()
