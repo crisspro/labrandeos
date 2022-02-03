@@ -308,7 +308,7 @@ class Programa(wx.Frame):
 	def abrir_opciones(self, event):
 		vn_opciones = vista.opciones.Opciones(self, 'Opciones')
 		if vn_opciones.ShowModal() == wx.ID_OK:
-			pass
+			vn_opciones.guardar_opciones()
 
 
 	#busca actualizaciones

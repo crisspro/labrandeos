@@ -2,23 +2,31 @@ import configparser
 
 import wx
 
+import controlador.configuracion
+
+
 class Opciones(wx.Dialog):
 	def __init__(self, parent, title):
 		super().__init__(parent, title= title)
-		self.Show()
 		self.Center()
+		self.archivo_configuracion = controlador_opciones.archivo_configuracion
+		configparser.read(self.archivo_configuracion,encoding= 'utf-8')
+
 
 # Creación de controles
 		panel1 = wx.Panel(self)
 		self.l_idioma = wx.StaticText(panel1, -1, 'Idioma')
-		self.lista_idioma = ['english', 'spanish']
-		self.com_idioma = wx.ComboBox(panel1, -1, 'Spanish', choices= self.lista_idioma )
+		self.lista_idioma = ['English', 'Spanish']
+		self.com_idioma = wx.ComboBox(panel1, -1, configparser.get('general', 'idioma'), choices= self.lista_idioma )
 		self.com_idioma.SetFocus()
 		self.cas_sonido_actualizacion = wx.CheckBox(panel1, -1, 'Activar sonido al detectar nueva actualización')
+		self.cas_sonido_actualizacion.SetValue(configparser.getboolean('general', 'sonido_actualizacion'))
 		self.cast_sonido_marca = wx.CheckBox(panel1, -1, 'Activar sonido al crear una nueva marca')
+		self.cast_sonido_marca.SetValue(configparser.getboolean('general', 'sonido_marca'))
 		self.cas_sonido_generar = wx.CheckBox(panel1, -1, 'Activar sonido al generar el archivo CUE')
-		self.bt_aceptar = wx.Button(panel1, -1, '&Aceptar', style= wx.ID_OK)
-		self.bt_cancelar = wx.Button(panel1, -1, '&Cancelar', style= wx.ID_CANCEL)
+		self.cas_sonido_generar.SetValue(configparser.getboolean('general', 'sonido_generar'))
+		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, '&Aceptar')
+		self.bt_cancelar = wx.Button(panel1, wx.ID_CANCEL, '&Cancelar')
 
 # Creación de sizers
 
@@ -29,13 +37,23 @@ class Opciones(wx.Dialog):
 		sz1.Add(self.cast_sonido_marca)
 		sz1.Add(self.cas_sonido_generar)
 
-		panel1.SetSizer(sz1)
 		sz2 = wx.BoxSizer(wx.HORIZONTAL)
 		sz1.Add(sz2)
 		sz2.Add(self.bt_aceptar)
 		sz2.Add(self.bt_cancelar)
 
+		panel1.SetSizer(sz1)
+
+
+	def guardar_opciones(self):
+		configparser.set('general', 'idioma', self.com_idioma.GetValue())
+		configparser.set('general', 'sonido_actualizacion', str(self.cas_sonido_actualizacion.GetValue()))
+		configparser.set('general', 'sonido_marca', str(self.cast_sonido_marca.GetValue()))
+		configparser.set('general', 'sonido_generar', str(self.cas_sonido_generar.GetValue()))
+		archivo = open(self.archivo_configuracion, 'w', encoding= 'UTF-8')
+		configparser.write(archivo)
 
 # Creación de instancias
 
 configparser = configparser.ConfigParser()
+controlador_opciones = controlador.configuracion.Opciones()
