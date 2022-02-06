@@ -3,7 +3,8 @@ class Data():
 		self.titulo= 'Sin título'
 		self.autor= 'Sin autor'
 		self.tiempo_inicio = 0
-		
+
+
 		# lista de  marcas.
 		self.lista_marcas= []
 	
@@ -11,6 +12,9 @@ class Data():
 	def agregarMarca(self, marca):
 		self.lista_marcas.append(marca)
 
+	#ordena las marcas
+	def ordenar(self):
+		self.lista_marcas.sort(key= lambda marca:marca.autor)
 
 	# limpia la lista de marcas.
 	def limpiar (self):

@@ -13,7 +13,7 @@ class Editar(wx.Dialog):
 		self.pista = ''
 		self.reproduciendo = False
 
-# controles
+		# Creación de controles
 		panel1= wx.Panel(self)
 		self.l_titulo = wx.StaticText(panel1, -1, 'Título:')
 		self.in_titulo= wx.TextCtrl(panel1)
@@ -38,21 +38,11 @@ class Editar(wx.Dialog):
 		self.in_marcos= wx.SpinCtrl(panel1)
 		self.in_marcos.SetRange(0,74)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_marcos)
-		self.bt_reproducir= wx.Button(panel1, -1, '&Reproducir')
-		self.Bind (wx.EVT_BUTTON, self.reproducir, self.bt_reproducir)
+		self.bt_reproducir = wx.Button(panel1, -1, '&Reproducir')
+		self.Bind (wx.EVT_BUTTON, self.cambiar_etiqueta, self.bt_reproducir)
 		self.bt_aceptar= wx.Button(panel1, wx.ID_OK, '&Aceptar')
 		self.bt_aceptar.Enable(False)
 		self.bt_cancelar= wx.Button(panel1, wx.ID_CANCEL, '&Cancelar')
-
-# agrega reproductor
-
-		backend= ''
-		self.reproductor= wx.media.MediaCtrl()
-		self.reproductor.Create(panel1, style=wx.SIMPLE_BORDER, szBackend=backend)
-		self.reproductor.Show(False)
-		self.timer= wx.Timer(self)
-		self.timer.Start(self.reproductor.Length())
-
 
 #sizers
 
@@ -121,10 +111,12 @@ class Editar(wx.Dialog):
 		else:
 			self.bt_aceptar.Enable(False)
 
-	def reproducir(self, event):
-		self.reproductor.Load(self.pista)
-		self.reproductor.Seek(self.tiempo_actual)
-		self.reproductor.Play()
+	# cambia la etiqueta del botón reproducir.
+	def cambiar_etiqueta(self):
+		if self.reproduciendo == True:
+			self.bt_reproducir.SetLabel('&Detener')
+		else:
+			self.bt_reproducir.SetLabel('&Reproducir')
 
 	def retomar_tiempo(self, event):
 		tiempo = (self.in_horas.GetValue(), self.in_minutos.GetValue(), self.in_segundos.GetValue(), self.in_marcos.GetValue())

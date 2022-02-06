@@ -13,7 +13,7 @@ class Opciones(wx.Dialog):
 		configparser.read(self.archivo_configuracion,encoding= 'utf-8')
 
 
-# Creación de controles
+		# Creación de controles
 		panel1 = wx.Panel(self)
 		self.l_idioma = wx.StaticText(panel1, -1, 'Idioma')
 		self.lista_idioma = ['English', 'Spanish']
@@ -52,6 +52,7 @@ class Opciones(wx.Dialog):
 		configparser.set('general', 'sonido_generar', str(self.cas_sonido_generar.GetValue()))
 		archivo = open(self.archivo_configuracion, 'w', encoding= 'UTF-8')
 		configparser.write(archivo)
+
 
 # Creación de instancias
 

@@ -141,6 +141,7 @@ class Programa(wx.Frame):
 		self.volumen= wx.Slider(panel2, -1, 100, 0, 100)
 		self.Bind(wx.EVT_SLIDER, self.volumenear,self.volumen)
 		self.bt_marcar= wx.Button(panel2, self.id_bt_marcar, '&Marcar')
+		self.bt_marcar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.id_bt_marcar)
 		self.atajo_marcar= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('m'), self.id_bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
@@ -216,43 +217,13 @@ class Programa(wx.Frame):
 			self.lista.SetStringItem(id, 2,marca.tiempo_inicio)
 			id+=1
 
+	def refrescar_lista(self):
+		self.lista.DeleteAllItems()
+		self.listar()
+
 	def borrar_item(self, event):
 		item = self.lista.GetFocusedItem()
 		self.lista.DeleteItem(item)
-
-
-	def generar (self, event):
-		if self.in_autor.GetValue() == '' and self.in_album.GetValue() == '':
-			nombre_cue= 'Sin autor - Nuevo disco.cue'
-			archivo= open( os.path.join(self.dialogo.GetDirectory(), nombre_cue), 'w+')
-		elif self.in_autor.GetValue() == '':
-			nombre_cue= ('Sin autor - ' + self.in_album.GetValue() + '.cue')
-			archivo= open(os.path.join(self.dialogo.GetDirectory(), nombre_cue), 'w+')
-		elif self.in_album.GetValue() == '':
-			nombre_cue= (self.in_autor.GetValue() + ' - Nuevo disco.cue')
-			archivo= open(os.path.join(self.dialogo.GetDirectory(), nombre_cue), 'w+')
-		else:
-			nombre_cue= (self.in_autor.GetValue() + ' - ' + self.in_album.GetValue() + '.cue')
-			archivo= open( os.path.join(self.dialogo.GetDirectory(), nombre_cue), 'w+')
-		if self.in_autor.GetValue() != '':
-			archivo.write("TITLE "+'"' + self.in_album.GetValue() + '"' + "\n")
-		if self.in_album.GetValue() != '':
-			archivo.write("PERFORMER " + '"' + self.in_autor.GetValue() + '"' + "\n")
-		if self.in_fecha.GetValue() != '':
-			archivo.write("REM DATE " + str (self.in_fecha.GetValue()) + "\n")
-		if self.in_genero.GetValue() != '':
-			archivo.write("REM GENRE " + '"' + self.in_genero.GetValue() + '"' + "\n")
-		if self.in_comentarios.GetValue() != '':
-			archivo.write("REM COMMENT 		" + '"' + self.in_comentarios.GetValue() + '"' + "\n")
-		archivo.write("FILE " + '"' +self.dialogo.GetFilename() + '"' + " ")
-		archivo.close()
-		if os.path.isfile(os.path.join(self.dialogo.GetDirectory(), nombre_cue)):
-			wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'ok.wav'))
-			resp= wx.MessageBox('El archivo "CUE" ha sido guardado con éxito. ¿Deseas abrir la carpeta de destino?', caption= 'Listo', style= wx.YES_NO)
-			if resp == wx.YES:
-				os.startfile(self.dialogo.GetDirectory())
-		else:
-			wx.MessageBox('Ha ocurrido un error. No se ha podido guardar el archivo CUE.', caption= 'Mensaje', style= wx.ICON_ERROR)
 
 	def cerrar (self, event):
 		if os.path.exists('temp.proyecto.cgp'):
@@ -275,6 +246,7 @@ class Programa(wx.Frame):
 			for track in archivo_info.tracks:
 				if track.track_type == 'Audio':
 					self.path= self.dialogo.GetPath()
+					self.bt_marcar.Enable(True)
 				elif track.track_type == 'Video':
 					self.path= ''
 					break
@@ -324,11 +296,6 @@ class Programa(wx.Frame):
 		if dlg.ShowModal() == wx.ID_OK:
 			dlg.close()
 
-#retorna al tiempo de la pista indicado
-	def retornar(self, event ):
-		self.reproductor.Seek(Editar.tiempo_actual)
-		self.reproducir_pausar(None)
-
 # reproduce o pausa la pista.
 	def reproducir_pausar (self, event):
 		self.estado= self.reproductor.GetState()
@@ -356,6 +323,16 @@ class Programa(wx.Frame):
 			self.bt_reproducir.SetLabel('&Reproducir')
 		else:
 			self.bt_reproducir.SetLabel('&Reproducir')
+
+	#reproduce y pausa en ventana editar.
+	def reproducir_editar(self, event):
+		self.reproductor.Seek(self.editar.tiempo_actual)
+		self.reproducir_pausar(None)
+		if self.estado == 1 or self.estado == 0:
+			self.editar.reproduciendo = True
+		else:
+			self.editar.reproduciendo = False
+		self.editar.cambiar_etiqueta()
 
 # controla el volumen
 	def volumenear (self, event):
@@ -413,26 +390,30 @@ class Programa(wx.Frame):
 
 
 	def vn_editar(self):
-		dlg = Editar(self, title= 'Editar')
-		dlg.in_autor.SetValue(controlador.consultar_autor())
-		dlg.getTiempo(self.reproductor.Tell())
-		dlg.tiempo_actual = self.reproductor.Tell()
-		dlg.pista = self.path
-		dlg.Bind(wx.EVT_BUTTON, self.retornar, dlg.bt_reproducir)
-		if dlg.ShowModal() == wx.ID_OK:
+		self.editar = Editar(self, title= 'Editar')
+		self.editar.in_autor.SetValue(controlador.consultar_autor())
+		self.editar.getTiempo(self.reproductor.Tell())
+		self.editar.tiempo_actual = self.reproductor.Tell()
+		self.editar.pista = self.path
+		self.editar.Bind(wx.EVT_BUTTON, self.reproducir_editar, self.editar.bt_reproducir)
+		if self.editar.ShowModal() == wx.ID_OK:
 			self.detener(None)
 			marca = self.controlador.crearMarca(dlg.getTitulo(),
-				dlg.getAutor(),
-				dlg.getTiempoInicio())
+				self.editar.getAutor(),
+				self.editar.getTiempoInicio())
 			id=self.lista.GetItemCount()
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
 			self.lista.SetStringItem(id, 2, marca.tiempo_inicio)
+			self.refrescar_lista()
 		else:
 			self.detener(None)
 
+	def generar(self):
+		pass
 
 
 
+#Creación de instancias
 
 controlador = Controlador()
