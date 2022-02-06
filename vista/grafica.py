@@ -1,4 +1,5 @@
 import requests
+import requests
 import os
 import pdb
 
@@ -160,6 +161,7 @@ class Programa(wx.Frame):
 		self.bt_borrar = wx.Button(panel2, -1, '&Borrar')
 		self.Bind(wx.EVT_BUTTON, self.borrar_item, self.bt_borrar)
 		self.bt_editar = wx.Button(panel2, -1, '&Editar')
+		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
 		self.bt_generar= wx.Button(panel2, -1, '&GENERAR CUE')
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
 
@@ -187,8 +189,8 @@ class Programa(wx.Frame):
 		sz1.Add(l_comentarios)
 		sz1.Add(self.in_comentarios)
 		sz1.Add(self.reproductor)
-		sz1.Add(self.l_reloj)
-		sz1.Add(self.pista)
+		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
+		sz1.Add(self.pista, wx.SizerFlags().Expand())
 
 
 		sz2= wx.BoxSizer(wx.HORIZONTAL)
@@ -223,6 +225,7 @@ class Programa(wx.Frame):
 
 	def borrar_item(self, event):
 		item = self.lista.GetFocusedItem()
+		self.controlador.borrar_marca(item)
 		self.lista.DeleteItem(item)
 
 	def cerrar (self, event):
@@ -309,7 +312,7 @@ class Programa(wx.Frame):
 			self.bt_reproducir.SetLabel('&Reproducir')
 
 #pausa la reproducción
-	def pausar(self, evento):
+	def pausar(self, event):
 		self.estado= self.reproductor.GetState()
 		if self.estado == 2:
 			self.reproductor.Pause()
@@ -390,15 +393,15 @@ class Programa(wx.Frame):
 
 
 	def vn_editar(self):
-		self.editar = Editar(self, title= 'Editar')
+		self.editar = Editar(self, title= 'Crear marca')
 		self.editar.in_autor.SetValue(controlador.consultar_autor())
 		self.editar.getTiempo(self.reproductor.Tell())
 		self.editar.tiempo_actual = self.reproductor.Tell()
 		self.editar.pista = self.path
 		self.editar.Bind(wx.EVT_BUTTON, self.reproducir_editar, self.editar.bt_reproducir)
 		if self.editar.ShowModal() == wx.ID_OK:
-			self.detener(None)
-			marca = self.controlador.crearMarca(dlg.getTitulo(),
+			self.pausar(None)
+			marca = self.controlador.crearMarca(self.editar.getTitulo(),
 				self.editar.getAutor(),
 				self.editar.getTiempoInicio())
 			id=self.lista.GetItemCount()
@@ -407,7 +410,12 @@ class Programa(wx.Frame):
 			self.lista.SetStringItem(id, 2, marca.tiempo_inicio)
 			self.refrescar_lista()
 		else:
-			self.detener(None)
+			self.pausar(None)
+
+	def abrir_editar2(self,event):
+		self.editar2 = Editar(self, 'Editar marca')
+		if self.editar2.ShowModal():
+			pass
 
 	def generar(self):
 		pass

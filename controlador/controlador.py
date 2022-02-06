@@ -68,6 +68,10 @@ class Controlador():
 	def getMarcas(self):
 		return self.data.getMarcas()
 	
+	def borrar_marca(self, id):
+		self.data.borrar_marca(id)
+		self.data.ordenar()
+
 	def load(self):
 		""" carga la información del modelo. """
 		try:

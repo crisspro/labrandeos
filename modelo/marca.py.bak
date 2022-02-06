@@ -14,7 +14,7 @@ class Data():
 
 	#ordena las marcas
 	def ordenar(self):
-		self.lista_marcas.sort(key= lambda marca:self.autor)
+		self.lista_marcas.sort(key= lambda marca:marca.autor)
 
 	# limpia la lista de marcas.
 	def limpiar (self):

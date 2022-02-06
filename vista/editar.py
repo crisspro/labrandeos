@@ -123,6 +123,10 @@ class Editar(wx.Dialog):
 		self.tiempo_actual = controlador.reconvertir(tiempo)
 
 
+class Editar2(Editar):
+	def __init__(self, parent, title):
+		super().__init__(parent, title= title)
+
 
 # creación de instancias
 
