@@ -127,6 +127,11 @@ class Editar2(Editar):
 	def __init__(self, parent, title):
 		super().__init__(parent, title= title)
 
+	def cargar_datos(self, id):
+		marca = controlador.consultar_datos(id)
+		self.in_titulo.SetValue(marca.titulo)
+
+
 
 # creación de instancias
 

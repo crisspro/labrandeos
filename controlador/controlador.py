@@ -142,6 +142,9 @@ class Controlador():
 		else:
 			wx.MessageBox('Ha ocurrido un error. No se ha podido guardar el archivo CUE.', caption= 'Mensaje', style= wx.ICON_ERROR)
 
+	def consultar_datos(self, id):
+		marca = self.data.getMarcas()
+		return marca(id)
 
 
 # Creación de instancias

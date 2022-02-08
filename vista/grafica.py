@@ -12,6 +12,7 @@ import wx.adv
 import vista.opciones
 from controlador.controlador import Controlador 
 from .editar import Editar
+from .editar import Editar2
 from .acerca_de import Acerca_de
 
 
@@ -22,6 +23,7 @@ class Programa(wx.Frame):
 		self.Center()
 		self.graficar()
 		self.Show()
+
 
 
 
@@ -112,7 +114,7 @@ class Programa(wx.Frame):
 		self.font_reloj= self.l_reloj.GetFont()
 		self.font_reloj.SetPointSize(60)
 		self.l_reloj.SetFont(self.font_reloj)
-		self.l_pista= wx.StaticText(panel2, -1, 'Pista')
+		self.l_pista= wx.StaticText(panel2, -1, 'Línea de tiempo')
 		self.minutaje= 1
 		self.pista= wx.Slider(panel2, -1, 0, 0, self.minutaje,size= (400, -1))
 		self.pista.SetLineSize(5000)
@@ -152,10 +154,12 @@ class Programa(wx.Frame):
 
 		self.Bind(wx.EVT_CLOSE, self.cerrar)
 # Construcción de lista
-		self.lista= wx.ListCtrl(panel2, -1, style= wx.LC_REPORT)
+		self.l_lista = wx.StaticText(panel2, -1, 'Marcas')
+		self.lista= wx.ListCtrl(panel2, -1,style= wx.LC_REPORT)
 		self.lista.InsertColumn(0, 'Título')
 		self.lista.InsertColumn(1, 'Autor')
 		self.lista.InsertColumn(2, 'Tiempo de inicio')
+		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla, self.lista)
 
 
 		self.bt_borrar = wx.Button(panel2, -1, '&Borrar')
@@ -177,6 +181,7 @@ class Programa(wx.Frame):
 
 		sz1.Add(l_abrir)
 		sz1.Add(bt_abrir)
+		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
 		sz1.Add(self.l_instrucciones)
 		sz1.Add(l_autor)
 		sz1.Add(self.in_autor)
@@ -189,7 +194,7 @@ class Programa(wx.Frame):
 		sz1.Add(l_comentarios)
 		sz1.Add(self.in_comentarios)
 		sz1.Add(self.reproductor)
-		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
+
 		sz1.Add(self.pista, wx.SizerFlags().Expand())
 
 
@@ -222,6 +227,11 @@ class Programa(wx.Frame):
 	def refrescar_lista(self):
 		self.lista.DeleteAllItems()
 		self.listar()
+
+	def detectar_tecla(self, event):
+		tecla = event.GetKeyCode()
+		if tecla == wx.WXK_DELETE:
+			self.borrar_item(None)
 
 	def borrar_item(self, event):
 		item = self.lista.GetFocusedItem()
@@ -413,8 +423,10 @@ class Programa(wx.Frame):
 			self.pausar(None)
 
 	def abrir_editar2(self,event):
-		self.editar2 = Editar(self, 'Editar marca')
-		if self.editar2.ShowModal():
+		self.editar2 = Editar2(self, 'Editar marca')
+		item = self.lista.GetFocusedItem()
+		self.editar2.cargar_datos(item)
+		if self.editar2.ShowModal() == wx.ID_OK:
 			pass
 
 	def generar(self):

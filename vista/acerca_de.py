@@ -15,7 +15,7 @@ class Acerca_de(wx.Dialog):
 
 		sz1 = wx.BoxSizer(wx.VERTICAL)
 
-		sz1.Add(self.in_info)
+		sz1.Add(self.in_info, wx.SizerFlags().Expand())
 		sz1.Add(self.bt_visitar)
 		sz1.Add(self.bt_cerrar)
 

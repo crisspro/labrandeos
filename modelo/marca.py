@@ -7,7 +7,7 @@ class Data():
 
 		# lista de  marcas.
 		self.lista_marcas= []
-	
+
 	# añade una nueva marca a la lista.
 	def agregarMarca(self, marca):
 		self.lista_marcas.append(marca)
