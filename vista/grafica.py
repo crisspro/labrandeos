@@ -160,10 +160,7 @@ class Programa(wx.Frame):
 		self.lista.InsertColumn(1, 'Autor')
 		self.lista.InsertColumn(2, 'Tiempo de inicio')
 		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla, self.lista)
-
-
-		self.bt_borrar = wx.Button(panel2, -1, '&Borrar')
-		self.Bind(wx.EVT_BUTTON, self.borrar_item, self.bt_borrar)
+		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_menu, self.lista)
 		self.bt_editar = wx.Button(panel2, -1, '&Editar')
 		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
 		self.bt_generar= wx.Button(panel2, -1, '&GENERAR CUE')
@@ -206,7 +203,6 @@ class Programa(wx.Frame):
 		sz2.Add(self.bt_marcar)
 
 		sz1.Add(self.lista, wx.EXPAND|wx.RIGHT)
-		sz1.Add(self.bt_borrar)
 		sz1.Add(self.bt_editar)
 		sz1.Add(self.bt_generar)
 
@@ -237,6 +233,15 @@ class Programa(wx.Frame):
 		item = self.lista.GetFocusedItem()
 		self.controlador.borrar_marca(item)
 		self.lista.DeleteItem(item)
+		self.lector.output('Eliminada')
+
+	def desplegar_menu(self, event):
+		item = self.lista.GetFocusedItem()
+		menu = wx.Menu()
+		editar = wx.MenuItem(menu, -1, '&Editar')
+		menu.AppendItem(editar)
+#		self.lista.PopupMenu(menu)
+		print('click derecho')
 
 	def cerrar (self, event):
 		if os.path.exists('temp.proyecto.cgp'):

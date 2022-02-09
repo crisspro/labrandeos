@@ -3,6 +3,7 @@ class Data():
 		self.titulo= 'Sin título'
 		self.autor= 'Sin autor'
 		self.tiempo_inicio = 0
+		self.milesimas = 0
 
 
 		# lista de  marcas.
