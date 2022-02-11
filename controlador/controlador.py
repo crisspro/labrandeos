@@ -1,3 +1,4 @@
+import pdb
 import configparser
 import os
 import pickle
@@ -106,8 +107,12 @@ class Controlador():
 		return (horas, minutos, segundos, marcos, milesimas)
 
 	def reconvertir(self, t):
-		tiempo =self.tiempo.reconvertir(t)
-		return tiempo
+		self.tiempo.horas = t[0]
+		self.tiempo.minutos= t[1]
+		self.tiempo.segundos= t[2]
+		self.tiempo.marcos= t[3]
+		milesimas = self.tiempo.reconvertir()
+		return milesimas
 
 	def generar (self):
 		if self.in_autor.GetValue() == '' and self.in_album.GetValue() == '':

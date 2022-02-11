@@ -1,5 +1,5 @@
 class Tiempo():
-	def __init__(self):
+	def __init__(self, *ARGS, **KWARGS):
 		self.horas = 0
 		self.minutos = 0
 		self.segundos = 0
@@ -15,10 +15,10 @@ class Tiempo():
 		self.total_minutos= int(total_marcos/60/75)
 		self.horas= int(total_marcos/60/60/75)
 
-	def reconvertir(self, tiempo):
-		marcos = int(tiempo[3]) * 1000/75
-		segundos = int(tiempo[2]) * 1000
-		minutos = int(tiempo[1]) *60 * 1000
-		horas = int(tiempo[0]) * 60 *60 * 1000
-		milesimas = int(horas+minutos+segundos+marcos)
-		return milesimas
+	def reconvertir(self):
+		marcos = int(self.marcos) * 1000/75
+		segundos = int(self.segundos) * 1000
+		minutos = self.minutos *60 * 1000
+		horas = int(self.horas) * 60 *60 * 1000
+		self.milesimas = int(horas+minutos+segundos+marcos)
+		return self.milesimas
