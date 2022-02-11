@@ -418,7 +418,8 @@ class Programa(wx.Frame):
 			self.pausar(None)
 			marca = self.controlador.crearMarca(self.editar.getTitulo(),
 				self.editar.getAutor(),
-				self.editar.getTiempoInicio())
+				self.editar.getTiempoInicio(),
+				self.editar.tiempo_actual)
 			id=self.lista.GetItemCount()
 			self.lista.InsertStringItem(id, marca.titulo)
 			self.lista.SetStringItem(id, 1, marca.autor)
