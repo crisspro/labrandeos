@@ -156,11 +156,13 @@ class Programa(wx.Frame):
 # Construcción de lista
 		self.l_lista = wx.StaticText(panel2, -1, 'Marcas')
 		self.lista= wx.ListCtrl(panel2, -1,style= wx.LC_REPORT)
-		self.lista.InsertColumn(0, 'Título')
-		self.lista.InsertColumn(1, 'Autor')
-		self.lista.InsertColumn(2, 'Tiempo de inicio')
+		self.lista.InsertColumn(0, 'N°')
+		self.lista.InsertColumn(1, 'Título')
+		self.lista.InsertColumn(2, 'Autor')
+		self.lista.InsertColumn(3, 'Tiempo de inicio')
 		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_menu, self.lista)
+		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
 		self.bt_editar = wx.Button(panel2, -1, '&Editar')
 		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
 		self.bt_generar= wx.Button(panel2, -1, '&GENERAR CUE')
@@ -215,9 +217,10 @@ class Programa(wx.Frame):
 	def listar(self):
 		id = self.lista.GetItemCount()
 		for marca in self.controlador.getMarcas():
-			self.lista.InsertStringItem(id, marca.titulo)
-			self.lista.SetStringItem(id, 1, marca.autor)
-			self.lista.SetStringItem(id, 2,marca.tiempo_inicio)
+			self.lista.InsertStringItem(id, str(marca.id))
+			self.lista.SetStringItem(id, 1,  marca.titulo)
+			self.lista.SetStringItem(id, 2, marca.autor)
+			self.lista.SetStringItem(id, 3,marca.tiempo_inicio)
 			id+=1
 
 	def refrescar_lista(self):
@@ -228,6 +231,11 @@ class Programa(wx.Frame):
 		tecla = event.GetKeyCode()
 		if tecla == wx.WXK_DELETE:
 			self.borrar_item(None)
+
+	def posicionar_marca(self, event):
+		item = self.lista.GetFocusedItem()
+		marca =self.controlador.getMarcas()[item]
+		self.reproductor.Seek(marca.milesimas)
 
 	def borrar_item(self, event):
 		item = self.lista.GetFocusedItem()
@@ -416,14 +424,16 @@ class Programa(wx.Frame):
 		self.editar.Bind(wx.EVT_BUTTON, self.reproducir_editar, self.editar.bt_reproducir)
 		if self.editar.ShowModal() == wx.ID_OK:
 			self.pausar(None)
-			marca = self.controlador.crearMarca(self.editar.getTitulo(),
+			marca = self.controlador.crearMarca(self.lista.GetItemCount(),
+				self.editar.getTitulo(),
 				self.editar.getAutor(),
 				self.editar.getTiempoInicio(),
 				self.editar.tiempo_actual)
 			id=self.lista.GetItemCount()
-			self.lista.InsertStringItem(id, marca.titulo)
-			self.lista.SetStringItem(id, 1, marca.autor)
-			self.lista.SetStringItem(id, 2, marca.tiempo_inicio)
+			self.lista.InsertStringItem(id,  str(marca.id))
+			self.lista.SetStringItem(id, 1, marca.titulo)
+			self.lista.SetStringItem(id, 2, marca.autor)
+			self.lista.SetStringItem(id, 3, marca.tiempo_inicio)
 			self.refrescar_lista()
 		else:
 			self.pausar(None)

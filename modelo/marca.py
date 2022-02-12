@@ -1,5 +1,6 @@
 class Data():
 	def __init__(self, *ARGS, **KWARGS):
+		self.id = 0
 		self.titulo= 'Sin título'
 		self.autor= 'Sin autor'
 		self.tiempo_inicio = 0
@@ -16,6 +17,10 @@ class Data():
 	#ordena las marcas
 	def ordenar(self):
 		self.lista_marcas.sort(key= lambda marca:marca.milesimas)
+		id = 0
+		for marca in self.lista_marcas:
+			marca.id = id+1
+			id = id+1
 
 	def borrar_marca(self, id):
 		self.lista_marcas.pop(id)
@@ -29,7 +34,8 @@ class Data():
 
 
 class Marca():
-	def __init__(self, titulo, autor, tiempo_inicio, milesimas):
+	def __init__(self, id, titulo, autor, tiempo_inicio, milesimas):
+		self.id = id
 		self.titulo = titulo
 		self.autor = autor
 		self.tiempo_inicio = tiempo_inicio
