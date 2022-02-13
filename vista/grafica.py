@@ -9,6 +9,7 @@ from wx import media
 import wx
 import wx.adv
 
+import vista.disco
 import vista.opciones
 from controlador.controlador import Controlador 
 from .editar import Editar
@@ -23,10 +24,6 @@ class Programa(wx.Frame):
 		self.Center()
 		self.graficar()
 		self.Show()
-
-
-
-
 
 	#creación de controles
 	def graficar(self):
@@ -82,26 +79,8 @@ class Programa(wx.Frame):
 		l_abrir= wx.StaticText (panel2, -1, 'Carga el archivo de audio que quieres procesar.')
 		bt_abrir= wx.Button(panel2, -1, '&Cargar audio')
 		self.Bind(wx.EVT_BUTTON, self.abrir_archivo, bt_abrir)
-		self.l_instrucciones= wx.StaticText (panel2, -1, 'ingresa los metadatos  a continuación.') 
-		l_autor= wx.StaticText(panel2, -1, 'Autor:')
-		self.in_autor= wx.TextCtrl(panel2, -1)
-		self.in_autor.SetMaxLength(80)
-		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_autor)
-		l_album= wx.StaticText(panel2, -1, 'Título del álbum:')
-		self.in_album= wx.TextCtrl(panel2, -1)
-		self.in_album.SetMaxLength(80)
-		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_album)
-		l_fecha= wx.StaticText(panel2, -1, 'Año:')
-		self.in_fecha= wx.TextCtrl(panel2, -1)
-		self.in_fecha.SetMaxLength(4)
-		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_fecha)
-		l_genero= wx.StaticText(panel2, -1, 'Género:')
-		self.in_genero= wx.TextCtrl(panel2, -1)
-		self.in_genero.SetMaxLength(80)
-		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_genero)
-		l_comentarios= wx.StaticText(panel2, -1, 'Comentarios:')
-		self.in_comentarios= wx.TextCtrl(panel2, -1, style= wx.TE_MULTILINE)
-		self.Bind (wx.EVT_TEXT, self.guardar_disco, self.in_comentarios)
+		self.bt_disco = wx.Button(panel2, -1, 'Meta&datos del álbum')
+		self.Bind(wx.EVT_BUTTON, self.guardar_disco)
 		backend= ''
 		self.reproductor= wx.media.MediaCtrl()
 		self.reproductor.Create(panel2, style=wx.SIMPLE_BORDER, szBackend=backend)
@@ -180,18 +159,8 @@ class Programa(wx.Frame):
 
 		sz1.Add(l_abrir)
 		sz1.Add(bt_abrir)
+		sz1.Add(self.bt_disco)
 		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
-		sz1.Add(self.l_instrucciones)
-		sz1.Add(l_autor)
-		sz1.Add(self.in_autor)
-		sz1.Add(l_album)
-		sz1.Add(self.in_album)
-		sz1.Add(l_fecha)
-		sz1.Add(self.in_fecha)
-		sz1.Add(l_genero)
-		sz1.Add(self.in_genero)
-		sz1.Add(l_comentarios)
-		sz1.Add(self.in_comentarios)
 		sz1.Add(self.reproductor)
 
 		sz1.Add(self.pista, wx.SizerFlags().Expand())
@@ -261,7 +230,10 @@ class Programa(wx.Frame):
 			self.Destroy()
 
 	def guardar_disco(self, event):
-		controlador.crear_disco(self.in_album.GetValue(), self.in_autor.GetValue(), self.in_genero.GetValue(), self.in_fecha.GetValue(), self.in_comentarios.GetValue())
+		self.vn_disco = vista.disco.Disco(self, 'Metadatos del álbum')
+		if self.vn_disco.ShowModal() == wx.ID_OK:
+			pass
+
 
 
 	def abrir_archivo (self, event):
@@ -279,7 +251,8 @@ class Programa(wx.Frame):
 			if self.path == '':
 				wx.MessageBox('No es posible cargar el fichero, sólo se admiten archivos de audio.', caption= 'Atención.', style= wx.ICON_ERROR)
 			self.reproductor.Load(self.path)
-			self.l_instrucciones.SetFocus()
+			self.bt_reproducir.SetFocus()
+			self.controlador.ruta_audio = self.path
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
@@ -445,8 +418,10 @@ class Programa(wx.Frame):
 		if self.editar2.ShowModal() == wx.ID_OK:
 			pass
 
-	def generar(self):
-		pass
+	def generar(self, event):
+		self.controlador.generar_cue()
+		wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
+
 
 
 

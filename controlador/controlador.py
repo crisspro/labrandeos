@@ -19,6 +19,7 @@ class Controlador():
 		self.disco = Disco()
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
+		self.ruta_audio = ''
 		self.actualizado = True
 
 
@@ -46,6 +47,7 @@ class Controlador():
 			else:
 				self.actualizado = True
 
+
 	def crear_disco(self, titulo, autor, genero, ano, comentario):
 		self.disco.titulo = titulo
 		self.disco.autor = autor
@@ -67,7 +69,7 @@ class Controlador():
 
 	def getMarcas(self):
 		return self.data.getMarcas()
-	
+
 	def borrar_marca(self, id):
 		self.data.borrar_marca(id)
 		self.data.ordenar()
@@ -113,38 +115,24 @@ class Controlador():
 		milesimas = self.tiempo.reconvertir()
 		return milesimas
 
-	def generar (self):
-		if self.in_autor.GetValue() == '' and self.in_album.GetValue() == '':
-			nombre_cue= 'Sin autor - Nuevo disco.cue'
-			archivo= open( os.path.join(self.dialogo.GetDirectory(), nombre_cue), 'w+')
-		elif self.in_autor.GetValue() == '':
-			nombre_cue= ('Sin autor - ' + self.in_album.GetValue() + '.cue')
-			archivo= open(os.path.join(self.dialogo.GetDirectory(), nombre_cue), 'w+')
-		elif self.in_album.GetValue() == '':
-			nombre_cue= (self.in_autor.GetValue() + ' - Nuevo disco.cue')
-			archivo= open(os.path.join(self.dialogo.GetDirectory(), nombre_cue), 'w+')
-		else:
-			nombre_cue= (self.in_autor.GetValue() + ' - ' + self.in_album.GetValue() + '.cue')
-			archivo= open( os.path.join(self.dialogo.GetDirectory(), nombre_cue), 'w+')
-		if self.in_autor.GetValue() != '':
-			archivo.write("TITLE "+'"' + self.in_album.GetValue() + '"' + "\n")
-		if self.in_album.GetValue() != '':
-			archivo.write("PERFORMER " + '"' + self.in_autor.GetValue() + '"' + "\n")
-		if self.in_fecha.GetValue() != '':
-			archivo.write("REM DATE " + str (self.in_fecha.GetValue()) + "\n")
-		if self.in_genero.GetValue() != '':
-			archivo.write("REM GENRE " + '"' + self.in_genero.GetValue() + '"' + "\n")
-		if self.in_comentarios.GetValue() != '':
-			archivo.write("REM COMMENT 		" + '"' + self.in_comentarios.GetValue() + '"' + "\n")
-		archivo.write("FILE " + '"' +self.dialogo.GetFilename() + '"' + " ")
+	def generar_cue (self):
+		carpeta = os.path.dirname(self.ruta_audio)
+		tipo = os.path.splitext(self.ruta_audio)[1]
+		tipo = tipo[1:].upper()
+		archivo = open(os.path.join(carpeta,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'), 'w')
+		archivo.write('TITLE "' + self.disco.titulo + '"\n')
+		archivo.write('PERFORMER "' + self.disco.autor + '"\n')
+		archivo.write('REM GENRE "' + self.disco.genero + '"\n')
+		archivo.write('REM DATE ' + str(self.disco.ano) + '\n')
+		archivo.write('REM COMMENT "' + self.disco.comentario + '"\n')
+		archivo.write('FILE "' + os.path.basename(self.ruta_audio) + ' ' + tipo + '\n')
+		marca = self.getMarcas()
+		for marca in marca:
+			archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
+			archivo.write('TITLE "' + marca.titulo + '"\n')
+			archivo.write('PERFORMER "' + marca.autor + '"\n')
+			archivo.write('INDEX 01 ' +marca.tiempo_inicio + '\n')
 		archivo.close()
-		if os.path.isfile(os.path.join(self.dialogo.GetDirectory(), nombre_cue)):
-			wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'ok.wav'))
-			resp= wx.MessageBox('El archivo "CUE" ha sido guardado con éxito. ¿Deseas abrir la carpeta de destino?', caption= 'Listo', style= wx.YES_NO)
-			if resp == wx.YES:
-				os.startfile(self.dialogo.GetDirectory())
-		else:
-			wx.MessageBox('Ha ocurrido un error. No se ha podido guardar el archivo CUE.', caption= 'Mensaje', style= wx.ICON_ERROR)
 
 	def consultar_datos(self, id):
 		marca = self.data.getMarcas()
