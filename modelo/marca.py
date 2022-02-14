@@ -41,7 +41,7 @@ class Marca():
 		self.tiempo_inicio = tiempo_inicio
 		self.milesimas = milesimas
 
-	def __str__(self):
-		return "{titulo} ({autor}) {tiempo_inicio}".format(titulo=self.titulo, autor=self.autor, tiempo_inicio= self.tiempo_inicio)
-
-
+	def filtrar_tiempo_inicio(self):
+		tiempo = self.tiempo_inicio.split()
+		tiempo = tiempo[0].zfill(2) +':'+ tiempo[2].zfill(2) +':'+ tiempo[4].zfill(2) +':'+ tiempo[6].zfill(2)
+		return tiempo

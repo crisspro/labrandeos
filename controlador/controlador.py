@@ -16,7 +16,7 @@ class Controlador():
 		self.version_app= 'v1.1'
 
 		self.data  = None
-		self.disco = Disco()
+		self.disco = None
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
 		self.ruta_audio = ''
@@ -48,17 +48,12 @@ class Controlador():
 				self.actualizado = True
 
 
-	def crear_disco(self, titulo, autor, genero, ano, comentario):
-		self.disco.titulo = titulo
-		self.disco.autor = autor
-		self.disco.genero = genero
-		self.disco.ano = ano
-		self.disco.comentario = comentario
+	def crear_disco(self, titulo, autor, fecha= '', genero= '', comentarios= ''):
+		self.disco = Disco(titulo, autor, fecha, genero, comentarios)
+		return self.disco
 
-
-	def consultar_autor (self):
-		autor = self.disco.autor
-		return autor
+	def consultar_disco(self):
+		return self.disco
 
 	def crearMarca(self, *args, **kwargs):
 		marca = Marca(*args, **kwargs)
@@ -123,15 +118,15 @@ class Controlador():
 		archivo.write('TITLE "' + self.disco.titulo + '"\n')
 		archivo.write('PERFORMER "' + self.disco.autor + '"\n')
 		archivo.write('REM GENRE "' + self.disco.genero + '"\n')
-		archivo.write('REM DATE ' + str(self.disco.ano) + '\n')
-		archivo.write('REM COMMENT "' + self.disco.comentario + '"\n')
-		archivo.write('FILE "' + os.path.basename(self.ruta_audio) + ' ' + tipo + '\n')
+		archivo.write('REM DATE ' + str(self.disco.fecha) + '\n')
+		archivo.write('REM COMMENT "' + self.disco.comentarios + '"\n')
+		archivo.write('FILE "' + os.path.basename(self.ruta_audio) + '" ' + tipo + '\n')
 		marca = self.getMarcas()
 		for marca in marca:
 			archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
 			archivo.write('TITLE "' + marca.titulo + '"\n')
 			archivo.write('PERFORMER "' + marca.autor + '"\n')
-			archivo.write('INDEX 01 ' +marca.tiempo_inicio + '\n')
+			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio) + '\n')
 		archivo.close()
 
 	def consultar_datos(self, id):

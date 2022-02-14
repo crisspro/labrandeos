@@ -17,6 +17,10 @@ class Data():
 	#ordena las marcas
 	def ordenar(self):
 		self.lista_marcas.sort(key= lambda marca:marca.milesimas)
+		id = 0
+		for marca in self.lista_marcas:
+			marca.id = id+1
+			id = id+1
 
 	def borrar_marca(self, id):
 		self.lista_marcas.pop(id)
@@ -40,4 +44,7 @@ class Marca():
 	def __str__(self):
 		return "{titulo} ({autor}) {tiempo_inicio}".format(titulo=self.titulo, autor=self.autor, tiempo_inicio= self.tiempo_inicio)
 
-
+	def filtrar_tiempo_inicio(self):
+		tiempo = self.tiempo_inicio.split()
+		tiempo = tiempo[0].zfill(2) +':'+ tiempo[2].zfill(2) +':'+ tiempo[4].zfill(2) +':'+ tiempo[6].zfill(2)
+		return tiempo

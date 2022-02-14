@@ -79,8 +79,8 @@ class Programa(wx.Frame):
 		l_abrir= wx.StaticText (panel2, -1, 'Carga el archivo de audio que quieres procesar.')
 		bt_abrir= wx.Button(panel2, -1, '&Cargar audio')
 		self.Bind(wx.EVT_BUTTON, self.abrir_archivo, bt_abrir)
-		self.bt_disco = wx.Button(panel2, -1, 'Meta&datos del álbum')
-		self.Bind(wx.EVT_BUTTON, self.guardar_disco)
+		self.bt_disco = wx.Button(panel2, -1, 'Metadato&s del álbum')
+		self.Bind(wx.EVT_BUTTON, self.guardar_disco, self.bt_disco)
 		backend= ''
 		self.reproductor= wx.media.MediaCtrl()
 		self.reproductor.Create(panel2, style=wx.SIMPLE_BORDER, szBackend=backend)
@@ -151,7 +151,7 @@ class Programa(wx.Frame):
 
 #estado de los controles
 		self.bt_generar.Enable(True)
-		l_abrir.SetFocus() #pone el foco del cursor al abrir la aplicación.
+		bt_abrir.SetFocus() #pone el foco del cursor al abrir la aplicación.
 
 #creación de sizers
 
@@ -218,7 +218,7 @@ class Programa(wx.Frame):
 		editar = wx.MenuItem(menu, -1, '&Editar')
 		menu.AppendItem(editar)
 #		self.lista.PopupMenu(menu)
-		print('click derecho')
+
 
 	def cerrar (self, event):
 		if os.path.exists('temp.proyecto.cgp'):
@@ -232,7 +232,11 @@ class Programa(wx.Frame):
 	def guardar_disco(self, event):
 		self.vn_disco = vista.disco.Disco(self, 'Metadatos del álbum')
 		if self.vn_disco.ShowModal() == wx.ID_OK:
-			pass
+			self.controlador.crear_disco(self.vn_disco.getTitulo(),
+			self.vn_disco.getAutor(),
+			self.vn_disco.getFecha(),
+			self.vn_disco.getGenero(),
+			self.vn_disco.getComentarios())
 
 
 
@@ -253,6 +257,7 @@ class Programa(wx.Frame):
 			self.reproductor.Load(self.path)
 			self.bt_reproducir.SetFocus()
 			self.controlador.ruta_audio = self.path
+			self.guardar_disco(None)
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
@@ -390,7 +395,6 @@ class Programa(wx.Frame):
 
 	def vn_editar(self):
 		self.editar = Editar(self, title= 'Crear marca')
-		self.editar.in_autor.SetValue(controlador.consultar_autor())
 		self.editar.getTiempo(self.reproductor.Tell())
 		self.editar.tiempo_actual = self.reproductor.Tell()
 		self.editar.pista = self.path

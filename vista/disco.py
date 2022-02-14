@@ -1,27 +1,36 @@
 import wx
 
+import controlador.controlador
+
 class Disco(wx.Dialog):
 	def __init__ (self, parent, title):
 		super().__init__(parent, title= title)
 		self.Center()
 		self.Size = (200,300)
 
+
+
+		#creación de controles
 		panel1 = wx.Panel(self)
 		self.l_titulo= wx.StaticText(panel1, -1, 'Título:')
 		self.in_titulo= wx.TextCtrl(panel1, -1)
 		self.in_titulo.SetMaxLength(80)
+		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
 		self.l_autor= wx.StaticText(panel1, -1, 'Autor:')
 		self.in_autor= wx.TextCtrl(panel1, -1)
 		self.in_autor.SetMaxLength(80)
+		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_autor)
 		self.l_fecha= wx.StaticText(panel1, -1, 'Año:')
 		self.in_fecha= wx.TextCtrl(panel1, -1)
 		self.in_fecha.SetMaxLength(4)
+		self.Bind(wx.EVT_TEXT, self.admitir_numeros, self.in_fecha)
 		self.l_genero= wx.StaticText(panel1, -1, 'Género:')
 		self.in_genero= wx.TextCtrl(panel1, -1)
 		self.in_genero.SetMaxLength(80)
 		self.l_comentarios= wx.StaticText(panel1, -1, 'Comentarios:')
 		self.in_comentarios= wx.TextCtrl(panel1, -1, style= wx.TE_MULTILINE)
 		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, '&Aceptar')
+		self.bt_aceptar.Enable(False)
 		self.bt_cancelar = wx.Button(panel1, wx.ID_CANCEL, '&Cancelar')
 
 # creación de sizers
@@ -44,3 +53,46 @@ class Disco(wx.Dialog):
 		sz2.Add(self.bt_cancelar)
 
 		panel1.SetSizer(sz1)
+
+		self.completar_valores()
+
+	def getTitulo(self):
+		return self.in_titulo.GetValue()
+
+	def getAutor(self):
+		return self.in_autor.GetValue()
+
+	def getFecha(self):
+		return self.in_fecha.GetValue()
+
+	def getGenero(self):
+		return self.in_genero.GetValue()
+
+	def getComentarios(self):
+		return self.in_comentarios.GetValue()
+
+	def evento_texto (self, event):
+		self.evalua_llenado()
+
+	def evalua_llenado(self):
+		if self.in_autor.GetValue() != '' and self.in_titulo.GetValue() != '':
+			self.bt_aceptar.Enable(True)
+		else:
+			self.bt_aceptar.Enable(False)
+
+	def admitir_numeros(self, event):
+		texto = self.in_fecha.GetValue().strip()
+		for caracter in texto:
+			if caracter.isdigit() == False:
+				self.in_fecha.SetValue('')
+
+	def completar_valores(self):
+		if controlador.disco != None:
+			self.in_titulo.SetValue(controlador.consultar_disco.titulo)
+
+
+
+
+#creación de instancias
+
+controlador = controlador.controlador.Controlador()
