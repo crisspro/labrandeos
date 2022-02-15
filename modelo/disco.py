@@ -1,10 +1,10 @@
 class Disco():
-	def __init__(self, titulo, autor, fecha, genero, comentarios):
-		self.titulo = titulo
-		self.autor = autor
-		self.fecha = fecha
-		self.genero = genero
-		self.comentarios = comentarios
+	def __init__(self):
+		self.titulo = 'Sin título'
+		self.autor = 'Sin autor'
+		self.fecha = ''
+		self.genero = ''
+		self.comentarios = ''
 
 	def retornar_datos(self):
 		return (self.titulo, self.autor, self.genero, self.ano, self.comentario)

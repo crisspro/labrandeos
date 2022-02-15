@@ -48,8 +48,13 @@ class Controlador():
 				self.actualizado = True
 
 
-	def crear_disco(self, titulo, autor, fecha= '', genero= '', comentarios= ''):
-		self.disco = Disco(titulo, autor, fecha, genero, comentarios)
+	def crear_disco(self, titulo, autor, fecha, genero, comentarios):
+		self.disco = Disco()
+		self.disco.titulo = titulo
+		self.disco.autor = autor
+		self.disco.fecha = fecha
+		self.disco.genero = genero
+		self.disco.comentarios = comentarios
 		return self.disco
 
 	def consultar_disco(self):
@@ -77,11 +82,12 @@ class Controlador():
 			f.close()
 		except FileNotFoundError:
 			self.data = Data()
-	
+
 	def save(self):
 		""" guarda la información del modelo """
 		f = open(self.ruta_proyecto , 'wb')
 		pickle.dump(self.data, f)
+		pickle.dump(self.disco, f)
 		f.close()
 
 	def limpiar_temporal(self):
@@ -118,7 +124,7 @@ class Controlador():
 		archivo.write('TITLE "' + self.disco.titulo + '"\n')
 		archivo.write('PERFORMER "' + self.disco.autor + '"\n')
 		archivo.write('REM GENRE "' + self.disco.genero + '"\n')
-		archivo.write('REM DATE ' + str(self.disco.fecha) + '\n')
+		archivo.write('REM DATE "' + str(self.disco.fecha) + '"\n')
 		archivo.write('REM COMMENT "' + self.disco.comentarios + '"\n')
 		archivo.write('FILE "' + os.path.basename(self.ruta_audio) + '" ' + tipo + '\n')
 		marca = self.getMarcas()

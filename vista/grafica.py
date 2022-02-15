@@ -61,6 +61,7 @@ class Programa(wx.Frame):
 		menu2= wx.Menu()
 		herramientas =  barrademenu.Append(menu2,"&Herramientas")
 		self.mn_metadatos_disco = menu2.Append(-1, '&Metadatos del álbum')
+		self.mn_metadatos_disco.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_disco, self.mn_metadatos_disco)
 		opciones = menu2.Append(-1, '&Opciones')
 		self.Bind(wx.EVT_MENU, self.abrir_opciones, opciones)
@@ -76,6 +77,7 @@ class Programa(wx.Frame):
 
 
 #panel y controles
+
 		panel2= wx.Panel(self)
 
 		l_abrir= wx.StaticText (panel2, -1, 'Carga el archivo de audio que quieres procesar.')
@@ -87,7 +89,10 @@ class Programa(wx.Frame):
 		self.reproductor.Show(False)
 
 
-
+		self.l_encabezado = wx.StaticText(panel2, -1, 'Nuevo proyecto')
+		self.font_encabezado =self.l_encabezado.GetFont()
+		self.font_encabezado.SetPointSize(30)
+		self.l_encabezado.SetFont(self.font_encabezado)
 		self.valores= '0:0:0:0'
 		self.l_reloj= wx.StaticText(panel2, -1, self.valores)
 		self.font_reloj= self.l_reloj.GetFont()
@@ -157,6 +162,7 @@ class Programa(wx.Frame):
 
 		sz1= wx.BoxSizer(wx.VERTICAL)
 
+		sz1.Add(self.l_encabezado, wx.SizerFlags().Center())
 		sz1.Add(l_abrir)
 		sz1.Add(bt_abrir)
 		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
@@ -236,6 +242,8 @@ class Programa(wx.Frame):
 			self.vn_disco.getFecha(),
 			self.vn_disco.getGenero(),
 			self.vn_disco.getComentarios())
+			self.mn_metadatos_disco.Enable(True)
+			self.l_encabezado.SetLabel(self.controlador.consultar_disco().titulo + ' - ' + self.controlador.consultar_disco(). autor)
 
 
 
@@ -393,7 +401,7 @@ class Programa(wx.Frame):
 
 
 	def vn_editar(self):
-		self.editar = Editar(self, title= 'Crear marca')
+		self.editar = Editar(self, 'Crear marca', self.controlador)
 		self.editar.getTiempo(self.reproductor.Tell())
 		self.editar.tiempo_actual = self.reproductor.Tell()
 		self.editar.pista = self.path

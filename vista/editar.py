@@ -1,14 +1,12 @@
-import pdb
 import wx
 import wx.adv
 
-from controlador.controlador import Controlador
 
 class Editar(wx.Dialog):
-	def __init__(self, parent, title):
+	def __init__(self, parent, title, controlador):
 		super().__init__(parent, title= title)
 		self.Center()
-#		self.controlador = Controlador()
+		self.controlador = controlador
 		self.tiempo_actual = 0
 		self.pista = ''
 		self.reproduciendo = False
@@ -92,8 +90,8 @@ class Editar(wx.Dialog):
 			wx.MessageBox('Debe ingresar un título.', 'Alerta.')
 
 	def getTiempo(self, milesimas):
-		controlador.temporizar(milesimas)
-		tiempo = controlador.cargar_tiempo()
+		self.controlador.temporizar(milesimas)
+		tiempo = self.controlador.cargar_tiempo()
 		self.in_marcos.SetValue(tiempo[3]) 
 		self.in_segundos.SetValue(tiempo[2])
 		self.in_minutos.SetValue(tiempo[1])
@@ -120,7 +118,7 @@ class Editar(wx.Dialog):
 
 	def retomar_tiempo(self, event):
 		tiempo = (self.in_horas.GetValue(), self.in_minutos.GetValue(), self.in_segundos.GetValue(), self.in_marcos.GetValue())
-		self.tiempo_actual = controlador.reconvertir(tiempo)
+		self.tiempo_actual = self.controlador.reconvertir(tiempo)
 
 
 class Editar2(Editar):
@@ -128,11 +126,8 @@ class Editar2(Editar):
 		super().__init__(parent, title= title)
 
 	def cargar_datos(self, id):
-		marca = controlador.consultar_datos(id)
+		marca = self.controlador.consultar_datos(id)
 		self.in_titulo.SetValue(marca.titulo)
 
 
 
-# creación de instancias
-
-controlador = Controlador()
