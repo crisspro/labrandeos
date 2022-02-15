@@ -31,9 +31,8 @@ class Programa(wx.Frame):
 		self.lector= accessible_output2.outputs.auto.Auto()
 
 		#ID personalizados
-		self.id_bt_marcar= wx.NewIdRef()
-		self.id_bt_detener= wx.NewIdRef()
-		self.id_bt_reproducir= wx.NewIdRef()
+		self.id_bt_enfocar_lista = wx.NewIdRef()
+		self.id_bt_enfocar_linea_tiempo = wx.NewIdRef()
 		self.id_bt_tiempo_actual= wx.NewIdRef()
 		self.id_hablar_duracion= wx.NewIdRef()
 
@@ -112,8 +111,14 @@ class Programa(wx.Frame):
 		self.timer.Start(self.reproductor.Length())
 		self.Bind(wx.EVT_TIMER, self.temporizar)
 
-
-
+		self.bt_enfocar_linea_tiempo = wx.Button(panel2, self.id_bt_enfocar_linea_tiempo, 'línea de tiempo')
+		self.bt_enfocar_linea_tiempo.Show(False)
+		self.Bind(wx.EVT_BUTTON, self.enfocar_linea_tiempo, self.id_bt_enfocar_linea_tiempo)
+		self.atajo_enfocar_linea_tiempo = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('l'), self.id_bt_enfocar_linea_tiempo)
+		self.bt_enfocar_lista = wx.Button(panel2, self.id_bt_enfocar_lista, 'enfocar lista')
+		self.bt_enfocar_lista.Show(False)
+		self.Bind(wx.EVT_BUTTON, self.enfocar_lista, self.id_bt_enfocar_lista)
+		self.atajo_enfocar_lista = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('m'), self.id_bt_enfocar_lista)
 		self.bt_duracion= wx.Button(panel2, self.id_hablar_duracion, 'Duración')
 		self.bt_duracion.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_duracion, self.id_hablar_duracion)
@@ -121,18 +126,16 @@ class Programa(wx.Frame):
 		self.bt_tiempo_actual= wx.Button(panel2, self.id_bt_tiempo_actual, 'tiempo actual')
 		self.bt_tiempo_actual.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_tiempo, self.id_bt_tiempo_actual)
-		bt_detener= wx.Button(panel2, self.id_bt_detener, '&Detener')
-		self.Bind(wx.EVT_BUTTON, self.detener, self.id_bt_detener)
-		self.atajo_detener= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('s'), self.id_bt_detener)
+		bt_detener= wx.Button(panel2, -1, '&Detener')
+		self.Bind(wx.EVT_BUTTON, self.detener, bt_detener)
 		l_volumen= wx.StaticText(panel2, -1, 'Volumen')
 		self.volumen= wx.Slider(panel2, -1, 100, 0, 100)
 		self.Bind(wx.EVT_SLIDER, self.volumenear,self.volumen)
-		self.bt_marcar= wx.Button(panel2, self.id_bt_marcar, '&Marcar')
+		self.bt_marcar= wx.Button(panel2, -1, '&Marcar')
 		self.bt_marcar.Enable(False)
-		self.Bind(wx.EVT_BUTTON, self.marcar, self.id_bt_marcar)
-		self.atajo_marcar= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('m'), self.id_bt_marcar)
+		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
-		self.entradas_atajos= [self.atajo_marcar, self.atajo_detener, self.atajo_tiempo_actual, self.atajo_duracion]
+		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion]
 		self.tabla_atajos= wx.AcceleratorTable(self.entradas_atajos)
 		self.SetAcceleratorTable(self.tabla_atajos)
 
@@ -306,6 +309,12 @@ class Programa(wx.Frame):
 		dlg = Acerca_de(self, title= 'Acerca de...')
 		if dlg.ShowModal() == wx.ID_OK:
 			dlg.close()
+
+	def enfocar_linea_tiempo(self, event):
+		self.pista.SetFocus()
+
+	def enfocar_lista(self, event):
+		self.lista.SetFocus()
 
 # reproduce o pausa la pista.
 	def reproducir_pausar (self, event):
