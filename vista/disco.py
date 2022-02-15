@@ -1,12 +1,11 @@
 import wx
 
-import controlador.controlador
-
 class Disco(wx.Dialog):
-	def __init__ (self, parent, title):
+	def __init__ (self, parent, title, controlador):
 		super().__init__(parent, title= title)
 		self.Center()
 		self.Size = (200,300)
+		self.controlador = controlador
 
 
 
@@ -87,12 +86,16 @@ class Disco(wx.Dialog):
 				self.in_fecha.SetValue('')
 
 	def completar_valores(self):
-		if controlador.disco != None:
-			self.in_titulo.SetValue(controlador.consultar_disco.titulo)
+		if self.controlador.disco != None:
+			disco = self.controlador.consultar_disco()
+			self.in_titulo.SetValue(disco.titulo)
+			self.in_autor.SetValue(disco.autor)
+			self.in_fecha.SetValue(disco.fecha)
+			self.in_genero.SetValue(disco.genero)
+			self.in_comentarios.SetValue(disco.comentarios)
 
 
 
 
 #creación de instancias
 
-controlador = controlador.controlador.Controlador()

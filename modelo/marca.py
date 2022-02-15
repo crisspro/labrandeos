@@ -41,7 +41,11 @@ class Marca():
 		self.tiempo_inicio = tiempo_inicio
 		self.milesimas = milesimas
 
-	def filtrar_tiempo_inicio(self):
+	def filtrar_tiempo_inicio_cue(self):
 		tiempo = self.tiempo_inicio.split()
-		tiempo = tiempo[0].zfill(2) +':'+ tiempo[2].zfill(2) +':'+ tiempo[4].zfill(2) +':'+ tiempo[6].zfill(2)
+		minutos = int(tiempo[0]) * 60 + int(tiempo[2]) 
+		tiempo = str(minutos).zfill(2) +':'+ tiempo[4].zfill(2) +':'+ tiempo[6].zfill(2)
 		return tiempo
+
+
+

@@ -60,6 +60,8 @@ class Programa(wx.Frame):
 	# creación del menú herramientas
 		menu2= wx.Menu()
 		herramientas =  barrademenu.Append(menu2,"&Herramientas")
+		self.mn_metadatos_disco = menu2.Append(-1, '&Metadatos del álbum')
+		self.Bind(wx.EVT_MENU, self.guardar_disco, self.mn_metadatos_disco)
 		opciones = menu2.Append(-1, '&Opciones')
 		self.Bind(wx.EVT_MENU, self.abrir_opciones, opciones)
 
@@ -79,8 +81,6 @@ class Programa(wx.Frame):
 		l_abrir= wx.StaticText (panel2, -1, 'Carga el archivo de audio que quieres procesar.')
 		bt_abrir= wx.Button(panel2, -1, '&Cargar audio')
 		self.Bind(wx.EVT_BUTTON, self.abrir_archivo, bt_abrir)
-		self.bt_disco = wx.Button(panel2, -1, 'Metadato&s del álbum')
-		self.Bind(wx.EVT_BUTTON, self.guardar_disco, self.bt_disco)
 		backend= ''
 		self.reproductor= wx.media.MediaCtrl()
 		self.reproductor.Create(panel2, style=wx.SIMPLE_BORDER, szBackend=backend)
@@ -159,7 +159,6 @@ class Programa(wx.Frame):
 
 		sz1.Add(l_abrir)
 		sz1.Add(bt_abrir)
-		sz1.Add(self.bt_disco)
 		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
 		sz1.Add(self.reproductor)
 
@@ -230,7 +229,7 @@ class Programa(wx.Frame):
 			self.Destroy()
 
 	def guardar_disco(self, event):
-		self.vn_disco = vista.disco.Disco(self, 'Metadatos del álbum')
+		self.vn_disco = vista.disco.Disco(self, 'Metadatos del álbum', self.controlador)
 		if self.vn_disco.ShowModal() == wx.ID_OK:
 			self.controlador.crear_disco(self.vn_disco.getTitulo(),
 			self.vn_disco.getAutor(),

@@ -126,7 +126,7 @@ class Controlador():
 			archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
 			archivo.write('TITLE "' + marca.titulo + '"\n')
 			archivo.write('PERFORMER "' + marca.autor + '"\n')
-			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio) + '\n')
+			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio_cue()) + '\n')
 		archivo.close()
 
 	def consultar_datos(self, id):
