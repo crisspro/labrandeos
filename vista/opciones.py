@@ -16,7 +16,7 @@ class Opciones(wx.Dialog):
 		# Creación de controles
 		panel1 = wx.Panel(self)
 		self.l_idioma = wx.StaticText(panel1, -1, 'Idioma')
-		self.lista_idioma = ['English', 'Spanish']
+		self.lista_idioma = ['Español', 'Inglés']
 		self.com_idioma = wx.ComboBox(panel1, -1, configparser.get('general', 'idioma'), choices= self.lista_idioma )
 		self.com_idioma.SetFocus()
 		self.cas_sonido_actualizacion = wx.CheckBox(panel1, -1, 'Activar sonido al detectar nueva actualización')

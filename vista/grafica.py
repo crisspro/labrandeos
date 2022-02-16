@@ -68,7 +68,7 @@ class Programa(wx.Frame):
 	#creación del menú ayuda
 		menu3= wx.Menu()
 		ayuda= barrademenu.Append(menu3, 'A&yuda')
-		manual= menu3.Append(-1, 'Manual')
+		documentacion = menu3.Append(-1, '&Documentación')
 		self.mn_buscar_actualizacion = menu3.Append(-1, '&Buscar  actualizaciones')
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
 		acercade= menu3.Append(-1, 'Acerca de')
@@ -77,61 +77,62 @@ class Programa(wx.Frame):
 
 #panel y controles
 
-		panel2= wx.Panel(self)
-
-		l_abrir= wx.StaticText (panel2, -1, 'Carga el archivo de audio que quieres procesar.')
-		bt_abrir= wx.Button(panel2, -1, '&Cargar audio')
-		self.Bind(wx.EVT_BUTTON, self.abrir_archivo, bt_abrir)
+		self.panel1 = wx.Panel(self)
+		self.panel2= wx.Panel(self.panel1)
+		self.panel2.Enable(False)
+		self.l_abrir= wx.StaticText (self.panel1, -1, 'Carga el archivo de audio que quieres procesar.')
+		self.bt_abrir= wx.Button(self.panel1, -1, '&Cargar audio')
+		self.Bind(wx.EVT_BUTTON, self.abrir_archivo, self.bt_abrir)
 		backend= ''
 		self.reproductor= wx.media.MediaCtrl()
-		self.reproductor.Create(panel2, style=wx.SIMPLE_BORDER, szBackend=backend)
+		self.reproductor.Create(self.panel2, style=wx.SIMPLE_BORDER, szBackend=backend)
 		self.reproductor.Show(False)
 
 
-		self.l_encabezado = wx.StaticText(panel2, -1, 'Nuevo proyecto')
+		self.l_encabezado = wx.StaticText(self.panel2, -1, 'Nuevo proyecto')
 		self.font_encabezado =self.l_encabezado.GetFont()
 		self.font_encabezado.SetPointSize(30)
 		self.l_encabezado.SetFont(self.font_encabezado)
 		self.valores= '0:0:0:0'
-		self.l_reloj= wx.StaticText(panel2, -1, self.valores)
+		self.l_reloj= wx.StaticText(self.panel2, -1, self.valores)
 		self.font_reloj= self.l_reloj.GetFont()
 		self.font_reloj.SetPointSize(60)
 		self.l_reloj.SetFont(self.font_reloj)
-		self.l_pista= wx.StaticText(panel2, -1, 'Línea de tiempo')
+		self.l_pista= wx.StaticText(self.panel2, -1, 'Línea de tiempo')
 		self.minutaje= 1
-		self.pista= wx.Slider(panel2, -1, 0, 0, self.minutaje,size= (400, -1))
+		self.pista= wx.Slider(self.panel2, -1, 0, 0, self.minutaje,size= (400, -1))
 		self.pista.SetLineSize(5000)
 		self.pista.SetPageSize(60000)
 
 		self.Bind(wx.EVT_SLIDER, self.mover, self.pista)		
-		self.bt_reproducir= wx.Button(panel2, -1, '&Reproducir')
+		self.bt_reproducir= wx.Button(self.panel2, -1, '&Reproducir')
 		self.Bind(wx.EVT_BUTTON, self.reproducir_pausar, self.bt_reproducir)
 		self.Bind(wx.media.EVT_MEDIA_STOP, self.detener, self.reproductor)
 		self.timer= wx.Timer(self)
 		self.timer.Start(self.reproductor.Length())
 		self.Bind(wx.EVT_TIMER, self.temporizar)
 
-		self.bt_enfocar_linea_tiempo = wx.Button(panel2, self.id_bt_enfocar_linea_tiempo, 'línea de tiempo')
+		self.bt_enfocar_linea_tiempo = wx.Button(self.panel2, self.id_bt_enfocar_linea_tiempo, 'línea de tiempo')
 		self.bt_enfocar_linea_tiempo.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.enfocar_linea_tiempo, self.id_bt_enfocar_linea_tiempo)
 		self.atajo_enfocar_linea_tiempo = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('l'), self.id_bt_enfocar_linea_tiempo)
-		self.bt_enfocar_lista = wx.Button(panel2, self.id_bt_enfocar_lista, 'enfocar lista')
+		self.bt_enfocar_lista = wx.Button(self.panel2, self.id_bt_enfocar_lista, 'enfocar lista')
 		self.bt_enfocar_lista.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.enfocar_lista, self.id_bt_enfocar_lista)
 		self.atajo_enfocar_lista = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('m'), self.id_bt_enfocar_lista)
-		self.bt_duracion= wx.Button(panel2, self.id_hablar_duracion, 'Duración')
+		self.bt_duracion= wx.Button(self.panel2, self.id_hablar_duracion, 'Duración')
 		self.bt_duracion.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_duracion, self.id_hablar_duracion)
 		self.atajo_duracion= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('d'), self.id_hablar_duracion)
-		self.bt_tiempo_actual= wx.Button(panel2, self.id_bt_tiempo_actual, 'tiempo actual')
+		self.bt_tiempo_actual= wx.Button(self.panel2, self.id_bt_tiempo_actual, 'tiempo actual')
 		self.bt_tiempo_actual.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_tiempo, self.id_bt_tiempo_actual)
-		bt_detener= wx.Button(panel2, -1, '&Detener')
+		bt_detener= wx.Button(self.panel2, -1, '&Detener')
 		self.Bind(wx.EVT_BUTTON, self.detener, bt_detener)
-		l_volumen= wx.StaticText(panel2, -1, 'Volumen')
-		self.volumen= wx.Slider(panel2, -1, 100, 0, 100)
+		l_volumen= wx.StaticText(self.panel2, -1, 'Volumen')
+		self.volumen= wx.Slider(self.panel2, -1, 100, 0, 100)
 		self.Bind(wx.EVT_SLIDER, self.volumenear,self.volumen)
-		self.bt_marcar= wx.Button(panel2, -1, '&Marcar')
+		self.bt_marcar= wx.Button(self.panel2, -1, '&Marcar')
 		self.bt_marcar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
@@ -141,8 +142,8 @@ class Programa(wx.Frame):
 
 		self.Bind(wx.EVT_CLOSE, self.cerrar)
 # Construcción de lista
-		self.l_lista = wx.StaticText(panel2, -1, 'Marcas')
-		self.lista= wx.ListCtrl(panel2, -1,style= wx.LC_REPORT)
+		self.l_lista = wx.StaticText(self.panel2, -1, 'Marcas')
+		self.lista= wx.ListCtrl(self.panel2, -1,style= wx.LC_REPORT)
 		self.lista.InsertColumn(0, 'N°')
 		self.lista.InsertColumn(1, 'Título')
 		self.lista.InsertColumn(2, 'Autor')
@@ -150,24 +151,29 @@ class Programa(wx.Frame):
 		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_menu, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
-		self.bt_editar = wx.Button(panel2, -1, '&Editar')
+		self.bt_editar = wx.Button(self.panel2, -1, '&Editar')
 		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
-		self.bt_generar= wx.Button(panel2, -1, '&GENERAR CUE')
+		self.bt_generar= wx.Button(self.panel2, -1, '&GENERAR CUE')
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
 
 
 
 #estado de los controles
 		self.bt_generar.Enable(True)
-		bt_abrir.SetFocus() #pone el foco del cursor al abrir la aplicación.
+		self.bt_abrir.SetFocus() #pone el foco del cursor al abrir la aplicación.
 
 #creación de sizers
+
+		sz0 = wx.BoxSizer(wx.VERTICAL)
+		sz0.Add(self.l_abrir)
+		sz0.Add(self.bt_abrir)
+		sz0.Add(self.panel2,  wx.SizerFlags().Expand())
+		self.panel1.SetSizer(sz0)
+
 
 		sz1= wx.BoxSizer(wx.VERTICAL)
 
 		sz1.Add(self.l_encabezado, wx.SizerFlags().Center())
-		sz1.Add(l_abrir)
-		sz1.Add(bt_abrir)
 		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
 		sz1.Add(self.reproductor)
 
@@ -185,7 +191,7 @@ class Programa(wx.Frame):
 		sz1.Add(self.bt_editar)
 		sz1.Add(self.bt_generar)
 
-		panel2.SetSizer (sz1)
+		self.panel2.SetSizer (sz1)
 
 
 
@@ -267,6 +273,7 @@ class Programa(wx.Frame):
 			self.reproductor.Load(self.path)
 			self.bt_reproducir.SetFocus()
 			self.controlador.ruta_audio = self.path
+			self.panel2.Enable(True)
 			self.guardar_disco(None)
 
 	#abre un proyecto existente
@@ -432,7 +439,7 @@ class Programa(wx.Frame):
 			self.pausar(None)
 
 	def abrir_editar2(self,event):
-		self.editar2 = Editar2(self, 'Editar marca')
+		self.editar2 = Editar2(self, 'Editar marca', self.controlador)
 		item = self.lista.GetFocusedItem()
 		self.editar2.cargar_datos(item)
 		if self.editar2.ShowModal() == wx.ID_OK:

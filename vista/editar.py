@@ -12,35 +12,35 @@ class Editar(wx.Dialog):
 		self.reproduciendo = False
 
 		# Creación de controles
-		panel1= wx.Panel(self)
-		self.l_titulo = wx.StaticText(panel1, -1, 'Título:')
-		self.in_titulo= wx.TextCtrl(panel1)
+		self.panel1= wx.Panel(self)
+		self.l_titulo = wx.StaticText(self.panel1, -1, 'Título:')
+		self.in_titulo= wx.TextCtrl(self.panel1)
 		self.in_titulo.SetFocus()
 		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
-		self.l_autor= wx.StaticText(panel1, -1, 'Autor:')
-		self.in_autor= wx.TextCtrl(panel1, -1)
+		self.l_autor= wx.StaticText(self.panel1, -1, 'Autor:')
+		self.in_autor= wx.TextCtrl(self.panel1, -1)
 		self.Bind (wx.EVT_TEXT, self.evento_texto, self.in_autor)
-		self.l_horas= wx.StaticText(panel1, -1, 'Horas')
-		self.in_horas= wx.SpinCtrl(panel1)
+		self.l_horas= wx.StaticText(self.panel1, -1, 'Horas')
+		self.in_horas= wx.SpinCtrl(self.panel1)
 		self.in_horas.SetRange(0,24)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_horas)
-		self.l_minutos= wx.StaticText(panel1, -1, 'Minutos')
-		self.in_minutos= wx.SpinCtrl(panel1)
+		self.l_minutos= wx.StaticText(self.panel1, -1, 'Minutos')
+		self.in_minutos= wx.SpinCtrl(self.panel1)
 		self.in_minutos.SetRange(0,59)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_minutos)
-		self.l_segundos= wx.StaticText(panel1, -1, 'Segundos')
-		self.in_segundos= wx.SpinCtrl(panel1)
+		self.l_segundos= wx.StaticText(self.panel1, -1, 'Segundos')
+		self.in_segundos= wx.SpinCtrl(self.panel1)
 		self.in_segundos.SetRange(0,59)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_segundos)
-		self.l_marcos= wx.StaticText(panel1, -1, 'Marcos')
-		self.in_marcos= wx.SpinCtrl(panel1)
+		self.l_marcos= wx.StaticText(self.panel1, -1, 'Marcos')
+		self.in_marcos= wx.SpinCtrl(self.panel1)
 		self.in_marcos.SetRange(0,74)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_marcos)
-		self.bt_reproducir = wx.Button(panel1, -1, '&Reproducir')
+		self.bt_reproducir = wx.Button(self.panel1, -1, '&Reproducir')
 		self.Bind (wx.EVT_BUTTON, self.cambiar_etiqueta, self.bt_reproducir)
-		self.bt_aceptar= wx.Button(panel1, wx.ID_OK, '&Aceptar')
+		self.bt_aceptar= wx.Button(self.panel1, wx.ID_OK, '&Aceptar')
 		self.bt_aceptar.Enable(False)
-		self.bt_cancelar= wx.Button(panel1, wx.ID_CANCEL, '&Cancelar')
+		self.bt_cancelar= wx.Button(self.panel1, wx.ID_CANCEL, '&Cancelar')
 
 #sizers
 
@@ -70,7 +70,9 @@ class Editar(wx.Dialog):
 		sz3.Add(self.bt_aceptar)
 		sz3.Add(self.bt_cancelar)
 
-		panel1.SetSizer(sz1)
+		self.panel1.SetSizer(sz1)
+
+		self.llenar_valores()
 
 # funciones
 
@@ -120,14 +122,16 @@ class Editar(wx.Dialog):
 		tiempo = (self.in_horas.GetValue(), self.in_minutos.GetValue(), self.in_segundos.GetValue(), self.in_marcos.GetValue())
 		self.tiempo_actual = self.controlador.reconvertir(tiempo)
 
+	def llenar_valores(self):
+		self.in_autor.SetValue(self.controlador.consultar_disco().autor)
+
 
 class Editar2(Editar):
-	def __init__(self, parent, title):
-		super().__init__(parent, title= title)
+	def __init__(self, parent, title, controlador):
+		super().__init__(parent, title= title, controlador=  controlador)
 
 	def cargar_datos(self, id):
 		marca = self.controlador.consultar_datos(id)
 		self.in_titulo.SetValue(marca.titulo)
-
-
+		self.in_autor.SetValue(marca.autor)
 
