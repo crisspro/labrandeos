@@ -83,6 +83,7 @@ class Disco(wx.Dialog):
 		texto = self.in_fecha.GetValue().strip()
 		for caracter in texto:
 			if caracter.isdigit() == False:
+				wx.MessageBox('Solo se admiten números', 'Advertencia:')
 				self.in_fecha.SetValue('')
 
 	def completar_valores(self):
@@ -93,9 +94,4 @@ class Disco(wx.Dialog):
 			self.in_fecha.SetValue(disco.fecha)
 			self.in_genero.SetValue(disco.genero)
 			self.in_comentarios.SetValue(disco.comentarios)
-
-
-
-
-#creación de instancias
 

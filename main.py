@@ -1,6 +1,6 @@
 #título: CUE Genesis
-#autor: Crisspro
-#lisencia: GPL-3.0.
+#Copyriht (C) 2022 Crisspro <crisspro@hotmail.com>
+#lisencia: GPL-3.0
 
 import wx
 
@@ -20,5 +20,6 @@ controlador_opciones = Opciones()
 controlador.verificarNuevaVersion()
 controlador_opciones.chequear_ini()
 controlador.load()
+controlador.limpiar_temporal()
 Programa(None, title= 'CUE Genesis', controlador = controlador)
 App.MainLoop()

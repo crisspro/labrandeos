@@ -16,7 +16,7 @@ class Controlador():
 		self.version_app= 'v1.1'
 
 		self.data  = None
-		self.disco = None
+		self.disco = Disco()
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
 		self.ruta_audio = ''

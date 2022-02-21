@@ -1,10 +1,10 @@
-import requests
-import requests
+
 import os
 import pdb
 
 import accessible_output2.outputs.auto
 import pymediainfo
+import requests
 from wx import media
 import wx
 import wx.adv
@@ -47,12 +47,15 @@ class Programa(wx.Frame):
 		nuevo= menu1.Append(-1, '&Nuevo')
 		mn_cargar_audio = menu1.Append(-1, '&Cargar audio')
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, mn_cargar_audio)
-		mn_abrir_proyecto = menu1.Append(-1, '&Abrir proyecto')
-		self.Bind(wx.EVT_MENU, self.abrir_proyecto, mn_abrir_proyecto)
-		mn_guardar_proyecto = menu1.Append(-1, '&Guardar proyecto como...')
-		self.Bind(wx.EVT_MENU, self.guardar_proyecto, mn_guardar_proyecto)
-		mn_generar= menu1.Append(-1, '&Generar CUE')
-		self.Bind(wx.EVT_MENU, self.generar, mn_generar)
+		self.mn_abrir_proyecto = menu1.Append(-1, '&Abrir proyecto')
+		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.mn_abrir_proyecto)
+		self.mn_guardar_proyecto = menu1.Append(-1, '&Guardar proyecto como...')
+		self.mn_guardar_proyecto.Enable(False)
+
+		self.Bind(wx.EVT_MENU, self.guardar_proyecto, self.mn_guardar_proyecto)
+		self.mn_generar= menu1.Append(-1, '&Generar CUE')
+		self.mn_generar.Enable(False)
+		self.Bind(wx.EVT_MENU, self.generar, self.mn_generar)
 		salir= menu1.Append(-1, '&Salir')
 		self.Bind(wx.EVT_MENU, self.cerrar, salir)
 
@@ -82,6 +85,7 @@ class Programa(wx.Frame):
 		self.panel2.Enable(False)
 		self.l_abrir= wx.StaticText (self.panel1, -1, 'Carga el archivo de audio que quieres procesar.')
 		self.bt_abrir= wx.Button(self.panel1, -1, '&Cargar audio')
+		self.bt_abrir.SetFocus()
 		self.Bind(wx.EVT_BUTTON, self.abrir_archivo, self.bt_abrir)
 		backend= ''
 		self.reproductor= wx.media.MediaCtrl()
@@ -154,13 +158,9 @@ class Programa(wx.Frame):
 		self.bt_editar = wx.Button(self.panel2, -1, '&Editar')
 		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
 		self.bt_generar= wx.Button(self.panel2, -1, '&GENERAR CUE')
+		self.bt_generar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
 
-
-
-#estado de los controles
-		self.bt_generar.Enable(True)
-		self.bt_abrir.SetFocus() #pone el foco del cursor al abrir la aplicación.
 
 #creación de sizers
 
@@ -274,6 +274,7 @@ class Programa(wx.Frame):
 			self.bt_reproducir.SetFocus()
 			self.controlador.ruta_audio = self.path
 			self.panel2.Enable(True)
+			self.mn_metadatos_disco.Enable(True)
 			self.guardar_disco(None)
 
 	#abre un proyecto existente
@@ -309,7 +310,6 @@ class Programa(wx.Frame):
 		self.controlador.verificarNuevaVersion()
 		if self.controlador.actualizado == True:
 			wx.MessageBox('No hay ninguna nueva versión disponible', 'Aviso.')
-
 
 # muestra información acerca del programa
 	def mg_acerca(self, event):
@@ -371,8 +371,6 @@ class Programa(wx.Frame):
 	def mover (self, event):
 		self.reproductor.Seek(self.pista.GetValue())
 
-
-
 #mueve la aguja del control de la pista de forma automática a medida que se reproduce el audio
 	def temporizar (self, event):
 		self.tiempo= self.reproductor.Tell()
@@ -420,8 +418,9 @@ class Programa(wx.Frame):
 		self.editar = Editar(self, 'Crear marca', self.controlador)
 		self.editar.getTiempo(self.reproductor.Tell())
 		self.editar.tiempo_actual = self.reproductor.Tell()
-		self.editar.pista = self.path
 		self.editar.Bind(wx.EVT_BUTTON, self.reproducir_editar, self.editar.bt_reproducir)
+		self.editar.duracion_milesimas = self.reproductor.Length()
+		self.editar.duracion_tiempo = self.calcular_tiempo(self.reproductor.Length())
 		if self.editar.ShowModal() == wx.ID_OK:
 			self.pausar(None)
 			marca = self.controlador.crearMarca(self.lista.GetItemCount(),
@@ -437,6 +436,11 @@ class Programa(wx.Frame):
 			self.refrescar_lista()
 		else:
 			self.pausar(None)
+		self.bt_generar.Enable(True)
+		self.mn_generar.Enable(True)
+		self.mn_guardar_proyecto.Enable(True)
+
+
 
 	def abrir_editar2(self,event):
 		self.editar2 = Editar2(self, 'Editar marca', self.controlador)
