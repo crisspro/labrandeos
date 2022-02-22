@@ -153,7 +153,7 @@ class Programa(wx.Frame):
 		self.lista.InsertColumn(2, 'Autor')
 		self.lista.InsertColumn(3, 'Tiempo de inicio')
 		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla, self.lista)
-		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_menu, self.lista)
+		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_contextual, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
 		self.bt_editar = wx.Button(self.panel2, -1, '&Editar')
 		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
@@ -214,6 +214,9 @@ class Programa(wx.Frame):
 		tecla = event.GetKeyCode()
 		if tecla == wx.WXK_DELETE:
 			self.borrar_item(None)
+		elif tecla == wx.WXK_WINDOWS_MENU:
+			self.desplegar_contextual(event)
+
 
 	def posicionar_marca(self, event):
 		item = self.lista.GetFocusedItem()
@@ -225,13 +228,10 @@ class Programa(wx.Frame):
 		self.controlador.borrar_marca(item)
 		self.lista.DeleteItem(item)
 		self.lector.output('Eliminada')
+		self.refrescar_lista()
 
-	def desplegar_menu(self, event):
-		item = self.lista.GetFocusedItem()
-		menu = wx.Menu()
-		editar = wx.MenuItem(menu, -1, '&Editar')
-		menu.AppendItem(editar)
-#		self.lista.PopupMenu(menu)
+	def desplegar_contextual(self, event):
+		self.PopupMenu(Contextual(self))
 
 
 	def cerrar (self, event):
@@ -454,8 +454,20 @@ class Programa(wx.Frame):
 		wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
 
 
+class Contextual(wx.Menu):
+	def __init__(self, parent):
+		super(Contextual, self).__init__()
+		self.parent = parent
+		self.m1 = wx.MenuItem(self, wx.NewId(), '&Editar')
+		self.AppendItem(self.m1)
+		self.Bind(wx.EVT_MENU, self.abrir_editar2, self.m1)
+		self.m2 = wx.MenuItem(self, -1, 'E&liminar')
+		self.AppendItem(self.m2)
+		self.Bind(wx.EVT_MENU, self.borrar_item, self.m2)
 
 
-#Creación de instancias
+	def abrir_editar2(self, event):
+		self.parent.abrir_editar2(None)
 
-controlador = Controlador()
+	def borrar_item(self, event):
+		self.parent.borrar_item(None)
