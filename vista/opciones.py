@@ -26,6 +26,7 @@ class Opciones(wx.Dialog):
 		self.cas_sonido_generar = wx.CheckBox(panel1, -1, 'Activar sonido al generar el archivo CUE')
 		self.cas_sonido_generar.SetValue(configparser.getboolean('general', 'sonido_generar'))
 		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, '&Aceptar')
+		self.bt_aceptar.SetDefault()
 		self.bt_cancelar = wx.Button(panel1, wx.ID_CANCEL, '&Cancelar')
 
 # Creación de sizers

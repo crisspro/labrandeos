@@ -15,11 +15,11 @@ class Editar(wx.Dialog):
 		# Creación de controles
 		self.panel1= wx.Panel(self)
 		self.l_titulo = wx.StaticText(self.panel1, -1, 'Título:')
-		self.in_titulo= wx.TextCtrl(self.panel1)
+		self.in_titulo= wx.TextCtrl(self.panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_titulo.SetFocus()
 		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
 		self.l_autor= wx.StaticText(self.panel1, -1, 'Autor:')
-		self.in_autor= wx.TextCtrl(self.panel1, -1)
+		self.in_autor= wx.TextCtrl(self.panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.Bind (wx.EVT_TEXT, self.evento_texto, self.in_autor)
 		self.l_horas= wx.StaticText(self.panel1, -1, 'Horas')
 		self.in_horas= wx.SpinCtrl(self.panel1)
@@ -41,6 +41,7 @@ class Editar(wx.Dialog):
 		self.Bind (wx.EVT_BUTTON, self.cambiar_etiqueta, self.bt_reproducir)
 		self.bt_aceptar= wx.Button(self.panel1, wx.ID_OK, '&Aceptar')
 		self.bt_aceptar.Enable(False)
+		self.bt_aceptar.SetDefault()
 		self.bt_cancelar= wx.Button(self.panel1, wx.ID_CANCEL, '&Cancelar')
 
 #sizers
@@ -72,6 +73,8 @@ class Editar(wx.Dialog):
 		sz3.Add(self.bt_cancelar)
 
 		self.panel1.SetSizer(sz1)
+
+#llamado de funciones
 
 		self.llenar_valores()
 
@@ -142,10 +145,16 @@ class Editar(wx.Dialog):
 
 class Editar2(Editar):
 	def __init__(self, parent, title, controlador):
-		super().__init__(parent, title= title, controlador=  controlador)
+		super().__init__(parent, title= title, controlador = controlador)
+		self.id = 1
+		self.tiempo_actual = 1
+		self.llenar_valores()
 
-	def cargar_datos(self, id):
-		marca = self.controlador.consultar_datos(id)
-		self.in_titulo.SetValue(marca.titulo)
-		self.in_autor.SetValue(marca.autor)
 
+	def llenar_valores(self):
+		print(self.tiempo_actual)
+		marca = self.controlador.getMarcas()
+		for marca in marca:
+			if marca.id == self.id:
+				self.in_titulo.SetValue(marca.titulo)
+				self.in_autor.SetValue(marca.autor)

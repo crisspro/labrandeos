@@ -71,7 +71,8 @@ class Programa(wx.Frame):
 	#creación del menú ayuda
 		menu3= wx.Menu()
 		ayuda= barrademenu.Append(menu3, 'A&yuda')
-		documentacion = menu3.Append(-1, '&Documentación')
+		self.documentacion = menu3.Append(-1, '&Documentación')
+		self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.documentacion)
 		self.mn_buscar_actualizacion = menu3.Append(-1, '&Buscar  actualizaciones')
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
 		acercade= menu3.Append(-1, 'Acerca de')
@@ -160,6 +161,7 @@ class Programa(wx.Frame):
 		self.bt_generar= wx.Button(self.panel2, -1, '&GENERAR CUE')
 		self.bt_generar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
+		self.Bind(wx.EVT_KEY_DOWN, self. abrir_documentacion)
 
 
 #creación de sizers
@@ -216,6 +218,7 @@ class Programa(wx.Frame):
 			self.borrar_item(None)
 		elif tecla == wx.WXK_WINDOWS_MENU:
 			self.desplegar_contextual(event)
+
 
 
 	def posicionar_marca(self, event):
@@ -304,6 +307,8 @@ class Programa(wx.Frame):
 		if vn_opciones.ShowModal() == wx.ID_OK:
 			vn_opciones.guardar_opciones()
 
+	def abrir_documentacion(self, event):
+		os.startfile(os.path.join('files', 'documentation', 'es.html'))
 
 	#busca actualizaciones
 	def buscar_actualizacion(self, event):
@@ -445,7 +450,7 @@ class Programa(wx.Frame):
 	def abrir_editar2(self,event):
 		self.editar2 = Editar2(self, 'Editar marca', self.controlador)
 		item = self.lista.GetFocusedItem()
-		self.editar2.cargar_datos(item)
+		self.editar2.id = item
 		if self.editar2.ShowModal() == wx.ID_OK:
 			pass
 
