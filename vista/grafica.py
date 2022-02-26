@@ -1,4 +1,3 @@
-
 import os
 import pdb
 
@@ -18,9 +17,11 @@ from .acerca_de import Acerca_de
 
 
 class Programa(wx.Frame):
-	def __init__(self, parent, title, controlador):
-		super().__init__(parent, title= title)
+	def __init__(self, parent, title, controlador, app):
+		super().__init__(parent, title= title, style = wx.DEFAULT_FRAME_STYLE|wx.MAXIMIZE)
+		self.syze = (800,800)
 		self.controlador = controlador
+		self.controlador_app = app
 		self.Center()
 		self.graficar()
 		self.Show()
@@ -148,7 +149,7 @@ class Programa(wx.Frame):
 		self.Bind(wx.EVT_CLOSE, self.cerrar)
 # Construcción de lista
 		self.l_lista = wx.StaticText(self.panel2, -1, 'Marcas')
-		self.lista= wx.ListCtrl(self.panel2, -1,style= wx.LC_REPORT)
+		self.lista= wx.ListCtrl(self.panel2, -1,style= wx.LC_REPORT|wx.LC_VRULES)
 		self.lista.InsertColumn(0, 'N°')
 		self.lista.InsertColumn(1, 'Título')
 		self.lista.InsertColumn(2, 'Autor')
@@ -156,6 +157,7 @@ class Programa(wx.Frame):
 		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_contextual, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
+#		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.seleccionar_multiple, self.lista)
 		self.bt_editar = wx.Button(self.panel2, -1, '&Editar')
 		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
 		self.bt_generar= wx.Button(self.panel2, -1, '&GENERAR CUE')
@@ -189,13 +191,19 @@ class Programa(wx.Frame):
 		sz2.Add(self.volumen)
 		sz2.Add(self.bt_marcar)
 
-		sz1.Add(self.lista, wx.EXPAND|wx.RIGHT)
-		sz1.Add(self.bt_editar)
-		sz1.Add(self.bt_generar)
+		sz3 = wx.BoxSizer(wx.HORIZONTAL)
+		sz1.Add(sz3, wx.SizerFlags().Center())
+		sz3.Add(self.lista, wx.SizerFlags().Expand())
+
+		sz4 = wx.BoxSizer(wx.VERTICAL)
+		sz3.Add(sz4)
+		sz4.Add(self.bt_editar)
+		sz4.Add(self.bt_generar)
 
 		self.panel2.SetSizer (sz1)
 
-
+		#llamado a funciones
+		self.buscar_actualizacion(None)
 
 
 	# carga marcas en  la lista
@@ -208,9 +216,12 @@ class Programa(wx.Frame):
 			self.lista.SetStringItem(id, 3,marca.tiempo_inicio)
 			id+=1
 
+
+
 	def refrescar_lista(self):
 		self.lista.DeleteAllItems()
 		self.listar()
+
 
 	def detectar_tecla(self, event):
 		tecla = event.GetKeyCode()
@@ -226,12 +237,28 @@ class Programa(wx.Frame):
 		marca =self.controlador.getMarcas()[item]
 		self.reproductor.Seek(marca.milesimas)
 
+		self.lista_id_marcas = []
+
 	def borrar_item(self, event):
 		item = self.lista.GetFocusedItem()
-		self.controlador.borrar_marca(item)
-		self.lista.DeleteItem(item)
-		self.lector.output('Eliminada')
+		cantidad = self.lista.GetItemCount()
+#		pdb.set_trace()
+		for marca in range(0,cantidad-1):
+			sl = self.lista.IsSelected(marca)
+			if sl == True:
+				print(marca)
+				self.controlador.borrar_marca(marca)
 		self.refrescar_lista()
+		self.lector.output('Eliminada')
+
+
+
+
+	def seleccionar_multiple(self, event):
+		item = event.GetEventObject()
+		item.Get
+		self.lista_id_marcas.append(id)
+		print(self.lista_id_marcas)
 
 	def desplegar_contextual(self, event):
 		self.PopupMenu(Contextual(self))
@@ -312,8 +339,13 @@ class Programa(wx.Frame):
 
 	#busca actualizaciones
 	def buscar_actualizacion(self, event):
-		self.controlador.verificarNuevaVersion()
-		if self.controlador.actualizado == True:
+		self.controlador_app.verificarNuevaVersion()
+		if self.controlador_app.actualizado == False:
+			wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'nueva_version.wav'))
+			res =wx.MessageBox('Hay una nueva versión disponible. ¿Deseas descargarla ahora?', style= wx.YES_NO)
+			if res == wx.YES:
+				self.controlador_app.descargar_version()
+		elif self.controlador_app.actualizado == True and event != None:
 			wx.MessageBox('No hay ninguna nueva versión disponible', 'Aviso.')
 
 # muestra información acerca del programa

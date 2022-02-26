@@ -5,21 +5,16 @@
 import wx
 
 from controlador.controlador import Controlador
-from controlador.configuracion import Opciones 
+import controlador.configuracion
 from vista.grafica import Programa
 
 
-
-
-
-
 App= wx.App()
-controlador = Controlador()
-controlador_opciones = Opciones()
-
-controlador.verificarNuevaVersion()
+controlador_controlador = Controlador()
+controlador_opciones = controlador.configuracion.Opciones()
+controlador_app = controlador.configuracion.App()
 controlador_opciones.chequear_ini()
-controlador.load()
-controlador.limpiar_temporal()
-Programa(None, title= 'CUE Genesis', controlador = controlador)
+controlador_controlador.load()
+controlador_controlador.limpiar_temporal()
+Programa(None, title= 'CUE Genesis', controlador = controlador_controlador, app= controlador_app)
 App.MainLoop()

@@ -10,42 +10,13 @@ from modelo.tiempo import Tiempo
  
 class Controlador():
 	def __init__(self):
-		self.nombre_app= 'CUE Genesis'
-		self.autor_app= 'Crisspro'
-		self.licencia_app= 'GPL-3.0'
-		self.version_app= 'v1.1'
-
 		self.data  = None
 		self.disco = Disco()
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
 		self.ruta_audio = ''
-		self.actualizado = True
 
 
-	def verificarNuevaVersion(self):
-		try:
-			link= 'https://api.github.com/repos/crisspro/keyzoneclassic-ahk/releases/latest'
-			coneccion= requests.get(link, timeout= 5)
-		except(requests.ConectionError, requests.Timeout):
-			print('No hay conección')
-		else:
-			try:
-				v= coneccion.json() ['tag_name']
-			except KeyError:
-				print('No se ha podido establecer la conexión', 'Error.')
-			if v != self.version_app:
-				self.actualizado = False
-				wx.adv.Sound.PlaySound(os.path.join('vista', 'sounds', 'nueva_version.wav'))
-				resp= wx.MessageBox('Hay disponible una nueva versión de ' + self.nombre_app + '(' + v + ')' + '. ¿Quieres descargarla ahora?', caption= 'Aviso', style= wx.YES_NO)
-				if resp == wx.YES:
-					dw= coneccion.json() ['assets']
-					for i in dw:
-						dw= i['browser_download_url']
-					wx.LaunchDefaultBrowser(dw)
-					self.Close()
-			else:
-				self.actualizado = True
 
 
 	def crear_disco(self, titulo, autor, fecha, genero, comentarios):

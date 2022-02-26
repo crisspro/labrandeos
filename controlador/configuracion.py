@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 import os
+import requests
 import webbrowser
 
 import modelo.configuracion
@@ -11,15 +12,14 @@ class App():
 		self.licencia_app = 'GPL 3.0'
 		self.sitio_app = 'https://github.com/crisspro/cuegenesis'
 		self.api_app = 'https://api.github.com/repos/crisspro/keyzoneclassic-ahk/releases/latest'
-		self.version_app = 'v0.1'
-
+		self.version_app = 'v1.1'
+		self.actualizado = True
 
 
 	def verificarNuevaVersion(self):
 		try:
-			link= self.api_app
-			coneccion= requests.get(link, timeout= 5)
-		except(requests.ConectionError, requests.Timeout):
+			coneccion= requests.get(self.api_app, timeout= 5)
+		except:
 			print('No hay conección')
 		else:
 			try:
@@ -28,16 +28,16 @@ class App():
 				print('No se ha podido establecer la conexión', 'Error.')
 			if v != self.version_app:
 				self.actualizado = False
-				wx.adv.Sound.PlaySound(os.path.join('vista', 'sounds', 'nueva_version.wav'))
-				resp= wx.MessageBox('Hay disponible una nueva versión de ' + self.nombre_app + '(' + v + ')' + '. ¿Quieres descargarla ahora?', caption= 'Aviso', style= wx.YES_NO)
-				if resp == wx.YES:
-					dw= coneccion.json() ['assets']
-					for i in dw:
-						dw= i['browser_download_url']
-					webbrowser.open(dw)
-					self.Close()
 			else:
 				self.actualizado = True
+
+	def descargar_version(self):
+		coneccion= requests.get(self.api_app, timeout= 5)
+		dw= coneccion.json() ['assets']
+		for i in dw:
+			dw= i['browser_download_url']
+		webbrowser.open(dw)
+
 
 
 class Opciones():
