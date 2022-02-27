@@ -154,7 +154,7 @@ class Programa(wx.Frame):
 		self.lista.InsertColumn(1, 'Título')
 		self.lista.InsertColumn(2, 'Autor')
 		self.lista.InsertColumn(3, 'Tiempo de inicio')
-		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla, self.lista)
+		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla_lista, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_contextual, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
 #		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.seleccionar_multiple, self.lista)
@@ -163,7 +163,7 @@ class Programa(wx.Frame):
 		self.bt_generar= wx.Button(self.panel2, -1, '&GENERAR CUE')
 		self.bt_generar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
-		self.Bind(wx.EVT_KEY_DOWN, self. abrir_documentacion)
+		self.Bind(wx.EVT_KEY_DOWN, self.detectar_tecla_principal)
 
 
 #creación de sizers
@@ -223,48 +223,40 @@ class Programa(wx.Frame):
 		self.listar()
 
 
-	def detectar_tecla(self, event):
+	def detectar_tecla_lista(self, event):
 		tecla = event.GetKeyCode()
 		if tecla == wx.WXK_DELETE:
 			self.borrar_item(None)
 		elif tecla == wx.WXK_WINDOWS_MENU:
 			self.desplegar_contextual(event)
-		elif tecla == wx.WXK_F1:
-			os.startfile()
 
-
+	def detectar_tecla_principal(self, event):
+		tecla = event.GetKeyCode()
+		if tecla == wx.WXK_F1:
+			self.abrir_documentacion(None)
 
 	def posicionar_marca(self, event):
+		""" Posiciona el inicio de reproducción según el tiempo de inicio de cada marca """
 		item = self.lista.GetFocusedItem()
 		marca =self.controlador.getMarcas()[item]
 		self.reproductor.Seek(marca.milesimas)
 
-		self.lista_id_marcas = []
-
 	def borrar_item(self, event):
+		""" Elimina las marcas seleccionadas en la lista """
 		item = self.lista.GetFocusedItem()
 		cantidad = self.lista.GetItemCount()
 #		pdb.set_trace()
-		for marca in range(0,cantidad-1):
+		for marca in reversed(range(cantidad)):
 			sl = self.lista.IsSelected(marca)
 			if sl == True:
-				print(marca)
 				self.controlador.borrar_marca(marca)
 		self.refrescar_lista()
-		self.lector.output('Eliminada')
-
-
-
-
-	def seleccionar_multiple(self, event):
-		item = event.GetEventObject()
-		item.Get
-		self.lista_id_marcas.append(id)
-		print(self.lista_id_marcas)
+		if cantidad != 0:
+			self.lector.output('Eliminado')
 
 	def desplegar_contextual(self, event):
+		""" Despliega el menú contextual de la lista de marcas """
 		self.PopupMenu(Contextual(self))
-
 
 	def cerrar (self, event):
 		if os.path.exists('temp.proyecto.cgp'):
