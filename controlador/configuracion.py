@@ -11,8 +11,8 @@ class App():
 		self.autor_app = 'Crisspro'
 		self.licencia_app = 'GPL 3.0'
 		self.sitio_app = 'https://github.com/crisspro/cuegenesis'
-		self.api_app = 'https://api.github.com/repos/crisspro/keyzoneclassic-ahk/releases/latest'
-		self.version_app = 'v1.1'
+		self.api_app = 'https://api.github.com/repos/crisspro/cuegenesis/releases/latest'
+		self.version_app = 'v0.1'
 		self.actualizado = True
 
 
@@ -24,12 +24,13 @@ class App():
 		else:
 			try:
 				v= coneccion.json() ['tag_name']
+				if v != self.version_app:
+					self.actualizado = False
+				else:
+					self.actualizado = True
 			except KeyError:
 				print('No se ha podido establecer la conexión', 'Error.')
-			if v != self.version_app:
-				self.actualizado = False
-			else:
-				self.actualizado = True
+
 
 	def descargar_version(self):
 		coneccion= requests.get(self.api_app, timeout= 5)

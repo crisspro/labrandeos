@@ -229,6 +229,8 @@ class Programa(wx.Frame):
 			self.borrar_item(None)
 		elif tecla == wx.WXK_WINDOWS_MENU:
 			self.desplegar_contextual(event)
+		elif tecla == wx.WXK_F1:
+			os.startfile()
 
 
 
@@ -300,12 +302,13 @@ class Programa(wx.Frame):
 					break
 			if self.path == '':
 				wx.MessageBox('No es posible cargar el fichero, sólo se admiten archivos de audio.', caption= 'Atención.', style= wx.ICON_ERROR)
-			self.reproductor.Load(self.path)
-			self.bt_reproducir.SetFocus()
-			self.controlador.ruta_audio = self.path
-			self.panel2.Enable(True)
-			self.mn_metadatos_disco.Enable(True)
-			self.guardar_disco(None)
+			else:
+				self.reproductor.Load(self.path)
+				self.bt_reproducir.SetFocus()
+				self.controlador.ruta_audio = self.path
+				self.panel2.Enable(True)
+				self.mn_metadatos_disco.Enable(True)
+				self.guardar_disco(None)
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
