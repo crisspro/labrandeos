@@ -19,11 +19,13 @@ class Opciones(wx.Dialog):
 		self.lista_idioma = ['Español', 'Inglés']
 		self.com_idioma = wx.ComboBox(panel1, -1, configparser.get('general', 'idioma'), choices= self.lista_idioma )
 		self.com_idioma.SetFocus()
-		self.cas_sonido_actualizacion = wx.CheckBox(panel1, -1, 'Activar sonido al detectar nueva actualización')
+		self.cas_cue_id = wx.CheckBox(panel1, -1, 'Añadir índice al exportar marcas')
+		self.cas_cue_id.SetValue(configparser.getboolean('general', 'cue_id'))
+		self.cas_sonido_actualizacion = wx.CheckBox(panel1, -1, 'Sonido al detectar nueva actualización')
 		self.cas_sonido_actualizacion.SetValue(configparser.getboolean('general', 'sonido_actualizacion'))
-		self.cast_sonido_marca = wx.CheckBox(panel1, -1, 'Activar sonido al crear una nueva marca')
+		self.cast_sonido_marca = wx.CheckBox(panel1, -1, 'Sonido al crear una nueva marca')
 		self.cast_sonido_marca.SetValue(configparser.getboolean('general', 'sonido_marca'))
-		self.cas_sonido_generar = wx.CheckBox(panel1, -1, 'Activar sonido al generar el archivo CUE')
+		self.cas_sonido_generar = wx.CheckBox(panel1, -1, 'Sonido al generar el archivo CUE')
 		self.cas_sonido_generar.SetValue(configparser.getboolean('general', 'sonido_generar'))
 		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, '&Aceptar')
 		self.bt_aceptar.SetDefault()
@@ -48,6 +50,7 @@ class Opciones(wx.Dialog):
 
 	def guardar_opciones(self):
 		configparser.set('general', 'idioma', self.com_idioma.GetValue())
+		configparser.set('general', 'cue_id', str(self.cas_cue_id.GetValue()))
 		configparser.set('general', 'sonido_actualizacion', str(self.cas_sonido_actualizacion.GetValue()))
 		configparser.set('general', 'sonido_marca', str(self.cast_sonido_marca.GetValue()))
 		configparser.set('general', 'sonido_generar', str(self.cas_sonido_generar.GetValue()))
