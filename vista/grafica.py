@@ -17,11 +17,12 @@ from .acerca_de import Acerca_de
 
 
 class Programa(wx.Frame):
-	def __init__(self, parent, title, controlador, app):
+	def __init__(self, parent, title, controlador, app, opciones):
 		super().__init__(parent, title= title, style = wx.DEFAULT_FRAME_STYLE|wx.MAXIMIZE)
 		self.syze = (800,800)
 		self.controlador = controlador
 		self.controlador_app = app
+		self.controlador_opciones = opciones
 		self.Center()
 		self.graficar()
 		self.Show()
@@ -89,10 +90,11 @@ class Programa(wx.Frame):
 		self.bt_abrir= wx.Button(self.panel1, -1, '&Cargar audio')
 		self.bt_abrir.SetFocus()
 		self.Bind(wx.EVT_BUTTON, self.abrir_archivo, self.bt_abrir)
-		backend= ''
+		backend= wx.media.MEDIABACKEND_DIRECTSHOW
 		self.reproductor= wx.media.MediaCtrl()
 		self.reproductor.Create(self.panel2, style=wx.SIMPLE_BORDER, szBackend=backend)
 		self.reproductor.Show(False)
+
 
 
 		self.l_encabezado = wx.StaticText(self.panel2, -1, 'Nuevo proyecto')
@@ -301,6 +303,7 @@ class Programa(wx.Frame):
 				self.panel2.Enable(True)
 				self.mn_metadatos_disco.Enable(True)
 				self.guardar_disco(None)
+				print(self.reproductor.Length())
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
@@ -336,7 +339,8 @@ class Programa(wx.Frame):
 	def buscar_actualizacion(self, event):
 		self.controlador_app.verificarNuevaVersion()
 		if self.controlador_app.actualizado == False:
-			wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'nueva_version.wav'))
+			if self.controlador_opciones.consultar_opciones('general', 'sonido_actualizacion'):
+				wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'nueva_version.wav'))
 			res =wx.MessageBox('Hay una nueva versión disponible. ¿Deseas descargarla ahora?', style= wx.YES_NO)
 			if res == wx.YES:
 				self.controlador_app.descargar_version()
@@ -380,8 +384,12 @@ class Programa(wx.Frame):
 		if self.estado == 1 or self.estado == 2:
 			self.reproductor.Stop()
 			self.bt_reproducir.SetLabel('&Reproducir')
+			self.editar.reproduciendo = False
+			self.editar.cambiar_etiqueta()
 		else:
 			self.bt_reproducir.SetLabel('&Reproducir')
+			self.editar.reproduciendo = False
+			self.editar.cambiar_etiqueta()
 
 	#reproduce y pausa en ventana editar.
 	def reproducir_editar(self, event):
@@ -392,6 +400,7 @@ class Programa(wx.Frame):
 		else:
 			self.editar.reproduciendo = False
 		self.editar.cambiar_etiqueta()
+
 
 # controla el volumen
 	def volumenear (self, event):
@@ -441,7 +450,8 @@ class Programa(wx.Frame):
 	def marcar (self, event):
 		self.reproductor.Pause()
 		self.bt_reproducir.SetLabel('&Reproducir')
-		wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'marca.wav'))
+		if self.controlador_opciones.consultar_opciones('general', 'sonido_marca'): 
+			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'marca.wav'))
 		self.lector.output('Marcado')
 		self.vn_editar()
 
@@ -472,8 +482,6 @@ class Programa(wx.Frame):
 		self.mn_generar.Enable(True)
 		self.mn_guardar_proyecto.Enable(True)
 
-
-
 	def abrir_editar2(self,event):
 		self.editar2 = Editar2(self, 'Editar marca', self.controlador)
 		item = self.lista.GetFocusedItem()
@@ -483,7 +491,12 @@ class Programa(wx.Frame):
 
 	def generar(self, event):
 		self.controlador.generar_cue()
-		wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
+		existe = self.controlador.verificar_exportacion()
+		if existe == True:
+			if self.controlador_opciones.consultar_opciones('general', 'sonido_generar'):
+				wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
+			msg = wx.adv.NotificationMessage('', 'Cue generado exitosamente.', self, wx.ICON_INFORMATION)
+			msg.Show(5)
 
 
 class Contextual(wx.Menu):

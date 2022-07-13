@@ -1,4 +1,5 @@
 import configparser
+import configparser
 import os
 import pickle
 import requests
@@ -105,6 +106,11 @@ class Controlador():
 			archivo.write('PERFORMER "' + marca.autor + '"\n')
 			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio_cue()) + '\n')
 		archivo.close()
+
+	def verificar_exportacion(self):
+		carpeta = os.path.dirname(self.ruta_audio)
+		existe = os.path.isfile(os.path.join(carpeta,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'))
+		return existe
 
 	def consultar_datos(self, id):
 		marca = self.data.getMarcas()

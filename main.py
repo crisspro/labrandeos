@@ -16,5 +16,6 @@ controlador_app = controlador.configuracion.App()
 controlador_opciones.chequear_ini()
 controlador_controlador.load()
 controlador_controlador.limpiar_temporal()
-Programa(None, title= 'CUE Genesis', controlador = controlador_controlador, app= controlador_app)
+Programa(None, title= 'CUE Genesis', controlador = controlador_controlador, app= controlador_app, opciones= controlador_opciones)
+
 App.MainLoop()

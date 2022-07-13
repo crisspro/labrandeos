@@ -55,6 +55,7 @@ class Opciones(wx.Dialog):
 		configparser.write(archivo)
 
 
+
 # Creación de instancias
 
 configparser = configparser.ConfigParser()

@@ -58,6 +58,16 @@ class Opciones():
 		self.configparser.write(archivo)
 		archivo.close()
 
+	def consultar_opciones(self,seccion, clave):
+		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
+		return self.configparser.getboolean(seccion, clave)
+
+
+	def refrescar_ini(self):
+		self.configparser = ConfigParser()
+		self.archivo_configuracion = os.path.join('files', 'user.ini')
+		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
+
 # creación de instancias
 
 modelo_configuracion = modelo.configuracion.Configuracion()
