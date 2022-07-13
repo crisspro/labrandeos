@@ -490,7 +490,7 @@ class Programa(wx.Frame):
 			pass
 
 	def generar(self, event):
-		self.controlador.generar_cue()
+		self.controlador.generar_cue(self.controlador_opciones.consultar_opciones('general', 'cue_id'))
 		existe = self.controlador.verificar_exportacion()
 		if existe == True:
 			if self.controlador_opciones.consultar_opciones('general', 'sonido_generar'):

@@ -88,7 +88,7 @@ class Controlador():
 		milesimas = self.tiempo.reconvertir()
 		return milesimas
 
-	def generar_cue (self):
+	def generar_cue (self, id):
 		carpeta = os.path.dirname(self.ruta_audio)
 		tipo = os.path.splitext(self.ruta_audio)[1]
 		tipo = tipo[1:].upper()
@@ -102,7 +102,10 @@ class Controlador():
 		marca = self.getMarcas()
 		for marca in marca:
 			archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
-			archivo.write('TITLE "' + marca.titulo + '"\n')
+			if id == True:
+				archivo.write('TITLE "' + str(marca.id).zfill(2) + ' ' + marca.titulo + '"\n')
+			else:
+				archivo.write('TITLE "' + marca.titulo + '"\n')
 			archivo.write('PERFORMER "' + marca.autor + '"\n')
 			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio_cue()) + '\n')
 		archivo.close()
