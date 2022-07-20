@@ -1,0 +1,231 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2022-07-17 15:38-0400\n"
+"PO-Revision-Date: 2022-07-17 16:27-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: grafica.py:52
+msgid "&Archivo"
+msgstr "&File"
+
+#: grafica.py:53
+msgid "&Nuevo"
+msgstr "&New"
+
+#: grafica.py:54 grafica.py:94
+msgid "&Cargar audio"
+msgstr "&Load audio file"
+
+#: grafica.py:56
+msgid "&Abrir proyecto"
+msgstr "&Open project"
+
+#: grafica.py:58
+msgid "&Guardar proyecto como..."
+msgstr "&Save Project as..."
+
+#: grafica.py:62
+msgid "&Generar CUE"
+msgstr "&CUE generate"
+
+#: grafica.py:65
+msgid "&Salir"
+msgstr "&Quit"
+
+#: grafica.py:70
+msgid "&Herramientas"
+msgstr "&Tools"
+
+#: grafica.py:71
+msgid "&Metadatos del álbum"
+msgstr "&Album metadata"
+
+#: grafica.py:74
+msgid "&Opciones"
+msgstr "&Options"
+
+#: grafica.py:79
+msgid "A&yuda"
+msgstr "&Help"
+
+#: grafica.py:80
+msgid "&Documentación"
+msgstr "&Documentation"
+
+#: grafica.py:82
+msgid "&Buscar  actualizaciones"
+msgstr "&Update"
+
+#: grafica.py:84
+msgid "Acerca de"
+msgstr "About"
+
+#: grafica.py:93
+msgid "Carga el archivo de audio que quieres procesar."
+msgstr "Load an audio file for processing."
+
+#: grafica.py:104
+msgid "Nuevo proyecto"
+msgstr "New project"
+
+#: grafica.py:113
+msgid "Línea de tiempo"
+msgstr "Time line"
+
+#: grafica.py:120 grafica.py:375 grafica.py:382 grafica.py:389 grafica.py:393
+#: grafica.py:455
+msgid "&Reproducir"
+msgstr "&Play"
+
+#: grafica.py:127
+msgid "línea de tiempo"
+msgstr "Time line"
+
+#: grafica.py:131
+msgid "enfocar lista"
+msgstr "List focus"
+
+#: grafica.py:135
+msgid "Duración"
+msgstr "Duration"
+
+#: grafica.py:139
+msgid "tiempo actual"
+msgstr "now"
+
+#: grafica.py:142
+msgid "&Detener"
+msgstr "&Stop"
+
+#: grafica.py:144
+msgid "Volumen"
+msgstr "Volume"
+
+#: grafica.py:147
+msgid "&Marcar"
+msgstr "&Bookmarck"
+
+#: grafica.py:157
+msgid "Marcas"
+msgstr "Marks"
+
+#: grafica.py:160
+msgid "Título"
+msgstr "Title"
+
+#: grafica.py:161
+msgid "Autor"
+msgstr "Author"
+
+#: grafica.py:162
+msgid "Tiempo de inicio"
+msgstr "Start time"
+
+#: grafica.py:167 grafica.py:509
+msgid "&Editar"
+msgstr "&Edit"
+
+#: grafica.py:169
+msgid "&GENERAR CUE"
+msgstr "&CUE generate"
+
+#: grafica.py:260
+msgid "Eliminado"
+msgstr "deleted"
+
+#: grafica.py:276
+msgid "Metadatos del álbum"
+msgstr "Albumn metadata"
+
+#: grafica.py:289
+msgid "Abrir archivo"
+msgstr "Open file"
+
+#: grafica.py:313
+msgid "Abrir proyecto"
+msgstr "Open project"
+
+#: grafica.py:326
+msgid "Guardar proyecto"
+msgstr "Save project"
+
+#: grafica.py:334
+msgid "Opciones"
+msgstr "Options"
+
+#: grafica.py:347
+msgid "Hay una nueva versión disponible. ¿Deseas descargarla ahora?"
+msgstr "There is a new versión. Do you want to download it?"
+
+#: grafica.py:351
+msgid "Aviso."
+msgstr "Message."
+
+#: grafica.py:351
+msgid "No hay ninguna nueva versión disponible"
+msgstr "No updates."
+
+#: grafica.py:355
+msgid "Acerca de..."
+msgstr "About"
+
+#: grafica.py:370
+msgid "&Pausar"
+msgstr "&Pause"
+
+#: grafica.py:445
+msgid " en tiempo actual"
+msgstr "now"
+
+#: grafica.py:445 grafica.py:451
+msgid "horas"
+msgstr "hours"
+
+#: grafica.py:445 grafica.py:451
+msgid "marcos"
+msgstr "frames"
+
+#: grafica.py:445 grafica.py:451
+msgid "minutos"
+msgstr "minutes"
+
+#: grafica.py:445 grafica.py:451
+msgid "segundos"
+msgstr "seconds"
+
+#: grafica.py:451
+msgid "Duración de la pista. "
+msgstr "Track's time"
+
+#: grafica.py:458
+msgid "Marcado"
+msgstr "marked"
+
+#: grafica.py:463
+msgid "Crear marca"
+msgstr "Make mark"
+
+#: grafica.py:489
+msgid "Editar marca"
+msgstr "Edit mark"
+
+#: grafica.py:501
+msgid "Cue generado exitosamente."
+msgstr "CUE successfully generated."
+
+#: grafica.py:512
+msgid "E&liminar"
+msgstr "&Delete"

@@ -1,0 +1,227 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2022-07-19 16:24-0400\n"
+"PO-Revision-Date: 2022-07-19 16:29-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: grafica.py:50
+msgid "&Archivo"
+msgstr ""
+
+#: grafica.py:51
+msgid "&Nuevo"
+msgstr ""
+
+#: grafica.py:52 grafica.py:92
+msgid "&Cargar audio"
+msgstr ""
+
+#: grafica.py:54
+msgid "&Abrir proyecto"
+msgstr ""
+
+#: grafica.py:56
+msgid "&Guardar proyecto como..."
+msgstr ""
+
+#: grafica.py:60
+msgid "&Generar CUE"
+msgstr ""
+
+#: grafica.py:63
+msgid "&Salir"
+msgstr ""
+
+#: grafica.py:68
+msgid "&Herramientas"
+msgstr ""
+
+#: grafica.py:69
+msgid "&Metadatos del álbum"
+msgstr ""
+
+#: grafica.py:72
+msgid "&Opciones"
+msgstr ""
+
+#: grafica.py:77
+msgid "A&yuda"
+msgstr ""
+
+#: grafica.py:78
+msgid "&Documentación"
+msgstr ""
+
+#: grafica.py:80
+msgid "&Buscar  actualizaciones"
+msgstr ""
+
+#: grafica.py:82
+msgid "Acerca de"
+msgstr ""
+
+#: grafica.py:91
+msgid "Carga el archivo de audio que quieres procesar."
+msgstr ""
+
+#: grafica.py:102
+msgid "Nuevo proyecto"
+msgstr ""
+
+#: grafica.py:111
+msgid "Línea de tiempo"
+msgstr ""
+
+#: grafica.py:118 grafica.py:373 grafica.py:380 grafica.py:387 grafica.py:391
+#: grafica.py:453
+msgid "&Reproducir"
+msgstr ""
+
+#: grafica.py:125
+msgid "línea de tiempo"
+msgstr ""
+
+#: grafica.py:129
+msgid "enfocar lista"
+msgstr ""
+
+#: grafica.py:133
+msgid "Duración"
+msgstr ""
+
+#: grafica.py:137
+msgid "tiempo actual"
+msgstr ""
+
+#: grafica.py:140
+msgid "&Detener"
+msgstr ""
+
+#: grafica.py:142
+msgid "Volumen"
+msgstr ""
+
+#: grafica.py:145
+msgid "&Marcar"
+msgstr ""
+
+#: grafica.py:155
+msgid "Marcas"
+msgstr ""
+
+#: grafica.py:158
+msgid "Título"
+msgstr ""
+
+#: grafica.py:159
+msgid "Autor"
+msgstr ""
+
+#: grafica.py:160
+msgid "Tiempo de inicio"
+msgstr ""
+
+#: grafica.py:165 grafica.py:507
+msgid "&Editar"
+msgstr ""
+
+#: grafica.py:167
+msgid "&GENERAR CUE"
+msgstr ""
+
+#: grafica.py:258
+msgid "Eliminado"
+msgstr ""
+
+#: grafica.py:274
+msgid "Metadatos del álbum"
+msgstr ""
+
+#: grafica.py:287
+msgid "Abrir archivo"
+msgstr ""
+
+#: grafica.py:311
+msgid "Abrir proyecto"
+msgstr ""
+
+#: grafica.py:324
+msgid "Guardar proyecto"
+msgstr ""
+
+#: grafica.py:332
+msgid "Opciones"
+msgstr ""
+
+#: grafica.py:345
+msgid "Hay una nueva versión disponible. ¿Deseas descargarla ahora?"
+msgstr ""
+
+#: grafica.py:349
+msgid "Aviso."
+msgstr ""
+
+#: grafica.py:349
+msgid "No hay ninguna nueva versión disponible"
+msgstr ""
+
+#: grafica.py:353
+msgid "Acerca de..."
+msgstr ""
+
+#: grafica.py:368
+msgid "&Pausar"
+msgstr ""
+
+#: grafica.py:443 grafica.py:449
+msgid "horas"
+msgstr ""
+
+#: grafica.py:443 grafica.py:449
+msgid "marcos"
+msgstr ""
+
+#: grafica.py:443 grafica.py:449
+msgid "minutos"
+msgstr ""
+
+#: grafica.py:443 grafica.py:449
+msgid "segundos"
+msgstr ""
+
+#: grafica.py:449
+msgid "Duración de la pista. "
+msgstr ""
+
+#: grafica.py:456
+msgid "Marcado"
+msgstr ""
+
+#: grafica.py:461
+msgid "Crear marca"
+msgstr ""
+
+#: grafica.py:487
+msgid "Editar marca"
+msgstr ""
+
+#: grafica.py:499
+msgid "Cue generado exitosamente."
+msgstr ""
+
+#: grafica.py:510
+msgid "E&liminar"
+msgstr ""

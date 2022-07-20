@@ -14,35 +14,35 @@ class Editar(wx.Dialog):
 
 		# Creación de controles
 		self.panel1= wx.Panel(self)
-		self.l_titulo = wx.StaticText(self.panel1, -1, 'Título:')
+		self.l_titulo = wx.StaticText(self.panel1, -1, _('Título:'))
 		self.in_titulo= wx.TextCtrl(self.panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_titulo.SetFocus()
 		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
-		self.l_autor= wx.StaticText(self.panel1, -1, 'Autor:')
+		self.l_autor= wx.StaticText(self.panel1, -1, _('Autor:'))
 		self.in_autor= wx.TextCtrl(self.panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.Bind (wx.EVT_TEXT, self.evento_texto, self.in_autor)
-		self.l_horas= wx.StaticText(self.panel1, -1, 'Horas')
+		self.l_horas= wx.StaticText(self.panel1, -1, _('Horas'))
 		self.in_horas= wx.SpinCtrl(self.panel1)
 		self.in_horas.SetRange(0,24)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_horas)
-		self.l_minutos= wx.StaticText(self.panel1, -1, 'Minutos')
+		self.l_minutos= wx.StaticText(self.panel1, -1, _('Minutos'))
 		self.in_minutos= wx.SpinCtrl(self.panel1)
 		self.in_minutos.SetRange(0,59)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_minutos)
-		self.l_segundos= wx.StaticText(self.panel1, -1, 'Segundos')
+		self.l_segundos= wx.StaticText(self.panel1, -1, _('Segundos'))
 		self.in_segundos= wx.SpinCtrl(self.panel1)
 		self.in_segundos.SetRange(0,59)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_segundos)
-		self.l_marcos= wx.StaticText(self.panel1, -1, 'Marcos')
+		self.l_marcos= wx.StaticText(self.panel1, -1, _('Marcos'))
 		self.in_marcos= wx.SpinCtrl(self.panel1)
 		self.in_marcos.SetRange(0,74)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_marcos)
-		self.bt_reproducir = wx.Button(self.panel1, -1, '&Reproducir')
+		self.bt_reproducir = wx.Button(self.panel1, -1, _('&Reproducir'))
 		self.Bind (wx.EVT_BUTTON, self.cambiar_etiqueta, self.bt_reproducir)
-		self.bt_aceptar= wx.Button(self.panel1, wx.ID_OK, '&Aceptar')
+		self.bt_aceptar= wx.Button(self.panel1, wx.ID_OK, _('&Aceptar'))
 		self.bt_aceptar.Enable(False)
 		self.bt_aceptar.SetDefault()
-		self.bt_cancelar= wx.Button(self.panel1, wx.ID_CANCEL, '&Cancelar')
+		self.bt_cancelar= wx.Button(self.panel1, wx.ID_CANCEL, _('&Cancelar'))
 
 #sizers
 
@@ -103,8 +103,6 @@ class Editar(wx.Dialog):
 		self.in_minutos.SetValue(tiempo[1])
 		self.in_horas.SetValue(tiempo[0])
 
-
-
 	def evento_texto (self, event):
 		self.evalua_llenado()
 
@@ -118,9 +116,9 @@ class Editar(wx.Dialog):
 	# cambia la etiqueta del botón reproducir.
 	def cambiar_etiqueta(self):
 		if self.reproduciendo == True:
-			self.bt_reproducir.SetLabel('&Detener')
+			self.bt_reproducir.SetLabel(_('&Detener'))
 		else:
-			self.bt_reproducir.SetLabel('&Reproducir')
+			self.bt_reproducir.SetLabel(_('&Reproducir'))
 
 	def retomar_tiempo(self, event):
 		tiempo = (self.in_horas.GetValue(), self.in_minutos.GetValue(), self.in_segundos.GetValue(), self.in_marcos.GetValue())
@@ -137,7 +135,6 @@ class Editar(wx.Dialog):
 		else:
 			self.bt_aceptar.Enable(True)
 
-
 	def llenar_valores(self):
 		self.in_autor.SetValue(self.controlador.consultar_disco().autor)
 		self.in_autor.SetValue(self.controlador.consultar_disco().autor)
@@ -152,7 +149,6 @@ class Editar2(Editar):
 
 
 	def llenar_valores(self):
-		print(self.tiempo_actual)
 		marca = self.controlador.getMarcas()
 		for marca in marca:
 			if marca.id == self.id:

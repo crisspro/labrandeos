@@ -11,27 +11,27 @@ class Disco(wx.Dialog):
 
 		#creación de controles
 		panel1 = wx.Panel(self)
-		self.l_titulo= wx.StaticText(panel1, -1, 'Título:')
+		self.l_titulo= wx.StaticText(panel1, -1, _('Título:'))
 		self.in_titulo= wx.TextCtrl(panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_titulo.SetMaxLength(80)
 		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
-		self.l_autor= wx.StaticText(panel1, -1, 'Autor:')
+		self.l_autor= wx.StaticText(panel1, -1, _('Autor:'))
 		self.in_autor= wx.TextCtrl(panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_autor.SetMaxLength(80)
 		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_autor)
-		self.l_fecha= wx.StaticText(panel1, -1, 'Año:')
+		self.l_fecha= wx.StaticText(panel1, -1, _('Año:'))
 		self.in_fecha= wx.TextCtrl(panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_fecha.SetMaxLength(4)
 		self.Bind(wx.EVT_TEXT, self.admitir_numeros, self.in_fecha)
-		self.l_genero= wx.StaticText(panel1, -1, 'Género:')
+		self.l_genero= wx.StaticText(panel1, -1, _('Género:'))
 		self.in_genero= wx.TextCtrl(panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_genero.SetMaxLength(80)
-		self.l_comentarios= wx.StaticText(panel1, -1, 'Comentarios:')
+		self.l_comentarios= wx.StaticText(panel1, -1, _('Comentarios:'))
 		self.in_comentarios= wx.TextCtrl(panel1, -1, style= wx.TE_MULTILINE|wx.TE_PROCESS_ENTER)
-		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, '&Aceptar')
+		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, _('&Aceptar'))
 		self.bt_aceptar.Enable(False)
 		self.bt_aceptar.SetDefault()
-		self.bt_cancelar = wx.Button(panel1, wx.ID_CANCEL, '&Cancelar')
+		self.bt_cancelar = wx.Button(panel1, wx.ID_CANCEL, _('&Cancelar'))
 
 # creación de sizers
 
@@ -84,7 +84,7 @@ class Disco(wx.Dialog):
 		texto = self.in_fecha.GetValue().strip()
 		for caracter in texto:
 			if caracter.isdigit() == False:
-				msg = wx.adv.NotificationMessage('Aviso:', 'Solo se admiten números', self, wx.ICON_ERROR)
+				msg = wx.adv.NotificationMessage(_('Aviso:'), _('Solo se admiten números'), self, wx.ICON_ERROR)
 				msg.Show(5)
 				self.in_fecha.SetValue('')
 

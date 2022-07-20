@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+from locale import getdefaultlocale
 import os
 import requests
 import webbrowser
@@ -7,11 +8,15 @@ import modelo.configuracion
 
 class App():
 	def __init__(self):
+		self.configparser = ConfigParser()
+		self.archivo_configuracion = os.path.join('files', 'user.ini')
+		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
 		self.nombre_app = 'CUE Genesis'
 		self.autor_app = 'Crisspro'
 		self.licencia_app = 'GPL 3.0'
 		self.sitio_app = 'https://github.com/crisspro/cuegenesis'
 		self.api_app = 'https://api.github.com/repos/crisspro/cuegenesis/releases/latest'
+		self.idioma_app = 'en'
 		self.version_app = 'v0.1'
 		self.actualizado = True
 

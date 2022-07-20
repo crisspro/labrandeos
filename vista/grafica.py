@@ -10,10 +10,13 @@ import wx.adv
 
 import vista.disco
 import vista.opciones
-from controlador.controlador import Controlador 
+from controlador.controlador import Controlador
+from controlador.traductor import Traductor 
 from .editar import Editar
 from .editar import Editar2
 from .acerca_de import Acerca_de
+
+
 
 
 class Programa(wx.Frame):
@@ -45,39 +48,39 @@ class Programa(wx.Frame):
 
 	#creación del menú archivo
 		menu1= wx.Menu()
-		archivo= barrademenu.Append(menu1,"&Archivo")
-		nuevo= menu1.Append(-1, '&Nuevo')
-		mn_cargar_audio = menu1.Append(-1, '&Cargar audio')
+		archivo = barrademenu.Append(menu1, _('&Archivo'))
+		nuevo= menu1.Append(-1, _('&Nuevo'))
+		mn_cargar_audio = menu1.Append(-1, _('&Cargar audio'))
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, mn_cargar_audio)
-		self.mn_abrir_proyecto = menu1.Append(-1, '&Abrir proyecto')
+		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto'))
 		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.mn_abrir_proyecto)
-		self.mn_guardar_proyecto = menu1.Append(-1, '&Guardar proyecto como...')
+		self.mn_guardar_proyecto = menu1.Append(-1, _('&Guardar proyecto como...'))
 		self.mn_guardar_proyecto.Enable(False)
 
 		self.Bind(wx.EVT_MENU, self.guardar_proyecto, self.mn_guardar_proyecto)
-		self.mn_generar= menu1.Append(-1, '&Generar CUE')
+		self.mn_generar = menu1.Append(-1, _('&Generar CUE'))
 		self.mn_generar.Enable(False)
 		self.Bind(wx.EVT_MENU, self.generar, self.mn_generar)
-		salir= menu1.Append(-1, '&Salir')
+		salir= menu1.Append(-1, _('&Salir'))
 		self.Bind(wx.EVT_MENU, self.cerrar, salir)
 
 	# creación del menú herramientas
 		menu2= wx.Menu()
-		herramientas =  barrademenu.Append(menu2,"&Herramientas")
-		self.mn_metadatos_disco = menu2.Append(-1, '&Metadatos del álbum')
+		herramientas =  barrademenu.Append(menu2, _('&Herramientas'))
+		self.mn_metadatos_disco = menu2.Append(-1, _('&Metadatos del álbum'))
 		self.mn_metadatos_disco.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_disco, self.mn_metadatos_disco)
-		opciones = menu2.Append(-1, '&Opciones')
+		opciones = menu2.Append(-1, _('&Opciones'))
 		self.Bind(wx.EVT_MENU, self.abrir_opciones, opciones)
 
 	#creación del menú ayuda
 		menu3= wx.Menu()
-		ayuda= barrademenu.Append(menu3, 'A&yuda')
-		self.documentacion = menu3.Append(-1, '&Documentación')
+		ayuda= barrademenu.Append(menu3, _('A&yuda'))
+		self.documentacion = menu3.Append(-1, _('&Documentación'))
 		self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.documentacion)
-		self.mn_buscar_actualizacion = menu3.Append(-1, '&Buscar  actualizaciones')
+		self.mn_buscar_actualizacion = menu3.Append(-1, _('&Buscar  actualizaciones'))
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
-		acercade= menu3.Append(-1, 'Acerca de')
+		acercade= menu3.Append(-1, _('Acerca de'))
 		self.Bind(wx.EVT_MENU, self.mg_acerca, acercade)
 
 
@@ -86,8 +89,8 @@ class Programa(wx.Frame):
 		self.panel1 = wx.Panel(self)
 		self.panel2= wx.Panel(self.panel1)
 		self.panel2.Enable(False)
-		self.l_abrir= wx.StaticText (self.panel1, -1, 'Carga el archivo de audio que quieres procesar.')
-		self.bt_abrir= wx.Button(self.panel1, -1, '&Cargar audio')
+		self.l_abrir= wx.StaticText (self.panel1, -1, _('Carga el archivo de audio que quieres procesar.'))
+		self.bt_abrir= wx.Button(self.panel1, -1, _('&Cargar audio'))
 		self.bt_abrir.SetFocus()
 		self.Bind(wx.EVT_BUTTON, self.abrir_archivo, self.bt_abrir)
 		backend= wx.media.MEDIABACKEND_DIRECTSHOW
@@ -97,7 +100,7 @@ class Programa(wx.Frame):
 
 
 
-		self.l_encabezado = wx.StaticText(self.panel2, -1, 'Nuevo proyecto')
+		self.l_encabezado = wx.StaticText(self.panel2, -1, _('Nuevo proyecto'))
 		self.font_encabezado =self.l_encabezado.GetFont()
 		self.font_encabezado.SetPointSize(30)
 		self.l_encabezado.SetFont(self.font_encabezado)
@@ -106,41 +109,41 @@ class Programa(wx.Frame):
 		self.font_reloj= self.l_reloj.GetFont()
 		self.font_reloj.SetPointSize(60)
 		self.l_reloj.SetFont(self.font_reloj)
-		self.l_pista= wx.StaticText(self.panel2, -1, 'Línea de tiempo')
+		self.l_pista= wx.StaticText(self.panel2, -1, _('Línea de tiempo'))
 		self.minutaje= 1
 		self.pista= wx.Slider(self.panel2, -1, 0, 0, self.minutaje,size= (400, -1))
 		self.pista.SetLineSize(5000)
 		self.pista.SetPageSize(60000)
 
 		self.Bind(wx.EVT_SLIDER, self.mover, self.pista)		
-		self.bt_reproducir= wx.Button(self.panel2, -1, '&Reproducir')
+		self.bt_reproducir= wx.Button(self.panel2, -1, _('&Reproducir'))
 		self.Bind(wx.EVT_BUTTON, self.reproducir_pausar, self.bt_reproducir)
 		self.Bind(wx.media.EVT_MEDIA_STOP, self.detener, self.reproductor)
 		self.timer= wx.Timer(self)
 		self.timer.Start(self.reproductor.Length())
 		self.Bind(wx.EVT_TIMER, self.temporizar)
 
-		self.bt_enfocar_linea_tiempo = wx.Button(self.panel2, self.id_bt_enfocar_linea_tiempo, 'línea de tiempo')
+		self.bt_enfocar_linea_tiempo = wx.Button(self.panel2, self.id_bt_enfocar_linea_tiempo, _('línea de tiempo'))
 		self.bt_enfocar_linea_tiempo.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.enfocar_linea_tiempo, self.id_bt_enfocar_linea_tiempo)
 		self.atajo_enfocar_linea_tiempo = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('l'), self.id_bt_enfocar_linea_tiempo)
-		self.bt_enfocar_lista = wx.Button(self.panel2, self.id_bt_enfocar_lista, 'enfocar lista')
+		self.bt_enfocar_lista = wx.Button(self.panel2, self.id_bt_enfocar_lista, _('enfocar lista'))
 		self.bt_enfocar_lista.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.enfocar_lista, self.id_bt_enfocar_lista)
 		self.atajo_enfocar_lista = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('m'), self.id_bt_enfocar_lista)
-		self.bt_duracion= wx.Button(self.panel2, self.id_hablar_duracion, 'Duración')
+		self.bt_duracion= wx.Button(self.panel2, self.id_hablar_duracion, _('Duración'))
 		self.bt_duracion.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_duracion, self.id_hablar_duracion)
 		self.atajo_duracion= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('d'), self.id_hablar_duracion)
-		self.bt_tiempo_actual= wx.Button(self.panel2, self.id_bt_tiempo_actual, 'tiempo actual')
+		self.bt_tiempo_actual= wx.Button(self.panel2, self.id_bt_tiempo_actual, _('tiempo actual'))
 		self.bt_tiempo_actual.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_tiempo, self.id_bt_tiempo_actual)
-		bt_detener= wx.Button(self.panel2, -1, '&Detener')
+		bt_detener= wx.Button(self.panel2, -1, _('&Detener'))
 		self.Bind(wx.EVT_BUTTON, self.detener, bt_detener)
-		l_volumen= wx.StaticText(self.panel2, -1, 'Volumen')
+		l_volumen= wx.StaticText(self.panel2, -1, _('Volumen'))
 		self.volumen= wx.Slider(self.panel2, -1, 100, 0, 100)
 		self.Bind(wx.EVT_SLIDER, self.volumenear,self.volumen)
-		self.bt_marcar= wx.Button(self.panel2, -1, '&Marcar')
+		self.bt_marcar= wx.Button(self.panel2, -1, _('&Marcar'))
 		self.bt_marcar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
@@ -150,19 +153,19 @@ class Programa(wx.Frame):
 
 		self.Bind(wx.EVT_CLOSE, self.cerrar)
 # Construcción de lista
-		self.l_lista = wx.StaticText(self.panel2, -1, 'Marcas')
+		self.l_lista = wx.StaticText(self.panel2, -1, _('Marcas'))
 		self.lista= wx.ListCtrl(self.panel2, -1,style= wx.LC_REPORT|wx.LC_VRULES)
 		self.lista.InsertColumn(0, 'N°')
-		self.lista.InsertColumn(1, 'Título')
-		self.lista.InsertColumn(2, 'Autor')
-		self.lista.InsertColumn(3, 'Tiempo de inicio')
+		self.lista.InsertColumn(1, _('Título'))
+		self.lista.InsertColumn(2, _('Autor'))
+		self.lista.InsertColumn(3, _('Tiempo de inicio'))
 		self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla_lista, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_contextual, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
 #		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.seleccionar_multiple, self.lista)
-		self.bt_editar = wx.Button(self.panel2, -1, '&Editar')
+		self.bt_editar = wx.Button(self.panel2, -1, _('&Editar'))
 		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
-		self.bt_generar= wx.Button(self.panel2, -1, '&GENERAR CUE')
+		self.bt_generar= wx.Button(self.panel2, -1, _('&GENERAR CUE'))
 		self.bt_generar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
 		self.Bind(wx.EVT_KEY_DOWN, self.detectar_tecla_principal)
@@ -238,26 +241,25 @@ class Programa(wx.Frame):
 			self.abrir_documentacion(None)
 
 	def posicionar_marca(self, event):
-		""" Posiciona el inicio de reproducción según el tiempo de inicio de cada marca """
+		''' Posiciona el inicio de reproducción según el tiempo de inicio de cada marca '''
 		item = self.lista.GetFocusedItem()
 		marca =self.controlador.getMarcas()[item]
 		self.reproductor.Seek(marca.milesimas)
 
 	def borrar_item(self, event):
-		""" Elimina las marcas seleccionadas en la lista """
+		''' Elimina las marcas seleccionadas en la lista '''
 		item = self.lista.GetFocusedItem()
 		cantidad = self.lista.GetItemCount()
-#		pdb.set_trace()
 		for marca in reversed(range(cantidad)):
 			sl = self.lista.IsSelected(marca)
 			if sl == True:
 				self.controlador.borrar_marca(marca)
 		self.refrescar_lista()
 		if cantidad != 0:
-			self.lector.output('Eliminado')
+			self.lector.output(_('Eliminado'))
 
 	def desplegar_contextual(self, event):
-		""" Despliega el menú contextual de la lista de marcas """
+		''' Despliega el menú contextual de la lista de marcas '''
 		self.PopupMenu(Contextual(self))
 
 	def cerrar (self, event):
@@ -270,7 +272,7 @@ class Programa(wx.Frame):
 			self.Destroy()
 
 	def guardar_disco(self, event):
-		self.vn_disco = vista.disco.Disco(self, 'Metadatos del álbum', self.controlador)
+		self.vn_disco = vista.disco.Disco(self, _('Metadatos del álbum'), self.controlador)
 		if self.vn_disco.ShowModal() == wx.ID_OK:
 			self.controlador.crear_disco(self.vn_disco.getTitulo(),
 			self.vn_disco.getAutor(),
@@ -283,7 +285,7 @@ class Programa(wx.Frame):
 
 
 	def abrir_archivo (self, event):
-		self.dialogo= wx.FileDialog(self, 'Abrir archivo', style=wx.FD_OPEN)
+		self.dialogo= wx.FileDialog(self, _('Abrir archivo'), style=wx.FD_OPEN)
 		if self.dialogo.ShowModal() == wx.ID_OK:
 			archivo_info= pymediainfo.MediaInfo.parse(self.dialogo.GetPath())
 			self.path= ''
@@ -303,11 +305,11 @@ class Programa(wx.Frame):
 				self.panel2.Enable(True)
 				self.mn_metadatos_disco.Enable(True)
 				self.guardar_disco(None)
-				print(self.reproductor.Length())
+
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
-		self.dialogo_abrir_proyecto = wx.FileDialog(self, 'Abrir proyecto', style=wx.FD_OPEN, wildcard= '*.CGP')
+		self.dialogo_abrir_proyecto = wx.FileDialog(self, _('Abrir proyecto'), style=wx.FD_OPEN, wildcard= '*.CGP')
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
 				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia.', style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
@@ -320,7 +322,7 @@ class Programa(wx.Frame):
 
 	#guarda el proyecto en una ruta específica
 	def guardar_proyecto(self, event):
-		self.dialogo_guardar = wx.FileDialog(self, 'Guardar proyecto', style=wx.FD_SAVE, wildcard= '*.CGP')
+		self.dialogo_guardar = wx.FileDialog(self, _('Guardar proyecto'), style=wx.FD_SAVE, wildcard= '*.CGP')
 		if self.dialogo_guardar.ShowModal() == wx.ID_OK:
 			self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
 			self.controlador.save()
@@ -328,7 +330,7 @@ class Programa(wx.Frame):
 
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):
-		vn_opciones = vista.opciones.Opciones(self, 'Opciones')
+		vn_opciones = vista.opciones.Opciones(self, _('Opciones'))
 		if vn_opciones.ShowModal() == wx.ID_OK:
 			vn_opciones.guardar_opciones()
 
@@ -341,15 +343,15 @@ class Programa(wx.Frame):
 		if self.controlador_app.actualizado == False:
 			if self.controlador_opciones.consultar_opciones('general', 'sonido_actualizacion'):
 				wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'nueva_version.wav'))
-			res =wx.MessageBox('Hay una nueva versión disponible. ¿Deseas descargarla ahora?', style= wx.YES_NO)
+			res =wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), style= wx.YES_NO)
 			if res == wx.YES:
 				self.controlador_app.descargar_version()
 		elif self.controlador_app.actualizado == True and event != None:
-			wx.MessageBox('No hay ninguna nueva versión disponible', 'Aviso.')
+			wx.MessageBox(_('No hay ninguna nueva versión disponible'), _('Aviso.'))
 
 # muestra información acerca del programa
 	def mg_acerca(self, event):
-		dlg = Acerca_de(self, title= 'Acerca de...')
+		dlg = Acerca_de(self, title= _('Acerca de...'))
 		if dlg.ShowModal() == wx.ID_OK:
 			dlg.close()
 
@@ -364,30 +366,30 @@ class Programa(wx.Frame):
 		self.estado= self.reproductor.GetState()
 		if self.estado == 1 or self.estado == 0:
 			self.reproductor.Play()
-			self.bt_reproducir.SetLabel('&Pausar')
+			self.bt_reproducir.SetLabel(_('&Pausar'))
 			self.minutaje= self.reproductor.Length()
 			self.pista.SetMax(self.minutaje)
 		elif self.estado == 2:
 			self.reproductor.Pause()
-			self.bt_reproducir.SetLabel('&Reproducir')
+			self.bt_reproducir.SetLabel(_('&Reproducir'))
 
 #pausa la reproducción
 	def pausar(self, event):
 		self.estado= self.reproductor.GetState()
 		if self.estado == 2:
 			self.reproductor.Pause()
-			self.bt_reproducir.SetLabel('&Reproducir')
+			self.bt_reproducir.SetLabel(_('&Reproducir'))
 
 # detiene la reproducción
 	def detener (self, event):
 		self.estado= self.reproductor.GetState()
 		if self.estado == 1 or self.estado == 2:
 			self.reproductor.Stop()
-			self.bt_reproducir.SetLabel('&Reproducir')
+			self.bt_reproducir.SetLabel(_('&Reproducir'))
 			self.editar.reproduciendo = False
 			self.editar.cambiar_etiqueta()
 		else:
-			self.bt_reproducir.SetLabel('&Reproducir')
+			self.bt_reproducir.SetLabel(_('&Reproducir'))
 			self.editar.reproduciendo = False
 			self.editar.cambiar_etiqueta()
 
@@ -439,25 +441,25 @@ class Programa(wx.Frame):
 		return self.valores
 # verbaliza el tiempo actual de reproducción
 	def hablar_tiempo (self, event):
-		self.lector.output(str(self.horas) + 'horas' + str(self.minutos) + 'minutos' + str(self.segundos) + 'segundos' + str(self.marcos) + 'marcos' + ' en tiempo actual')
+		self.lector.output(str(self.horas) + _('horas') + str(self.minutos) + _('minutos') + str(self.segundos) + _('segundos') + str(self.marcos) + _('marcos'))
 
 # verbaliza el tiempo de duración del archivo de audio.
 	def hablar_duracion (self, event):
 		self.duracion= self.reproductor.Length()
 		valores= self.calcular_tiempo(self.duracion)
-		self.lector.output('Duración de la pista. ' + str(valores[0]) + 'horas' + str(valores [1]) + 'minutos' + str(valores [2]) + 'segundos' + str(valores [3]) + 'marcos')
+		self.lector.output(_('Duración de la pista. ') + str(valores[0]) + _('horas') + str(valores [1]) + _('minutos') + str(valores [2]) + _('segundos') + str(valores [3]) + _('marcos'))
 
 	def marcar (self, event):
 		self.reproductor.Pause()
-		self.bt_reproducir.SetLabel('&Reproducir')
+		self.bt_reproducir.SetLabel(_('&Reproducir'))
 		if self.controlador_opciones.consultar_opciones('general', 'sonido_marca'): 
 			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'marca.wav'))
-		self.lector.output('Marcado')
+		self.lector.output(_('Marcado'))
 		self.vn_editar()
 
 
 	def vn_editar(self):
-		self.editar = Editar(self, 'Crear marca', self.controlador)
+		self.editar = Editar(self, _('Crear marca'), self.controlador)
 		self.editar.getTiempo(self.reproductor.Tell())
 		self.editar.tiempo_actual = self.reproductor.Tell()
 		self.editar.Bind(wx.EVT_BUTTON, self.reproducir_editar, self.editar.bt_reproducir)
@@ -483,7 +485,7 @@ class Programa(wx.Frame):
 		self.mn_guardar_proyecto.Enable(True)
 
 	def abrir_editar2(self,event):
-		self.editar2 = Editar2(self, 'Editar marca', self.controlador)
+		self.editar2 = Editar2(self, _('Editar marca'), self.controlador)
 		item = self.lista.GetFocusedItem()
 		self.editar2.id = item
 		if self.editar2.ShowModal() == wx.ID_OK:
@@ -495,7 +497,7 @@ class Programa(wx.Frame):
 		if existe == True:
 			if self.controlador_opciones.consultar_opciones('general', 'sonido_generar'):
 				wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
-			msg = wx.adv.NotificationMessage('', 'Cue generado exitosamente.', self, wx.ICON_INFORMATION)
+			msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
 			msg.Show(5)
 
 
@@ -503,10 +505,10 @@ class Contextual(wx.Menu):
 	def __init__(self, parent):
 		super(Contextual, self).__init__()
 		self.parent = parent
-		self.m1 = wx.MenuItem(self, wx.NewId(), '&Editar')
+		self.m1 = wx.MenuItem(self, wx.NewId(), _('&Editar'))
 		self.AppendItem(self.m1)
 		self.Bind(wx.EVT_MENU, self.abrir_editar2, self.m1)
-		self.m2 = wx.MenuItem(self, -1, 'E&liminar')
+		self.m2 = wx.MenuItem(self, -1, _('E&liminar'))
 		self.AppendItem(self.m2)
 		self.Bind(wx.EVT_MENU, self.borrar_item, self.m2)
 

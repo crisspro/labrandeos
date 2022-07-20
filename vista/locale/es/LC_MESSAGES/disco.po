@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2022-07-18 12:43-0400\n"
+"PO-Revision-Date: 2022-07-18 12:57-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: disco.py:14
+msgid "Título:"
+msgstr ""
+
+#: disco.py:18
+msgid "Autor:"
+msgstr ""
+
+#: disco.py:22
+msgid "Año:"
+msgstr ""
+
+#: disco.py:26
+msgid "Género:"
+msgstr ""
+
+#: disco.py:29
+msgid "Comentarios:"
+msgstr ""
+
+#: disco.py:31
+msgid "&Aceptar"
+msgstr ""
+
+#: disco.py:34
+msgid "&Cancelar"
+msgstr ""
+
+#: disco.py:87
+msgid "Aviso:"
+msgstr ""
+
+#: disco.py:87
+msgid "Solo se admiten números"
+msgstr ""
