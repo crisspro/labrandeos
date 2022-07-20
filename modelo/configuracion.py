@@ -2,6 +2,7 @@ from locale import getdefaultlocale
 
 class Configuracion():
 	def __init__(self):
+#		<<<<<<< HEAD
 		self.dic_general = {'idioma': 'en',
 		'cue_id': True,
 		'sonido_actualizacion': True,

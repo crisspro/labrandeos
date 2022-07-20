@@ -14,6 +14,7 @@ class Acerca_de(wx.Dialog):
 		self.bt_cerrar = wx.Button(panel, wx.ID_OK, _('&Cerrar'))
 
 #creación de sizers
+
 		sz1 = wx.BoxSizer(wx.VERTICAL)
 
 		sz1.Add(self.in_info, wx.SizerFlags().Expand())

@@ -3,8 +3,6 @@ from locale import getdefaultlocale
 import os
 
 
-
-
 class Traductor():
 	def __init__(self, idioma, modulo):
 		self.idioma = idioma

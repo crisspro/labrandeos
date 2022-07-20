@@ -1,5 +1,5 @@
+import gettext
 import os
-import pdb
 
 import accessible_output2.outputs.auto
 import pymediainfo
@@ -15,8 +15,6 @@ from controlador.traductor import Traductor
 from .editar import Editar
 from .editar import Editar2
 from .acerca_de import Acerca_de
-
-
 
 
 class Programa(wx.Frame):

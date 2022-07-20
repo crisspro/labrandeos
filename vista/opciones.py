@@ -1,6 +1,4 @@
 import pdb
-import configparser
-
 import wx
 
 import controlador.configuracion
@@ -11,9 +9,7 @@ class Opciones(wx.Dialog):
 		super().__init__(parent, title= title)
 		self.Center()
 		self.controlador_app = controlador.configuracion.App()
-		self.archivo_configuracion = controlador_opciones.archivo_configuracion
-		configparser.read(self.archivo_configuracion,encoding= 'utf-8')
-
+		self.controlador_opciones = controlador.configuracion.Opciones()
 
 		# Creación de controles
 		panel1 = wx.Panel(self)
@@ -22,13 +18,20 @@ class Opciones(wx.Dialog):
 		self.com_idioma = wx.ComboBox(panel1, -1, self.completar_idioma(), choices= self.lista_idioma )
 		self.com_idioma.SetFocus()
 		self.cas_cue_id = wx.CheckBox(panel1, -1, _('Añadir índice al exportar marcas'))
-		self.cas_cue_id.SetValue(configparser.getboolean('general', 'cue_id'))
+		self.cas_cue_id.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
 		self.cas_sonido_actualizacion = wx.CheckBox(panel1, -1, _('Sonido al detectar nueva actualización'))
-		self.cas_sonido_actualizacion.SetValue(configparser.getboolean('general', 'sonido_actualizacion'))
+		self.cas_sonido_actualizacion.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'))
 		self.cast_sonido_marca = wx.CheckBox(panel1, -1, _('Sonido al crear una nueva marca'))
-		self.cast_sonido_marca.SetValue(configparser.getboolean('general', 'sonido_marca'))
+		self.cast_sonido_marca.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'))
 		self.cas_sonido_generar = wx.CheckBox(panel1, -1, _('Sonido al generar el archivo CUE'))
-		self.cas_sonido_generar.SetValue(configparser.getboolean('general', 'sonido_generar'))
+		self.cas_cue_id = wx.CheckBox(panel1, -1, 'Añadir índice al exportar marcas')
+		self.cas_cue_id.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
+		self.cas_sonido_actualizacion = wx.CheckBox(panel1, -1, 'Sonido al detectar nueva actualización')
+		self.cas_sonido_actualizacion.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'))
+		self.cast_sonido_marca = wx.CheckBox(panel1, -1, 'Sonido al crear una nueva marca')
+		self.cast_sonido_marca.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'))
+		self.cas_sonido_generar = wx.CheckBox(panel1, -1, 'Sonido al generar el archivo CUE')
+		self.cas_sonido_generar.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_generar'))
 		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, _('&Aceptar'))
 		self.bt_aceptar.SetDefault()
 		self.bt_cancelar = wx.Button(panel1, wx.ID_CANCEL, _('&Cancelar'))
@@ -49,18 +52,16 @@ class Opciones(wx.Dialog):
 
 		panel1.SetSizer(sz1)
 
-
 	def guardar_opciones(self):
-		configparser.set('general', 'idioma', self.resumir_idioma())
-		configparser.set('general', 'cue_id', str(self.cas_cue_id.GetValue()))
-		configparser.set('general', 'sonido_actualizacion', str(self.cas_sonido_actualizacion.GetValue()))
-		configparser.set('general', 'sonido_marca', str(self.cast_sonido_marca.GetValue()))
-		configparser.set('general', 'sonido_generar', str(self.cas_sonido_generar.GetValue()))
-		archivo = open(self.archivo_configuracion, 'w', encoding= 'UTF-8')
-		configparser.write(archivo)
+		self.controlador_opciones.guardar_opciones('general', 'idioma', self.resumir_idioma())
+		self.controlador_opciones.guardar_opciones('general', 'cue_id', str(self.cas_cue_id.GetValue()))
+		self.controlador_opciones.guardar_opciones('general', 'sonido_actualizacion', str(self.cas_sonido_actualizacion.GetValue()))
+		self.controlador_opciones.guardar_opciones('general', 'sonido_marca', str(self.cast_sonido_marca.GetValue()))
+		self.controlador_opciones.guardar_opciones('general', 'sonido_generar', str(self.cas_sonido_generar.GetValue()))
+
 
 	def completar_idioma(self):
-		prefijo = configparser.get('general', 'idioma') 
+		prefijo = self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') 
 		if prefijo == 'es':
 			return _('Español')
 		elif prefijo == 'en':
@@ -73,7 +74,5 @@ class Opciones(wx.Dialog):
 		elif idioma == _('Inglés'):
 			return 'en'
 
-# Creación de instancias
 
-configparser = configparser.ConfigParser()
-controlador_opciones = controlador.configuracion.Opciones()
+

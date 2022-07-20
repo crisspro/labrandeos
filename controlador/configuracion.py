@@ -8,9 +8,6 @@ import modelo.configuracion
 
 class App():
 	def __init__(self):
-		self.configparser = ConfigParser()
-		self.archivo_configuracion = os.path.join('files', 'user.ini')
-		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
 		self.nombre_app = 'CUE Genesis'
 		self.autor_app = 'Crisspro'
 		self.licencia_app = 'GPL 3.0'
@@ -63,9 +60,18 @@ class Opciones():
 		self.configparser.write(archivo)
 		archivo.close()
 
-	def consultar_opciones(self,seccion, clave):
+	def guardar_opciones(self, seccion, clave, valor):
+		self.configparser.set(seccion, clave, str(valor))
+		archivo = open(self.archivo_configuracion, 'w', encoding= 'UTF-8')
+		self.configparser.write(archivo)
+		archivo.close()
+
+	def consultar_opciones(self, tipo, seccion, clave):
 		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
-		return self.configparser.getboolean(seccion, clave)
+		if tipo == 'bool':
+			return self.configparser.getboolean(seccion, clave)
+		elif tipo == 'str':
+			return self.configparser.get(seccion, clave)
 
 
 	def refrescar_ini(self):
@@ -76,3 +82,4 @@ class Opciones():
 # creación de instancias
 
 modelo_configuracion = modelo.configuracion.Configuracion()
+
