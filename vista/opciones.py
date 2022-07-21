@@ -1,7 +1,7 @@
-import pdb
 import wx
 
 import controlador.configuracion
+
 
 
 class Opciones(wx.Dialog):
@@ -24,13 +24,6 @@ class Opciones(wx.Dialog):
 		self.cast_sonido_marca = wx.CheckBox(panel1, -1, _('Sonido al crear una nueva marca'))
 		self.cast_sonido_marca.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'))
 		self.cas_sonido_generar = wx.CheckBox(panel1, -1, _('Sonido al generar el archivo CUE'))
-		self.cas_cue_id = wx.CheckBox(panel1, -1, 'Añadir índice al exportar marcas')
-		self.cas_cue_id.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
-		self.cas_sonido_actualizacion = wx.CheckBox(panel1, -1, 'Sonido al detectar nueva actualización')
-		self.cas_sonido_actualizacion.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'))
-		self.cast_sonido_marca = wx.CheckBox(panel1, -1, 'Sonido al crear una nueva marca')
-		self.cast_sonido_marca.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'))
-		self.cas_sonido_generar = wx.CheckBox(panel1, -1, 'Sonido al generar el archivo CUE')
 		self.cas_sonido_generar.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_generar'))
 		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, _('&Aceptar'))
 		self.bt_aceptar.SetDefault()
