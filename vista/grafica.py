@@ -1,4 +1,3 @@
-import gettext
 import os
 
 import accessible_output2.outputs.auto
@@ -30,6 +29,7 @@ class Programa(wx.Frame):
 
 	#creación de controles
 	def graficar(self):
+		Traductor('grafica')
 # creación de lector
 		self.lector= accessible_output2.outputs.auto.Auto()
 
@@ -47,7 +47,7 @@ class Programa(wx.Frame):
 	#creación del menú archivo
 		menu1= wx.Menu()
 		archivo = barrademenu.Append(menu1, _('&Archivo'))
-		nuevo= menu1.Append(-1, _('&Nuevo'))
+		self.nuevo= menu1.Append(-1, _('&Nuevo'))
 		mn_cargar_audio = menu1.Append(-1, _('&Cargar audio'))
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, mn_cargar_audio)
 		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto'))
@@ -221,6 +221,10 @@ class Programa(wx.Frame):
 
 
 
+	def refrescar_principal(self):
+		self.graficar()
+		self.refrescar_lista()
+
 	def refrescar_lista(self):
 		self.lista.DeleteAllItems()
 		self.listar()
@@ -262,7 +266,7 @@ class Programa(wx.Frame):
 
 	def cerrar (self, event):
 		if os.path.exists('temp.proyecto.cgp'):
-			resp = wx.MessageBox('Estás a punto de cerrar el programa. Los cambios que hayas echo al proyecto no se guardarán. \n ¿Deseas salir?', 'Advertencia.', style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
+			resp = wx.MessageBox(_('Estás a punto de cerrar el programa. Los cambios que hayas echo al proyecto no se guardarán. \n ¿Deseas salir?'), _('Advertencia.'), style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
 			if resp == wx.YES:
 				self.controlador.limpiar_temporal()
 				self.Destroy()
@@ -331,6 +335,7 @@ class Programa(wx.Frame):
 		vn_opciones = vista.opciones.Opciones(self, _('Opciones'))
 		if vn_opciones.ShowModal() == wx.ID_OK:
 			vn_opciones.guardar_opciones()
+			self.refrescar_principal()
 
 	def abrir_documentacion(self, event):
 		os.startfile(os.path.join('files', 'documentation', 'es.html'))
@@ -339,7 +344,7 @@ class Programa(wx.Frame):
 	def buscar_actualizacion(self, event):
 		self.controlador_app.verificarNuevaVersion()
 		if self.controlador_app.actualizado == False:
-			if self.controlador_opciones.consultar_opciones('general', 'sonido_actualizacion'):
+			if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'):
 				wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'nueva_version.wav'))
 			res =wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), style= wx.YES_NO)
 			if res == wx.YES:
@@ -450,7 +455,7 @@ class Programa(wx.Frame):
 	def marcar (self, event):
 		self.reproductor.Pause()
 		self.bt_reproducir.SetLabel(_('&Reproducir'))
-		if self.controlador_opciones.consultar_opciones('general', 'sonido_marca'): 
+		if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'): 
 			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'marca.wav'))
 		self.lector.output(_('Marcado'))
 		self.vn_editar()
@@ -490,10 +495,10 @@ class Programa(wx.Frame):
 			pass
 
 	def generar(self, event):
-		self.controlador.generar_cue(self.controlador_opciones.consultar_opciones('general', 'cue_id'))
+		self.controlador.generar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
 		existe = self.controlador.verificar_exportacion()
 		if existe == True:
-			if self.controlador_opciones.consultar_opciones('general', 'sonido_generar'):
+			if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_generar'):
 				wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
 			msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
 			msg.Show(5)

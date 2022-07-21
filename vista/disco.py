@@ -1,12 +1,14 @@
 import wx
 
+import controlador.traductor
+
 class Disco(wx.Dialog):
 	def __init__ (self, parent, title, controlador):
 		super().__init__(parent, title= title)
 		self.Center()
 		self.Size = (200,300)
 		self.controlador = controlador
-
+		controlador.traductor.Traductor('disco')
 
 
 		#creación de controles

@@ -1,6 +1,6 @@
 import wx
 import controlador.configuracion
-from .grafica import *
+#from .grafica import *
 
 class Acerca_de(wx.Dialog):
 	def __init__(self, parent, title):

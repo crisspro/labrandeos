@@ -1,12 +1,14 @@
 import wx
 import controlador.configuracion
-#from .grafica import *
+import controlador.traductor
+
 
 class Acerca_de(wx.Dialog):
 	def __init__(self, parent, title):
 		super().__init__(parent, title= title)
 		self.Center()
-		
+		controlador.traductor.Traductor('acerca_de')
+
 		panel = wx.Panel(self)
 		self.in_info = wx.TextCtrl(panel, -1, controlador_app.nombre_app + ' ' + controlador_app.version_app + '\n' + _('Autor: ') + controlador_app.autor_app + '\n' + _('Licencia: ') + controlador_app.licencia_app, style= wx.TE_MULTILINE|wx.TE_READONLY)
 		self.bt_visitar = wx.Button(panel, -1, _('&Visitar sitio del proyecto'))

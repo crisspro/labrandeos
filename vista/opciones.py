@@ -1,7 +1,7 @@
 import wx
 
 import controlador.configuracion
-
+import controlador.traductor
 
 
 class Opciones(wx.Dialog):
@@ -10,6 +10,7 @@ class Opciones(wx.Dialog):
 		self.Center()
 		self.controlador_app = controlador.configuracion.App()
 		self.controlador_opciones = controlador.configuracion.Opciones()
+		controlador.traductor.Traductor('opciones')
 
 		# Creación de controles
 		panel1 = wx.Panel(self)
