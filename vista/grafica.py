@@ -1,3 +1,4 @@
+import pdb
 import os
 
 import accessible_output2.outputs.auto
@@ -47,7 +48,9 @@ class Programa(wx.Frame):
 	#creación del menú archivo
 		menu1= wx.Menu()
 		archivo = barrademenu.Append(menu1, _('&Archivo'))
-		self.nuevo= menu1.Append(-1, _('&Nuevo'))
+		self.mn_nuevo = menu1.Append(-1, _('&Nuevo'))
+		self.mn_nuevo.Enable(False)
+		self.Bind(wx.EVT_MENU, self.crear_proyecto)
 		mn_cargar_audio = menu1.Append(-1, _('&Cargar audio'))
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, mn_cargar_audio)
 		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto'))
@@ -304,10 +307,18 @@ class Programa(wx.Frame):
 				self.reproductor.Load(self.path)
 				self.bt_reproducir.SetFocus()
 				self.controlador.ruta_audio = self.path
-				self.panel2.Enable(True)
-				self.mn_metadatos_disco.Enable(True)
+				self.habilitar_controles()
 				self.guardar_disco(None)
 
+	def habilitar_controles (self):
+		if self.controlador.ruta_audio != '':
+			self.panel2.Enable(True)
+			self.mn_metadatos_disco.Enable(True)
+			self.mn_nuevo.Enable(True)
+		if self.controlador.data != None:
+			self.mn_generar.Enable(True)
+			self.mn_guardar_proyecto.Enable(True)
+			self.bt_generar.Enable(True)
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
@@ -321,6 +332,9 @@ class Programa(wx.Frame):
 					self.controlador.load()
 					self.listar()
 
+	# Crea un nuevo proyecto
+	def crear_proyecto(self):
+		pass
 
 	#guarda el proyecto en una ruta específica
 	def guardar_proyecto(self, event):
@@ -460,7 +474,6 @@ class Programa(wx.Frame):
 		self.bt_reproducir.SetLabel(_('&Reproducir'))
 		if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'): 
 			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'marca.wav'))
-		self.lector.output(_('Marcado'))
 		self.vn_editar()
 
 
@@ -484,11 +497,12 @@ class Programa(wx.Frame):
 			self.lista.SetStringItem(id, 2, marca.autor)
 			self.lista.SetStringItem(id, 3, marca.tiempo_inicio)
 			self.refrescar_lista()
+			self.habilitar_controles()
 		else:
 			self.pausar(None)
-		self.bt_generar.Enable(True)
-		self.mn_generar.Enable(True)
-		self.mn_guardar_proyecto.Enable(True)
+#			self.bt_generar.Enable(True)
+#			self.mn_generar.Enable(True)
+#			self.mn_guardar_proyecto.Enable(True)
 
 	def abrir_editar2(self,event):
 		self.editar2 = Editar2(self, _('Editar marca'), self.controlador)

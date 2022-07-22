@@ -16,7 +16,7 @@ class Opciones(wx.Dialog):
 		panel1 = wx.Panel(self)
 		self.l_idioma = wx.StaticText(panel1, -1, _('Idioma'))
 		self.lista_idioma = [ _('Español'), _('Inglés')]
-		self.com_idioma = wx.ComboBox(panel1, -1, self.completar_idioma(), choices= self.lista_idioma )
+		self.com_idioma = wx.ComboBox(panel1, -1, self.completar_idioma(), choices= self.lista_idioma, style= wx.CB_READONLY)
 		self.com_idioma.SetFocus()
 		self.cas_cue_id = wx.CheckBox(panel1, -1, _('Añadir índice al exportar marcas'))
 		self.cas_cue_id.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))

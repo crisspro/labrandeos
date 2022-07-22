@@ -1,3 +1,4 @@
+import pdb
 import configparser
 import configparser
 import os
@@ -11,7 +12,7 @@ from modelo.tiempo import Tiempo
  
 class Controlador():
 	def __init__(self):
-		self.data  = None
+		self.data = None
 		self.disco = Disco()
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
