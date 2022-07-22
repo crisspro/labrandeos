@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-18 19:13-0400\n"
-"PO-Revision-Date: 2022-07-18 19:17-0400\n"
+"POT-Creation-Date: 2022-07-21 19:22-0400\n"
+"PO-Revision-Date: 2022-07-21 19:34-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -53,6 +53,26 @@ msgstr "&OK"
 msgid "&Cancelar"
 msgstr "&Cancel"
 
+#: editar.py:94
+msgid "Debes ingresar un autor."
+msgstr "You must write an autor."
+
+#: editar.py:94 editar.py:96
+msgid "Alerta."
+msgstr "Alert."
+
+#: editar.py:96
+msgid "Debes ingresar un título."
+msgstr "You must write a title."
+
 #: editar.py:119
 msgid "&Detener"
 msgstr "&Stop"
+
+#: editar.py:130
+msgid "Advertencia."
+msgstr "Caveat."
+
+#: editar.py:130
+msgid "El tiempo ingresado supera el tiempo de duración del audio."
+msgstr "The time ingresed is over them audio duration time."

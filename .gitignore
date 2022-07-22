@@ -8,6 +8,7 @@ files/documentation/*
 *.so
 *.bak
 *.txt
+*.ini
 
 # Distribution / packaging
 .Python

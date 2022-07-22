@@ -91,9 +91,9 @@ class Editar(wx.Dialog):
 
 	def alertar(self):
 		if self.in_autor.GetValue() == '':
-			wx.MessageBox('Debes ingresar un autor.', 'Alerta.')
+			wx.MessageBox(_('Debes ingresar un autor.'), _('Alerta.'))
 		elif self.in_titulo.GetValue() == '':
-			wx.MessageBox('Debe ingresar un título.', 'Alerta.')
+			wx.MessageBox(_('Debes ingresar un título.'), _('Alerta.'))
 
 	def getTiempo(self, milesimas):
 		self.controlador.temporizar(milesimas)
@@ -127,7 +127,7 @@ class Editar(wx.Dialog):
 
 	def comparar_tiempo(self, event):
 		if self.tiempo_actual > self.duracion_milesimas:
-			wx.MessageBox('El tiempo ingresado supera el tiempo de duración del audio.', 'Advertencia:')
+			wx.MessageBox(_('El tiempo ingresado supera el tiempo de duración del audio.'), _('Advertencia.'))
 			self.bt_aceptar.Enable(False)
 			id = event.GetEventObject()
 			id.SetValue('')

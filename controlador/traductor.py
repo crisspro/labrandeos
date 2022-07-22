@@ -2,10 +2,12 @@ import gettext
 from locale import getdefaultlocale
 import os
 
+import controlador.configuracion
 
 class Traductor():
-	def __init__(self, idioma, modulo):
-		self.idioma = idioma
+	def __init__(self, modulo):
+		self.controlador_opciones = controlador.configuracion.Opciones()
+		self.idioma = self.controlador_opciones.consultar_opciones('str', 'general', 'idioma')
 		self.modulo = modulo
 		self.ruta = os.path.join('vista', 'locale')
 		self.traducir()

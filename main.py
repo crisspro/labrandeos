@@ -17,7 +17,6 @@ controlador_opciones.chequear_ini()
 controlador_app = controlador.configuracion.App()
 controlador_controlador.load()
 controlador_controlador.limpiar_temporal()
-Traductor(controlador_opciones.consultar_opciones('str', 'general', 'idioma') , 'opciones')
 Programa(None, title= 'CUE Genesis', controlador = controlador_controlador, app= controlador_app, opciones= controlador_opciones)
 
 App.MainLoop()

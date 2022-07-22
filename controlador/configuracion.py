@@ -13,7 +13,6 @@ class App():
 		self.licencia_app = 'GPL 3.0'
 		self.sitio_app = 'https://github.com/crisspro/cuegenesis'
 		self.api_app = 'https://api.github.com/repos/crisspro/cuegenesis/releases/latest'
-		self.idioma_app = 'en'
 		self.version_app = 'v0.1'
 		self.actualizado = True
 

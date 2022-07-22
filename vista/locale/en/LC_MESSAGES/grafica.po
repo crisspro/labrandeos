@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-21 16:29-0400\n"
-"PO-Revision-Date: 2022-07-21 16:46-0400\n"
+"POT-Creation-Date: 2022-07-21 19:22-0400\n"
+"PO-Revision-Date: 2022-07-21 19:45-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -18,7 +18,6 @@ msgstr ""
 "X-Generator: Poedit 3.1.1\n"
 
 #: grafica.py:49
-#, fuzzy
 msgid "&Archivo"
 msgstr "&File"
 
@@ -148,19 +147,19 @@ msgid "Eliminado"
 msgstr "deleted"
 
 #: grafica.py:269
-msgid "Advertencia."
-msgstr "Caveat."
-
-#: grafica.py:269
 msgid ""
 "Estás a punto de cerrar el programa. Los cambios que hayas echo al proyecto "
 "no se guardarán. \n"
 " ¿Deseas salir?"
 msgstr ""
-"You are about to close the program. The changes you have made to the "
-"project will not be saved.\n"
+"You are about to close the program. The changes you have made to the project "
+"will not be saved.\n"
 "\n"
 "Do you want to go out?"
+
+#: grafica.py:269 grafica.py:317
+msgid "Advertencia."
+msgstr "Caveat."
 
 #: grafica.py:277
 msgid "Metadatos del álbum"
@@ -170,9 +169,24 @@ msgstr "Albumn metadata"
 msgid "Abrir archivo"
 msgstr "Open file"
 
+#: grafica.py:302
+msgid "No es posible cargar el fichero, sólo se admiten archivos de audio."
+msgstr "Impossible to load the file. Only audio files are accepted."
+
 #: grafica.py:314
 msgid "Abrir proyecto"
 msgstr "Open project"
+
+#: grafica.py:317
+msgid ""
+"Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
+"perderán. \n"
+" ¿Deseas continuar de todos modos?"
+msgstr ""
+"You are about to close the program. The changes you have made to the project "
+"will not be saved.\n"
+"\n"
+"Do you want to go out?"
 
 #: grafica.py:327
 msgid "Guardar proyecto"

@@ -299,7 +299,7 @@ class Programa(wx.Frame):
 					self.path= ''
 					break
 			if self.path == '':
-				wx.MessageBox('No es posible cargar el fichero, sólo se admiten archivos de audio.', caption= 'Atención.', style= wx.ICON_ERROR)
+				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención.', style= wx.ICON_ERROR)
 			else:
 				self.reproductor.Load(self.path)
 				self.bt_reproducir.SetFocus()
@@ -314,7 +314,7 @@ class Programa(wx.Frame):
 		self.dialogo_abrir_proyecto = wx.FileDialog(self, _('Abrir proyecto'), style=wx.FD_OPEN, wildcard= '*.CGP')
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
-				mensaje = wx.MessageBox('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?', 'Advertencia.', style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
+				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?'), _('Advertencia.'), style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
 				if mensaje == 2:
 					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
 					self.controlador.limpiar_temporal()
@@ -338,7 +338,10 @@ class Programa(wx.Frame):
 			self.refrescar_principal()
 
 	def abrir_documentacion(self, event):
-		os.startfile(os.path.join('files', 'documentation', 'es.html'))
+		if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':
+			os.startfile(os.path.join('files', 'documentation', 'es.html'))
+		else:
+			os.startfile(os.path.join('files', 'documentation', 'en.html'))
 
 	#busca actualizaciones
 	def buscar_actualizacion(self, event):
