@@ -145,7 +145,6 @@ class Programa(wx.Frame):
 		self.volumen= wx.Slider(self.panel2, -1, 100, 0, 100)
 		self.Bind(wx.EVT_SLIDER, self.volumenear,self.volumen)
 		self.bt_marcar= wx.Button(self.panel2, -1, _('&Marcar'))
-		self.bt_marcar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
 		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion]
@@ -304,28 +303,26 @@ class Programa(wx.Frame):
 				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención.', style= wx.ICON_ERROR)
 			else:
 				self.reproductor.Load(self.path)
-				self.controlador.ruta_audio = self.path
 				self.controlador.crear_proyecto()
-				self.habilitar_controles()
-				self.desactivar_controles()
 				self.guardar_disco(None)
 				self.registrar_pista()
-
+				self.habilitar_controles()
+				self.desactivar_controles()
+				self.linea_tiempo.SetFocus()
 
 
 	def registrar_pista(self):
+		direccion = os.path.dirname(self.path)
 		nombre_completo = os.path.basename(self.path)
 		nombre = os.path.splitext(nombre_completo)[0]
 		self.controlador.crear_pista(
 		nombre,
 		os.path.splitext(nombre_completo)[1],
-		self.path,
+		direccion,
 		self.reproductor.Length())
 
-
-
 	def habilitar_controles (self):
-		if self.controlador.ruta_audio != '':
+		if self.controlador.pista != None:
 			self.panel2.Enable(True)
 			self.mn_metadatos_disco.Enable(True)
 			self.mn_nuevo_proyecto.Enable(True)
@@ -336,7 +333,7 @@ class Programa(wx.Frame):
 
 	# desactiva controles
 	def desactivar_controles(self):
-		if self.controlador.ruta_audio != '':
+		if self.controlador.pista != None:
 			self.bt_abrir.Enable(False)
 			self.mn_cargar_audio.Enable(False)
 

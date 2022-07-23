@@ -1,6 +1,5 @@
 import pdb
 
-import configparser
 import os
 import pickle
 import requests
@@ -19,7 +18,6 @@ class Controlador():
 		self.disco = Disco()
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
-		self.ruta_audio = ''
 
 
 	def crear_proyecto(self):
@@ -67,12 +65,15 @@ class Controlador():
 		pickle.dump(self.disco, f)
 		f.close()
 
+	def limpiar_proyecto(self):
+		self.data.limpiar()
+		self.data = None
+
 	def limpiar_temporal(self):
 		if os.path.exists('temp.proyecto.cgp'):
 			os.remove('temp.proyecto.cgp')
-		self.data = None
-		self.ruta_audio = ''
 		self.ruta_proyecto = 'temp.proyecto.cgp'
+		self.data = None
 
 
 	def temporizar(self, milesimas):
@@ -97,16 +98,15 @@ class Controlador():
 		return milesimas
 
 	def generar_cue (self, id):
-		carpeta = os.path.dirname(self.ruta_audio)
-		tipo = os.path.splitext(self.ruta_audio)[1]
+		tipo = self.pista.extencion
 		tipo = tipo[1:].upper()
-		archivo = open(os.path.join(carpeta,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'), 'w')
+		archivo = open(os.path.join(self.pista.direccion,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'), 'w')
 		archivo.write('TITLE "' + self.disco.titulo + '"\n')
 		archivo.write('PERFORMER "' + self.disco.autor + '"\n')
 		archivo.write('REM GENRE "' + self.disco.genero + '"\n')
 		archivo.write('REM DATE "' + str(self.disco.fecha) + '"\n')
 		archivo.write('REM COMMENT "' + self.disco.comentarios + '"\n')
-		archivo.write('FILE "' + os.path.basename(self.ruta_audio) + '" ' + tipo + '\n')
+		archivo.write('FILE "' + self.pista.nombre + self.pista.extencion + '" ' + tipo + '\n')
 		marca = self.getMarcas()
 		for marca in marca:
 			archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
@@ -118,12 +118,11 @@ class Controlador():
 			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio_cue()) + '\n')
 		archivo.close()
 
-	def crear_pista(self, nombre, extencion, ruta, duracion):
-		self.pista = Pista(nombre, extencion, ruta, duracion)
+	def crear_pista(self, nombre, extencion, direccion, duracion):
+		self.pista = Pista(nombre, extencion, direccion, duracion)
 
 	def verificar_exportacion(self):
-		carpeta = os.path.dirname(self.ruta_audio)
-		existe = os.path.isfile(os.path.join(carpeta,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'))
+		existe = os.path.isfile(os.path.join(self.pista.direccion,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'))
 		return existe
 
 	def consultar_datos(self, id):
@@ -131,6 +130,3 @@ class Controlador():
 		return marca(id)
 
 
-# Creación de instancias
-
-configparser = configparser.ConfigParser()

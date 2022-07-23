@@ -1,6 +1,6 @@
 class Pista():
-	def __init__(self, nombre, extencion, ruta, duracion):
+	def __init__(self, nombre, extencion, direccion, duracion):
 		self.nombre = nombre
 		self.extencion = extencion
-		self.ruta = ruta
+		self.direccion = direccion
 		self.duracion = duracion
