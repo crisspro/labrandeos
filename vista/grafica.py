@@ -112,11 +112,11 @@ class Programa(wx.Frame):
 		self.l_reloj.SetFont(self.font_reloj)
 		self.l_pista= wx.StaticText(self.panel2, -1, _('Línea de tiempo'))
 		self.minutaje= 1
-		self.pista= wx.Slider(self.panel2, -1, 0, 0, self.minutaje,size= (400, -1))
-		self.pista.SetLineSize(5000)
-		self.pista.SetPageSize(60000)
+		self.linea_tiempo= wx.Slider(self.panel2, -1, 0, 0, self.minutaje,size= (400, -1))
+		self.linea_tiempo.SetLineSize(5000)
+		self.linea_tiempo.SetPageSize(60000)
 
-		self.Bind(wx.EVT_SLIDER, self.mover, self.pista)		
+		self.Bind(wx.EVT_SLIDER, self.mover, self.linea_tiempo)		
 		self.bt_reproducir= wx.Button(self.panel2, -1, _('&Reproducir'))
 		self.Bind(wx.EVT_BUTTON, self.reproducir_pausar, self.bt_reproducir)
 		self.Bind(wx.media.EVT_MEDIA_STOP, self.detener, self.reproductor)
@@ -187,7 +187,7 @@ class Programa(wx.Frame):
 		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
 		sz1.Add(self.reproductor)
 
-		sz1.Add(self.pista, wx.SizerFlags().Expand())
+		sz1.Add(self.linea_tiempo, wx.SizerFlags().Expand())
 
 
 		sz2= wx.BoxSizer(wx.HORIZONTAL)
@@ -290,14 +290,13 @@ class Programa(wx.Frame):
 
 
 	def abrir_archivo (self, event):
-		self.dialogo= wx.FileDialog(self, _('Abrir archivo'), style=wx.FD_OPEN)
+		self.dialogo= wx.FileDialog(self, _('Cargar audio'), style=wx.FD_OPEN)
 		if self.dialogo.ShowModal() == wx.ID_OK:
 			archivo_info= pymediainfo.MediaInfo.parse(self.dialogo.GetPath())
 			self.path= ''
 			for track in archivo_info.tracks:
 				if track.track_type == 'Audio':
 					self.path= self.dialogo.GetPath()
-					self.bt_marcar.Enable(True)
 				elif track.track_type == 'Video':
 					self.path= ''
 					break
@@ -305,12 +304,25 @@ class Programa(wx.Frame):
 				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención.', style= wx.ICON_ERROR)
 			else:
 				self.reproductor.Load(self.path)
-				self.bt_reproducir.SetFocus()
 				self.controlador.ruta_audio = self.path
-				self.controlador.crear_proyecto() 
+				self.controlador.crear_proyecto()
 				self.habilitar_controles()
 				self.desactivar_controles()
 				self.guardar_disco(None)
+				self.registrar_pista()
+
+
+
+	def registrar_pista(self):
+		nombre_completo = os.path.basename(self.path)
+		nombre = os.path.splitext(nombre_completo)[0]
+		self.controlador.crear_pista(
+		nombre,
+		os.path.splitext(nombre_completo)[1],
+		self.path,
+		self.reproductor.Length())
+
+
 
 	def habilitar_controles (self):
 		if self.controlador.ruta_audio != '':
@@ -335,10 +347,11 @@ class Programa(wx.Frame):
 			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
 				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?'), _('Advertencia.'), style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
 				if mensaje == 2:
-					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
 					self.controlador.limpiar_temporal()
+					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
+					self.controlador.crear_proyecto()
 					self.controlador.load()
-					self.listar()
+					self.refrescar_lista()
 					self.habilitar_controles()
 					self.desactivar_controles()
 
@@ -393,7 +406,7 @@ class Programa(wx.Frame):
 			dlg.close()
 
 	def enfocar_linea_tiempo(self, event):
-		self.pista.SetFocus()
+		self.linea_tiempo.SetFocus()
 
 	def enfocar_lista(self, event):
 		self.lista.SetFocus()
@@ -405,7 +418,7 @@ class Programa(wx.Frame):
 			self.reproductor.Play()
 			self.bt_reproducir.SetLabel(_('&Pausar'))
 			self.minutaje= self.reproductor.Length()
-			self.pista.SetMax(self.minutaje)
+			self.linea_tiempo.SetMax(self.minutaje)
 		elif self.estado == 2:
 			self.reproductor.Pause()
 			self.bt_reproducir.SetLabel(_('&Reproducir'))
@@ -449,12 +462,12 @@ class Programa(wx.Frame):
 
 #busca un momento de la pista cuando el usuario mueve la aguja del control
 	def mover (self, event):
-		self.reproductor.Seek(self.pista.GetValue())
+		self.reproductor.Seek(self.linea_tiempo.GetValue())
 
 #mueve la aguja del control de la pista de forma automática a medida que se reproduce el audio
 	def temporizar (self, event):
 		self.tiempo= self.reproductor.Tell()
-		self.pista.SetValue(self.tiempo)
+		self.linea_tiempo.SetValue(self.tiempo)
 		valores= self.calcular_tiempo(self.tiempo)
 		str_valores= []
 		for i in valores:

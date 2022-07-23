@@ -1,5 +1,5 @@
 import pdb
-import configparser
+
 import configparser
 import os
 import pickle
@@ -9,9 +9,12 @@ import wx
 from modelo.disco import Disco
 from modelo.marca import *
 from modelo.tiempo import Tiempo
- 
+from modelo.pista import Pista
+
+
 class Controlador():
 	def __init__(self):
+		self.pista = None
 		self.data = None
 		self.disco = Disco()
 		self.tiempo = Tiempo()
@@ -114,6 +117,9 @@ class Controlador():
 			archivo.write('PERFORMER "' + marca.autor + '"\n')
 			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio_cue()) + '\n')
 		archivo.close()
+
+	def crear_pista(self, nombre, extencion, ruta, duracion):
+		self.pista = Pista(nombre, extencion, ruta, duracion)
 
 	def verificar_exportacion(self):
 		carpeta = os.path.dirname(self.ruta_audio)
