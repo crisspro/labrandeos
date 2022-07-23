@@ -19,7 +19,8 @@ class Controlador():
 		self.ruta_audio = ''
 
 
-
+	def crear_proyecto(self):
+		self.data = Data()
 
 	def crear_disco(self, titulo, autor, fecha, genero, comentarios):
 		self.disco = Disco()
@@ -66,6 +67,9 @@ class Controlador():
 	def limpiar_temporal(self):
 		if os.path.exists('temp.proyecto.cgp'):
 			os.remove('temp.proyecto.cgp')
+		self.data = None
+		self.ruta_audio = ''
+		self.ruta_proyecto = 'temp.proyecto.cgp'
 
 
 	def temporizar(self, milesimas):

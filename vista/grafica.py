@@ -48,11 +48,11 @@ class Programa(wx.Frame):
 	#creación del menú archivo
 		menu1= wx.Menu()
 		archivo = barrademenu.Append(menu1, _('&Archivo'))
-		self.mn_nuevo = menu1.Append(-1, _('&Nuevo'))
-		self.mn_nuevo.Enable(False)
-		self.Bind(wx.EVT_MENU, self.crear_proyecto)
-		mn_cargar_audio = menu1.Append(-1, _('&Cargar audio'))
-		self.Bind(wx.EVT_MENU, self.abrir_archivo, mn_cargar_audio)
+		self.mn_nuevo_proyecto = menu1.Append(-1, _('&Nuevo proyecto'))
+		self.mn_nuevo_proyecto.Enable(False)
+		self.Bind(wx.EVT_MENU, self.crear_proyecto, self.mn_nuevo_proyecto)
+		self.mn_cargar_audio = menu1.Append(-1, _('&Cargar audio'))
+		self.Bind(wx.EVT_MENU, self.abrir_archivo, self.mn_cargar_audio)
 		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto'))
 		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.mn_abrir_proyecto)
 		self.mn_guardar_proyecto = menu1.Append(-1, _('&Guardar proyecto como...'))
@@ -81,7 +81,7 @@ class Programa(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.documentacion)
 		self.mn_buscar_actualizacion = menu3.Append(-1, _('&Buscar  actualizaciones'))
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
-		acercade= menu3.Append(-1, _('Acerca de'))
+		acercade= menu3.Append(-1, _('Acerca de...'))
 		self.Bind(wx.EVT_MENU, self.mg_acerca, acercade)
 
 
@@ -307,18 +307,26 @@ class Programa(wx.Frame):
 				self.reproductor.Load(self.path)
 				self.bt_reproducir.SetFocus()
 				self.controlador.ruta_audio = self.path
+				self.controlador.crear_proyecto() 
 				self.habilitar_controles()
+				self.desactivar_controles()
 				self.guardar_disco(None)
 
 	def habilitar_controles (self):
 		if self.controlador.ruta_audio != '':
 			self.panel2.Enable(True)
 			self.mn_metadatos_disco.Enable(True)
-			self.mn_nuevo.Enable(True)
+			self.mn_nuevo_proyecto.Enable(True)
 		if self.controlador.data != None:
 			self.mn_generar.Enable(True)
 			self.mn_guardar_proyecto.Enable(True)
 			self.bt_generar.Enable(True)
+
+	# desactiva controles
+	def desactivar_controles(self):
+		if self.controlador.ruta_audio != '':
+			self.bt_abrir.Enable(False)
+			self.mn_cargar_audio.Enable(False)
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
@@ -331,10 +339,19 @@ class Programa(wx.Frame):
 					self.controlador.limpiar_temporal()
 					self.controlador.load()
 					self.listar()
+					self.habilitar_controles()
+					self.desactivar_controles()
 
 	# Crea un nuevo proyecto
-	def crear_proyecto(self):
-		pass
+	def crear_proyecto(self, event):
+		mensaje = wx.MessageBox(_('Estás a punto de crear un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?'), _('Advertencia.'), style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
+		if mensaje == 2:
+			self.controlador.limpiar_temporal()
+			self.controlador.load()
+			self.path = ''
+			self.controlador.crear_proyecto()
+			self.habilitar_controles()
+			self.refrescar_principal()
 
 	#guarda el proyecto en una ruta específica
 	def guardar_proyecto(self, event):
