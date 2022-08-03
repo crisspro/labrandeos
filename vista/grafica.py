@@ -475,6 +475,8 @@ class Programa(wx.Frame):
 			str_valores.append(v)
 		valores= ' : '.join(str_valores)
 		self.l_reloj.SetLabel(valores)
+		if self.controlador.pista != None:
+			self.controlador.pista.reproducción_actual = self.tiempo
 
 # calcula y muestra el tiempo de la pista en horas,minutos,segundos y marcos.
 	def calcular_tiempo (self, tiempo):
@@ -486,6 +488,7 @@ class Programa(wx.Frame):
 		self.horas= int(milesimas/60/60/75)
 		self.valores= (self.horas, self.minutos, self.segundos, self.marcos)
 		return self.valores
+
 # verbaliza el tiempo actual de reproducción
 	def hablar_tiempo (self, event):
 		self.lector.output(str(self.horas) + _('horas') + str(self.minutos) + _('minutos') + str(self.segundos) + _('segundos') + str(self.marcos) + _('marcos'))
@@ -507,9 +510,8 @@ class Programa(wx.Frame):
 	def vn_editar(self):
 		self.editar = Editar(self, _('Crear marca'), self.controlador)
 		self.editar.getTiempo(self.reproductor.Tell())
-		self.editar.tiempo_actual = self.reproductor.Tell()
+#		self.editar.tiempo_actual = self.reproductor.Tell()
 		self.editar.Bind(wx.EVT_BUTTON, self.reproducir_editar, self.editar.bt_reproducir)
-		self.editar.duracion_milesimas = self.reproductor.Length()
 		self.editar.duracion_tiempo = self.calcular_tiempo(self.reproductor.Length())
 		if self.editar.ShowModal() == wx.ID_OK:
 			self.pausar(None)

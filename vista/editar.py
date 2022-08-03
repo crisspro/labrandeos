@@ -7,10 +7,12 @@ class Editar(wx.Dialog):
 		super().__init__(parent, title= title)
 		self.Center()
 		self.controlador = controlador
-		self.tiempo_actual = 0
-		self.duracion_milesimas = 0
+		self.tiempo_actual = self.controlador.pista.reproduccion_actual 
+		self.duracion_milesimas = self.controlador.pista.duracion
 		self.duracion_tiempo = ''
 		self.reproduciendo = False
+
+
 
 		# Creación de controles
 		self.panel1= wx.Panel(self)
@@ -128,12 +130,10 @@ class Editar(wx.Dialog):
 	def comparar_tiempo(self, event):
 		if self.tiempo_actual > self.duracion_milesimas:
 			wx.MessageBox(_('El tiempo ingresado supera el tiempo de duración del audio.'), _('Advertencia.'))
-			self.bt_aceptar.Enable(False)
 			id = event.GetEventObject()
 			id.SetValue('')
 			id.SetFocus()
-		else:
-			self.bt_aceptar.Enable(True)
+
 
 	def llenar_valores(self):
 		self.in_autor.SetValue(self.controlador.consultar_disco().autor)

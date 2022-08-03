@@ -4,3 +4,4 @@ class Pista():
 		self.extencion = extencion
 		self.direccion = direccion
 		self.duracion = duracion
+		self.reproduccion_actual = 0
