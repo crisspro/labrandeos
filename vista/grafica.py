@@ -1,4 +1,5 @@
 import pdb
+import pdb
 import os
 
 import accessible_output2.outputs.auto
@@ -319,6 +320,7 @@ class Programa(wx.Frame):
 		nombre,
 		os.path.splitext(nombre_completo)[1],
 		direccion,
+		self.path,
 		self.reproductor.Length())
 
 	def habilitar_controles (self):
@@ -348,6 +350,7 @@ class Programa(wx.Frame):
 					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
 					self.controlador.crear_proyecto()
 					self.controlador.load()
+					self.reproductor.Load(self.controlador.pista.ruta)
 					self.refrescar_lista()
 					self.habilitar_controles()
 					self.desactivar_controles()
@@ -510,7 +513,7 @@ class Programa(wx.Frame):
 	def vn_editar(self):
 		self.editar = Editar(self, _('Crear marca'), self.controlador)
 		self.editar.getTiempo(self.reproductor.Tell())
-#		self.editar.tiempo_actual = self.reproductor.Tell()
+		self.editar.tiempo_actual = self.reproductor.Tell()
 		self.editar.Bind(wx.EVT_BUTTON, self.reproducir_editar, self.editar.bt_reproducir)
 		self.editar.duracion_tiempo = self.calcular_tiempo(self.reproductor.Length())
 		if self.editar.ShowModal() == wx.ID_OK:

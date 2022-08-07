@@ -54,20 +54,27 @@ class Controlador():
 		try:
 			f = open(self.ruta_proyecto , "rb")
 			self.data = pickle.load(f)
+			self.pista = pickle.load(f)
+			self.disco = pickle.load(f)
 			f.close()
 		except FileNotFoundError:
 			self.data = Data()
+			self.disco = Disco()
+			self.pista = None
 
 	def save(self):
 		""" guarda la información del modelo """
 		f = open(self.ruta_proyecto , 'wb')
 		pickle.dump(self.data, f)
+		pickle.dump(self.pista, f)
 		pickle.dump(self.disco, f)
 		f.close()
 
 	def limpiar_proyecto(self):
 		self.data.limpiar()
 		self.data = None
+		self.pista = None
+		self.disco = Disco() 
 
 	def limpiar_temporal(self):
 		if os.path.exists('temp.proyecto.cgp'):
@@ -118,8 +125,8 @@ class Controlador():
 			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio_cue()) + '\n')
 		archivo.close()
 
-	def crear_pista(self, nombre, extencion, direccion, duracion):
-		self.pista = Pista(nombre, extencion, direccion, duracion)
+	def crear_pista(self, nombre, extencion, direccion, ruta, duracion):
+		self.pista = Pista(nombre, extencion, direccion, ruta, duracion)
 
 	def verificar_exportacion(self):
 		existe = os.path.isfile(os.path.join(self.pista.direccion,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'))
