@@ -227,6 +227,8 @@ class Programa(wx.Frame):
 	def refrescar_principal(self):
 		self.graficar()
 		self.refrescar_lista()
+		self.habilitar_controles()
+		self.desactivar_controles()
 
 	def refrescar_lista(self):
 		self.lista.DeleteAllItems()
