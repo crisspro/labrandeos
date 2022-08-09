@@ -341,19 +341,20 @@ class Programa(wx.Frame):
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
-		self.dialogo_abrir_proyecto = wx.FileDialog(self, _('Abrir proyecto'), style=wx.FD_OPEN, wildcard= '*.CGP')
+		self.dialogo_abrir_proyecto = wx.FileDialog(self, _('Abrir proyecto'), style=wx.FD_OPEN, wildcard= '*.cgp')
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
-			if self.controlador.ruta_proyecto != self.dialogo_abrir_proyecto.GetPath():
+			mensaje = 0
+			if self.controlador.data != None:
 				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?'), _('Advertencia.'), style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
-				if mensaje == 2:
-					self.controlador.limpiar_temporal()
-					self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
-					self.controlador.crear_proyecto()
-					self.controlador.load()
-					self.reproductor.Load(self.controlador.pista.ruta)
-					self.refrescar_lista()
-					self.habilitar_controles()
-					self.desactivar_controles()
+			if self.controlador.data == None or mensaje == 2:
+				self.controlador.limpiar_temporal()
+				self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
+				self.controlador.crear_proyecto()
+				self.controlador.load()
+				self.reproductor.Load(self.controlador.pista.ruta)
+				self.refrescar_lista()
+				self.habilitar_controles()
+				self.desactivar_controles()
 
 	# Crea un nuevo proyecto
 	def crear_proyecto(self, event):
@@ -370,9 +371,12 @@ class Programa(wx.Frame):
 	def guardar_proyecto(self, event):
 		self.dialogo_guardar = wx.FileDialog(self, _('Guardar proyecto'), style=wx.FD_SAVE, wildcard= '*.CGP')
 		if self.dialogo_guardar.ShowModal() == wx.ID_OK:
-			self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
-			self.controlador.save()
-			self.controlador.limpiar_temporal()
+			if os.path.isfile(self.dialogo_guardar.GetPath()):
+				mensaje = wx.MessageBox(_('Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?'), _('Advertencia.'), style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
+				if mensaje == 2:
+					self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
+					self.controlador.save()
+					self.controlador.limpiar_temporal()
 
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):
