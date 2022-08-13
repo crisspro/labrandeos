@@ -4,6 +4,7 @@ import os
 import pickle
 import requests
 
+import pymediainfo
 import wx
 from modelo.disco import Disco
 from modelo.marca import *
@@ -138,4 +139,12 @@ class Controlador():
 		marca = self.data.getMarcas()
 		return marca(id)
 
+	def comprobar_multimedia(self, archivo):
+		archivo_info= pymediainfo.MediaInfo.parse(archivo)
+		for track in archivo_info.tracks:
+			if track.track_type == 'Audio':
+				return 'audio'
+			if track.track_type == 'Video':
+				return 'otro'
+				break
 

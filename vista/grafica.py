@@ -294,15 +294,9 @@ class Programa(wx.Frame):
 	def abrir_archivo (self, event):
 		self.dialogo= wx.FileDialog(self, _('Cargar audio'), style=wx.FD_OPEN)
 		if self.dialogo.ShowModal() == wx.ID_OK:
-			archivo_info= pymediainfo.MediaInfo.parse(self.dialogo.GetPath())
-			self.path= ''
-			for track in archivo_info.tracks:
-				if track.track_type == 'Audio':
-					self.path= self.dialogo.GetPath()
-				elif track.track_type == 'Video':
-					self.path= ''
-					break
-			if self.path == '':
+			self.path = self.dialogo.GetPath()
+			tipo_archivo = self.controlador.comprobar_multimedia(self.path)
+			if tipo_archivo == 'otro':
 				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención.', style= wx.ICON_ERROR)
 			else:
 				self.reproductor.Load(self.path)
@@ -442,15 +436,10 @@ class Programa(wx.Frame):
 		if self.estado == 1 or self.estado == 2:
 			self.reproductor.Stop()
 			self.bt_reproducir.SetLabel(_('&Reproducir'))
-			self.editar.reproduciendo = False
 		else:
 			self.bt_reproducir.SetLabel(_('&Reproducir'))
 
-
-	#reproduce y pausa en ventana editar.
-
-
-# controla el volumen
+	# controla el volumen
 	def volumenear (self, event):
 		a= self.volumen.GetValue()
 		b= a /100

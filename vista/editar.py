@@ -11,7 +11,7 @@ class Editar(wx.Dialog):
 		self.tiempo_actual = self.controlador.pista.reproduccion_actual 
 		self.duracion_milesimas = self.controlador.pista.duracion
 		self.duracion_tiempo = ''
-		self.reproduciendo = False
+
 
 
 
@@ -116,13 +116,6 @@ class Editar(wx.Dialog):
 		else:
 			self.bt_aceptar.Enable(False)
 
-	# cambia la etiqueta del botón reproducir.
-	def cambiar_etiqueta(self):
-		if self.reproduciendo == True:
-			self.bt_reproducir.SetLabel(_('&Detener'))
-		else:
-			self.bt_reproducir.SetLabel(_('&Reproducir'))
-
 	def retomar_tiempo(self, event):
 		tiempo = (self.in_horas.GetValue(), self.in_minutos.GetValue(), self.in_segundos.GetValue(), self.in_marcos.GetValue())
 		self.tiempo_actual = self.controlador.reconvertir(tiempo)
@@ -144,11 +137,9 @@ class Editar(wx.Dialog):
 		self.reproductor.Seek(self.tiempo_actual)
 		if self.reproductor.GetState() == 1 or self.reproductor.GetState() == 0:
 			self.reproductor.Play()
-			self.reproduciendo = True
 			self.bt_reproducir.SetLabel(_('&Detener'))
 		else:
 			self.reproductor.Stop()
-			self.reproduciendo = False
 			self.bt_reproducir.SetLabel(_('&Reproducir'))
 
 
