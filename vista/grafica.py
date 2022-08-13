@@ -270,11 +270,16 @@ class Programa(wx.Frame):
 		self.PopupMenu(Contextual(self))
 
 	def cerrar (self, event):
-		if os.path.exists('temp.proyecto.cgp'):
-			resp = wx.MessageBox(_('Estás a punto de cerrar el programa. Los cambios que hayas echo al proyecto no se guardarán. \n ¿Deseas salir?'), _('Advertencia.'), style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
-			if resp == wx.YES:
+		if self.controlador.pista != None:
+			resp = wx.MessageBox(_('Estás a punto de cerrar el programa. \n ¿Deseas guardar los cambios que hayas realizado?'), _('Advertencia.'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
+			if resp == wx.NO:
 				self.controlador.limpiar_temporal()
 				self.Destroy()
+			elif resp == wx.YES:
+				self.controlador.save()
+				self.controlador.limpiar_temporal()
+				if self.controlador.ruta_proyecto == 'temp.proyecto.cgp':
+					self.guardar_proyecto(event)
 		else:
 			self.Destroy()
 
@@ -354,14 +359,17 @@ class Programa(wx.Frame):
 
 	# Crea un nuevo proyecto
 	def crear_proyecto(self, event):
-		mensaje = wx.MessageBox(_('Estás a punto de crear un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?'), _('Advertencia.'), style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
-		if mensaje == 2:
+		mensaje = wx.MessageBox(_('Hay cambios en este proyecto que no han sido guardados. \n ¿Deseas guardarlos?'), _('Advertencia.'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
+		if mensaje == wx.NO:
 			self.controlador.limpiar_temporal()
 			self.controlador.load()
 			self.path = ''
 			self.controlador.crear_proyecto()
 			self.habilitar_controles()
 			self.refrescar_principal()
+		elif mensaje == wx.YES:
+			self.guardar_proyecto(event)
+
 
 	#guarda el proyecto en una ruta específica
 	def guardar_proyecto(self, event):
