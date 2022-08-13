@@ -296,7 +296,7 @@ class Programa(wx.Frame):
 		if self.dialogo.ShowModal() == wx.ID_OK:
 			self.path = self.dialogo.GetPath()
 			tipo_archivo = self.controlador.comprobar_multimedia(self.path)
-			if tipo_archivo == 'otro':
+			if tipo_archivo != 'audio':
 				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención.', style= wx.ICON_ERROR)
 			else:
 				self.reproductor.Load(self.path)
