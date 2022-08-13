@@ -443,21 +443,11 @@ class Programa(wx.Frame):
 			self.reproductor.Stop()
 			self.bt_reproducir.SetLabel(_('&Reproducir'))
 			self.editar.reproduciendo = False
-			self.editar.cambiar_etiqueta()
 		else:
 			self.bt_reproducir.SetLabel(_('&Reproducir'))
-			self.editar.reproduciendo = False
-			self.editar.cambiar_etiqueta()
+
 
 	#reproduce y pausa en ventana editar.
-	def reproducir_editar(self, event):
-		self.reproductor.Seek(self.editar.tiempo_actual)
-		self.reproducir_pausar(None)
-		if self.estado == 1 or self.estado == 0:
-			self.editar.reproduciendo = True
-		else:
-			self.editar.reproduciendo = False
-		self.editar.cambiar_etiqueta()
 
 
 # controla el volumen
@@ -517,10 +507,9 @@ class Programa(wx.Frame):
 
 
 	def vn_editar(self):
-		self.editar = Editar(self, _('Crear marca'), self.controlador)
+		self.editar = Editar(self, _('Crear marca'), self.controlador, self.reproductor)
 		self.editar.getTiempo(self.reproductor.Tell())
 		self.editar.tiempo_actual = self.reproductor.Tell()
-		self.editar.Bind(wx.EVT_BUTTON, self.reproducir_editar, self.editar.bt_reproducir)
 		self.editar.duracion_tiempo = self.calcular_tiempo(self.reproductor.Length())
 		if self.editar.ShowModal() == wx.ID_OK:
 			self.pausar(None)

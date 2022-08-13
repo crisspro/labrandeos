@@ -3,10 +3,11 @@ import wx.adv
 
 
 class Editar(wx.Dialog):
-	def __init__(self, parent, title, controlador):
+	def __init__(self, parent, title, controlador, reproductor):
 		super().__init__(parent, title= title)
 		self.Center()
 		self.controlador = controlador
+		self.reproductor = reproductor
 		self.tiempo_actual = self.controlador.pista.reproduccion_actual 
 		self.duracion_milesimas = self.controlador.pista.duracion
 		self.duracion_tiempo = ''
@@ -40,7 +41,7 @@ class Editar(wx.Dialog):
 		self.in_marcos.SetRange(0,74)
 		self.Bind(wx.EVT_SPINCTRL, self.retomar_tiempo, self.in_marcos)
 		self.bt_reproducir = wx.Button(self.panel1, -1, _('&Reproducir'))
-		self.Bind (wx.EVT_BUTTON, self.cambiar_etiqueta, self.bt_reproducir)
+		self.Bind (wx.EVT_BUTTON, self.reproducir, self.bt_reproducir)
 		self.bt_aceptar= wx.Button(self.panel1, wx.ID_OK, _('&Aceptar'))
 		self.bt_aceptar.Enable(False)
 		self.bt_aceptar.SetDefault()
@@ -138,6 +139,19 @@ class Editar(wx.Dialog):
 	def llenar_valores(self):
 		self.in_autor.SetValue(self.controlador.consultar_disco().autor)
 		self.in_autor.SetValue(self.controlador.consultar_disco().autor)
+
+	def reproducir(self, event):
+		self.reproductor.Seek(self.tiempo_actual)
+		if self.reproductor.GetState() == 1 or self.reproductor.GetState() == 0:
+			self.reproductor.Play()
+			self.reproduciendo = True
+			self.bt_reproducir.SetLabel(_('&Detener'))
+		else:
+			self.reproductor.Stop()
+			self.reproduciendo = False
+			self.bt_reproducir.SetLabel(_('&Reproducir'))
+
+
 
 
 class Editar2(Editar):
