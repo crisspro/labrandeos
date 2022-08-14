@@ -72,23 +72,31 @@ class Programa(wx.Frame):
 		salir= menu1.Append(-1, _('&Salir'))
 		self.Bind(wx.EVT_MENU, self.cerrar, salir)
 
-	# creación del menú herramientas
+		#creacion del menu editar
 		menu2= wx.Menu()
-		herramientas =  barrademenu.Append(menu2, _('&Herramientas'))
-		self.mn_metadatos_disco = menu2.Append(-1, _('&Metadatos del álbum'))
+		self.mn_editar =  barrademenu.Append(menu2, _('&Editar'))
+		self.mn_deshacer = menu2.Append(-1, _('&Deshacer'))
+		self.mn_deshacer.Enable(False)
+		self.Bind(wx.EVT_MENU, self.deshacer, self.mn_deshacer)
+
+
+		# creación del menú herramientas
+		menu3= wx.Menu()
+		herramientas =  barrademenu.Append(menu3, _('&Herramientas'))
+		self.mn_metadatos_disco = menu3.Append(-1, _('&Metadatos del álbum'))
 		self.mn_metadatos_disco.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_disco, self.mn_metadatos_disco)
-		opciones = menu2.Append(-1, _('&Opciones'))
+		opciones = menu3.Append(-1, _('&Opciones'))
 		self.Bind(wx.EVT_MENU, self.abrir_opciones, opciones)
 
 	#creación del menú ayuda
-		menu3= wx.Menu()
-		ayuda= barrademenu.Append(menu3, _('A&yuda'))
-		self.documentacion = menu3.Append(-1, _('&Documentación'))
+		menu4= wx.Menu()
+		ayuda= barrademenu.Append(menu4, _('A&yuda'))
+		self.documentacion = menu4.Append(-1, _('&Documentación'))
 		self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.documentacion)
-		self.mn_buscar_actualizacion = menu3.Append(-1, _('&Buscar  actualizaciones'))
+		self.mn_buscar_actualizacion = menu4.Append(-1, _('&Buscar  actualizaciones'))
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
-		acercade= menu3.Append(-1, _('Acerca de...'))
+		acercade= menu4.Append(-1, _('Acerca de...'))
 		self.Bind(wx.EVT_MENU, self.mg_acerca, acercade)
 
 
@@ -143,6 +151,10 @@ class Programa(wx.Frame):
 		self.bt_guardar.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.guardar, self.id_bt_guardar)
 		self.atajo_guardar = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('s'), self.id_bt_guardar)
+		self.bt_deshacer = wx.Button(self.panel2, self.id_bt_deshacer, 'deshacer')
+		self.bt_deshacer.Show(False)
+		self.Bind(wx.EVT_BUTTON, self.deshacer, self.id_bt_deshacer)
+		self.atajo_deshacer = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('z'), self.id_bt_deshacer)
 		self.bt_duracion= wx.Button(self.panel2, self.id_hablar_duracion, _('Duración'))
 		self.bt_duracion.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_duracion, self.id_hablar_duracion)
@@ -158,7 +170,7 @@ class Programa(wx.Frame):
 		self.bt_marcar= wx.Button(self.panel2, -1, _('&Marcar'))
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
-		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar]
+		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar, self.atajo_deshacer]
 		self.tabla_atajos= wx.AcceleratorTable(self.entradas_atajos)
 		self.SetAcceleratorTable(self.tabla_atajos)
 
@@ -339,6 +351,7 @@ class Programa(wx.Frame):
 			self.panel2.Enable(True)
 			self.mn_metadatos_disco.Enable(True)
 			self.mn_nuevo_proyecto.Enable(True)
+			self.mn_deshacer.Enable(True)
 		if self.controlador.data != None:
 			self.mn_generar.Enable(True)
 			self.mn_guardar.Enable(True)
@@ -560,6 +573,12 @@ class Programa(wx.Frame):
 			msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
 			msg.Show(5)
 
+	def deshacer(self, event):
+		self.controlador.deshacer()
+		self.lector.output(_('Deshacer'))
+		self.refrescar_lista()
+
+
 
 class Contextual(wx.Menu):
 	def __init__(self, parent):
@@ -578,3 +597,4 @@ class Contextual(wx.Menu):
 
 	def borrar_item(self, event):
 		self.parent.borrar_item(None)
+

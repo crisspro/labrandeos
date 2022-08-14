@@ -10,6 +10,7 @@ from modelo.disco import Disco
 from modelo.marca import *
 from modelo.tiempo import Tiempo
 from modelo.pista import Pista
+from modelo.pila import Pila
 
 
 class Controlador():
@@ -19,12 +20,14 @@ class Controlador():
 		self.disco = Disco()
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
+		self.pila = Pila()
 
 
 	def crear_proyecto(self):
 		self.data = Data()
 
 	def crear_disco(self, titulo, autor, fecha, genero, comentarios):
+		self.pila.apilar(self.disco)
 		self.disco = Disco()
 		self.disco.titulo = titulo
 		self.disco.autor = autor
@@ -37,6 +40,7 @@ class Controlador():
 		return self.disco
 
 	def crearMarca(self, *args, **kwargs):
+		self.pila.apilar(self.data)
 		marca = Marca(*args, **kwargs)
 		self.data.agregarMarca(marca)
 		self.data.ordenar()
@@ -46,6 +50,7 @@ class Controlador():
 		return self.data.getMarcas()
 
 	def borrar_marca(self, id):
+		self.pila.apilar(self.data)
 		self.data.borrar_marca(id)
 		self.data.ordenar()
 
@@ -146,3 +151,9 @@ class Controlador():
 				return 'otro'
 				break
 
+	def deshacer(self):
+		objeto = self.pila.desapilar()
+		if objeto.__class__.__name__ == self.data.__class__.__name__:
+			self.data = objeto
+		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
+			self.disco = objeto

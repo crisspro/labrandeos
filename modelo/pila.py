@@ -1,6 +1,6 @@
 class Pila():
 	def __init__(self):
-		self.historial[]
+		self.historial = []
 
 	def apilar(self, objeto):
 		self.historial.append(objeto)
