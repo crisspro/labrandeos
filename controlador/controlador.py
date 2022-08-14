@@ -31,7 +31,6 @@ class Controlador():
 		self.disco.fecha = fecha
 		self.disco.genero = genero
 		self.disco.comentarios = comentarios
-		self.save()
 		return self.disco
 
 	def consultar_disco(self):
@@ -41,7 +40,6 @@ class Controlador():
 		marca = Marca(*args, **kwargs)
 		self.data.agregarMarca(marca)
 		self.data.ordenar()
-		self.save()
 		return marca
 
 	def getMarcas(self):
@@ -129,7 +127,7 @@ class Controlador():
 
 	def crear_pista(self, nombre, extencion, direccion, ruta, duracion):
 		self.pista = Pista(nombre, extencion, direccion, ruta, duracion)
-		self.save()
+
 
 	def verificar_exportacion(self):
 		existe = os.path.isfile(os.path.join(self.pista.direccion,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'))

@@ -40,6 +40,10 @@ class Programa(wx.Frame):
 		self.id_bt_enfocar_linea_tiempo = wx.NewIdRef()
 		self.id_bt_tiempo_actual= wx.NewIdRef()
 		self.id_hablar_duracion= wx.NewIdRef()
+		self.id_bt_guardar = wx.NewIdRef()
+		self.id_bt_deshacer = wx.NewIdRef()
+		self.id_bt_rehacer = wx.NewIdRef()
+		
 
 
 # creacion de la barra de menu.
@@ -56,10 +60,12 @@ class Programa(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, self.mn_cargar_audio)
 		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto'))
 		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.mn_abrir_proyecto)
-		self.mn_guardar_proyecto = menu1.Append(-1, _('&Guardar proyecto como...'))
-		self.mn_guardar_proyecto.Enable(False)
-
-		self.Bind(wx.EVT_MENU, self.guardar_proyecto, self.mn_guardar_proyecto)
+		self.mn_guardar = menu1.Append(-1, _('&Guardar'))
+		self.mn_guardar.Enable(False)
+		self.Bind(wx.EVT_MENU, self.guardar, self.mn_guardar)
+		self.mn_guardar_como = menu1.Append(-1, _('G&uardar como...'))
+		self.mn_guardar_como.Enable(False)
+		self.Bind(wx.EVT_MENU, self.guardar_proyecto, self.mn_guardar_como)
 		self.mn_generar = menu1.Append(-1, _('&Generar CUE'))
 		self.mn_generar.Enable(False)
 		self.Bind(wx.EVT_MENU, self.generar, self.mn_generar)
@@ -133,6 +139,10 @@ class Programa(wx.Frame):
 		self.bt_enfocar_lista.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.enfocar_lista, self.id_bt_enfocar_lista)
 		self.atajo_enfocar_lista = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('m'), self.id_bt_enfocar_lista)
+		self.bt_guardar = wx.Button(self.panel2, self.id_bt_guardar, _('guardar'))
+		self.bt_guardar.Show(False)
+		self.Bind(wx.EVT_BUTTON, self.guardar, self.id_bt_guardar)
+		self.atajo_guardar = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('s'), self.id_bt_guardar)
 		self.bt_duracion= wx.Button(self.panel2, self.id_hablar_duracion, _('Duración'))
 		self.bt_duracion.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_duracion, self.id_hablar_duracion)
@@ -148,7 +158,7 @@ class Programa(wx.Frame):
 		self.bt_marcar= wx.Button(self.panel2, -1, _('&Marcar'))
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
-		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion]
+		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar]
 		self.tabla_atajos= wx.AcceleratorTable(self.entradas_atajos)
 		self.SetAcceleratorTable(self.tabla_atajos)
 
@@ -331,7 +341,8 @@ class Programa(wx.Frame):
 			self.mn_nuevo_proyecto.Enable(True)
 		if self.controlador.data != None:
 			self.mn_generar.Enable(True)
-			self.mn_guardar_proyecto.Enable(True)
+			self.mn_guardar.Enable(True)
+			self.mn_guardar_como.Enable(True)
 			self.bt_generar.Enable(True)
 
 	# desactiva controles
@@ -345,9 +356,9 @@ class Programa(wx.Frame):
 		self.dialogo_abrir_proyecto = wx.FileDialog(self, _('Abrir proyecto'), style=wx.FD_OPEN, wildcard= '*.cgp')
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			mensaje = 0
-			if self.controlador.data != None:
-				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar de todos modos?'), _('Advertencia.'), style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
-			if self.controlador.data == None or mensaje == 2:
+			if self.controlador.pista != None:
+				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Advertencia.'), style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
+			if self.controlador.pista == None or mensaje == 2:
 				self.controlador.limpiar_temporal()
 				self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
 				self.controlador.crear_proyecto()
@@ -364,12 +375,17 @@ class Programa(wx.Frame):
 			self.controlador.limpiar_temporal()
 			self.controlador.load()
 			self.path = ''
+			self.controlador.limpiar_proyecto()
 			self.controlador.crear_proyecto()
 			self.habilitar_controles()
 			self.refrescar_principal()
 		elif mensaje == wx.YES:
 			self.guardar_proyecto(event)
 
+	#guardar cambios en proyecto actual
+	def guardar(self, event):
+		self.controlador.save()
+		self.lector.output(_('guardado'))
 
 	#guarda el proyecto en una ruta específica
 	def guardar_proyecto(self, event):
@@ -526,7 +542,7 @@ class Programa(wx.Frame):
 			self.pausar(None)
 #			self.bt_generar.Enable(True)
 #			self.mn_generar.Enable(True)
-#			self.mn_guardar_proyecto.Enable(True)
+#			self.mn_guardar_como.Enable(True)
 
 	def abrir_editar2(self,event):
 		self.editar2 = Editar2(self, _('Editar marca'), self.controlador)
