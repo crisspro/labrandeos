@@ -226,10 +226,10 @@ class Programa(wx.Frame):
 	def listar(self):
 		id = self.lista.GetItemCount()
 		for marca in self.controlador.getMarcas():
-			self.lista.InsertStringItem(id, str(marca.id))
-			self.lista.SetStringItem(id, 1,  marca.titulo)
-			self.lista.SetStringItem(id, 2, marca.autor)
-			self.lista.SetStringItem(id, 3,marca.tiempo_inicio)
+			self.lista.InsertItem(id, str(marca.id))
+			self.lista.SetItem(id, 1,  marca.titulo)
+			self.lista.SetItem(id, 2, marca.autor)
+			self.lista.SetItem(id, 3,marca.tiempo_inicio)
 			id+=1
 
 
@@ -532,10 +532,10 @@ class Programa(wx.Frame):
 				self.editar.getTiempoInicio(),
 				self.editar.tiempo_actual)
 			id=self.lista.GetItemCount()
-			self.lista.InsertStringItem(id,  str(marca.id))
-			self.lista.SetStringItem(id, 1, marca.titulo)
-			self.lista.SetStringItem(id, 2, marca.autor)
-			self.lista.SetStringItem(id, 3, marca.tiempo_inicio)
+			self.lista.InsertItem(id,  str(marca.id))
+			self.lista.SetItem(id, 1, marca.titulo)
+			self.lista.SetItem(id, 2, marca.autor)
+			self.lista.SetItem(id, 3, marca.tiempo_inicio)
 			self.refrescar_lista()
 			self.habilitar_controles()
 		else:
