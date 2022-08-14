@@ -40,10 +40,12 @@ class Programa(wx.Frame):
 		self.id_bt_enfocar_linea_tiempo = wx.NewIdRef()
 		self.id_bt_tiempo_actual= wx.NewIdRef()
 		self.id_hablar_duracion= wx.NewIdRef()
-		self.id_bt_guardar = wx.NewIdRef()
-		self.id_bt_deshacer = wx.NewIdRef()
+		self.id_mn_guardar = wx.NewIdRef()
+		self.id_mn_deshacer = wx.NewIdRef()
 		self.id_bt_rehacer = wx.NewIdRef()
-		
+		self.id_mn_nuevo_proyecto = wx.NewIdRef()
+		self.id_mn_abrir_proyecto = wx.NewIdRef()
+
 
 
 # creacion de la barra de menu.
@@ -53,16 +55,19 @@ class Programa(wx.Frame):
 	#creación del menú archivo
 		menu1= wx.Menu()
 		archivo = barrademenu.Append(menu1, _('&Archivo'))
-		self.mn_nuevo_proyecto = menu1.Append(-1, _('&Nuevo proyecto'))
+		self.mn_nuevo_proyecto = menu1.Append(self.id_mn_nuevo_proyecto, _('&Nuevo proyecto \ Ctrl+n'))
 		self.mn_nuevo_proyecto.Enable(False)
 		self.Bind(wx.EVT_MENU, self.crear_proyecto, self.mn_nuevo_proyecto)
+		self.atajo_mn_nuevo_proyecto = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('n'), self.id_mn_nuevo_proyecto)
 		self.mn_cargar_audio = menu1.Append(-1, _('&Cargar audio'))
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, self.mn_cargar_audio)
-		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto'))
-		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.mn_abrir_proyecto)
-		self.mn_guardar = menu1.Append(-1, _('&Guardar'))
+		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto \t Ctrl+O'))
+		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.id_mn_abrir_proyecto)
+		self.atajo_abrir_proyecto = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('o'), self.id_mn_abrir_proyecto)
+		self.mn_guardar = menu1.Append(self.id_mn_guardar, _('&Guardar \t Ctrl+S'))
 		self.mn_guardar.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar, self.mn_guardar)
+		self.atajo_guardar = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('s'), self.id_mn_guardar)	
 		self.mn_guardar_como = menu1.Append(-1, _('G&uardar como...'))
 		self.mn_guardar_como.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_proyecto, self.mn_guardar_como)
@@ -75,9 +80,10 @@ class Programa(wx.Frame):
 		#creacion del menu editar
 		menu2= wx.Menu()
 		self.mn_editar =  barrademenu.Append(menu2, _('&Editar'))
-		self.mn_deshacer = menu2.Append(-1, _('&Deshacer'))
+		self.mn_deshacer = menu2.Append(self.id_mn_deshacer, _('&Deshacer \t Ctrl+Z'))
 		self.mn_deshacer.Enable(False)
-		self.Bind(wx.EVT_MENU, self.deshacer, self.mn_deshacer)
+		self.Bind(wx.EVT_MENU, self.deshacer, self.id_mn_deshacer)
+		self.atajo_deshacer = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('z'), self.id_mn_deshacer)
 
 
 		# creación del menú herramientas
@@ -147,14 +153,6 @@ class Programa(wx.Frame):
 		self.bt_enfocar_lista.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.enfocar_lista, self.id_bt_enfocar_lista)
 		self.atajo_enfocar_lista = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('m'), self.id_bt_enfocar_lista)
-		self.bt_guardar = wx.Button(self.panel2, self.id_bt_guardar, _('guardar'))
-		self.bt_guardar.Show(False)
-		self.Bind(wx.EVT_BUTTON, self.guardar, self.id_bt_guardar)
-		self.atajo_guardar = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('s'), self.id_bt_guardar)
-		self.bt_deshacer = wx.Button(self.panel2, self.id_bt_deshacer, 'deshacer')
-		self.bt_deshacer.Show(False)
-		self.Bind(wx.EVT_BUTTON, self.deshacer, self.id_bt_deshacer)
-		self.atajo_deshacer = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('z'), self.id_bt_deshacer)
 		self.bt_duracion= wx.Button(self.panel2, self.id_hablar_duracion, _('Duración'))
 		self.bt_duracion.Show(False)
 		self.Bind(wx.EVT_BUTTON, self.hablar_duracion, self.id_hablar_duracion)
@@ -170,7 +168,7 @@ class Programa(wx.Frame):
 		self.bt_marcar= wx.Button(self.panel2, -1, _('&Marcar'))
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
-		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar, self.atajo_deshacer]
+		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar, self.atajo_deshacer, self.atajo_mn_nuevo_proyecto, self.atajo_abrir_proyecto]
 		self.tabla_atajos= wx.AcceleratorTable(self.entradas_atajos)
 		self.SetAcceleratorTable(self.tabla_atajos)
 
