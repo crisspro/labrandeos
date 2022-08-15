@@ -40,11 +40,15 @@ class Programa(wx.Frame):
 		self.id_bt_enfocar_linea_tiempo = wx.NewIdRef()
 		self.id_bt_tiempo_actual= wx.NewIdRef()
 		self.id_hablar_duracion= wx.NewIdRef()
-		self.id_mn_guardar = wx.NewIdRef()
 		self.id_mn_deshacer = wx.NewIdRef()
 		self.id_bt_rehacer = wx.NewIdRef()
 		self.id_mn_nuevo_proyecto = wx.NewIdRef()
 		self.id_mn_abrir_proyecto = wx.NewIdRef()
+		self.id_mn_guardar = wx.NewIdRef()
+		self.id_mn_rehacer = wx.NewIdRef()
+		self.id_mn_metadatos_disco = wx.NewIdRef()
+		self.id_mn_opciones = wx.NewIdRef()
+		self.id_mn_documentacion = wx.NewIdRef()
 
 
 
@@ -89,17 +93,20 @@ class Programa(wx.Frame):
 		# creación del menú herramientas
 		menu3= wx.Menu()
 		herramientas =  barrademenu.Append(menu3, _('&Herramientas'))
-		self.mn_metadatos_disco = menu3.Append(-1, _('&Metadatos del álbum'))
+		self.mn_metadatos_disco = menu3.Append(self.id_mn_metadatos_disco, _('&Metadatos del álbum \t Ctrl+Shift+M'))
 		self.mn_metadatos_disco.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_disco, self.mn_metadatos_disco)
-		opciones = menu3.Append(-1, _('&Opciones'))
-		self.Bind(wx.EVT_MENU, self.abrir_opciones, opciones)
+		self.atajo_metadatos_disco = wx.AcceleratorEntry(wx.ACCEL_CTRL|wx.ACCEL_SHIFT, ord ('m'), self.id_mn_metadatos_disco)
+		self.mn_opciones = menu3.Append(self.id_mn_opciones, _('&Opciones \t Ctrl+P'))
+		self.Bind(wx.EVT_MENU, self.abrir_opciones, self.mn_opciones)
+		self.atajo_opciones = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('p'), self.id_mn_opciones)
 
 	#creación del menú ayuda
 		menu4= wx.Menu()
 		ayuda= barrademenu.Append(menu4, _('A&yuda'))
-		self.documentacion = menu4.Append(-1, _('&Documentación'))
-		self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.documentacion)
+		self.mn_documentacion = menu4.Append(self.id_mn_documentacion, _('&Documentación \t F1'))
+		self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.mn_documentacion)
+		self.atajo_documentacion = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F1, self.id_mn_documentacion) 
 		self.mn_buscar_actualizacion = menu4.Append(-1, _('&Buscar  actualizaciones'))
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
 		acercade= menu4.Append(-1, _('Acerca de...'))
@@ -168,7 +175,7 @@ class Programa(wx.Frame):
 		self.bt_marcar= wx.Button(self.panel2, -1, _('&Marcar'))
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
-		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar, self.atajo_deshacer, self.atajo_mn_nuevo_proyecto, self.atajo_abrir_proyecto]
+		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar, self.atajo_deshacer, self.atajo_mn_nuevo_proyecto, self.atajo_abrir_proyecto, self.atajo_metadatos_disco, self.atajo_opciones, self.atajo_documentacion]
 		self.tabla_atajos= wx.AcceleratorTable(self.entradas_atajos)
 		self.SetAcceleratorTable(self.tabla_atajos)
 
@@ -187,7 +194,6 @@ class Programa(wx.Frame):
 		self.bt_generar= wx.Button(self.panel2, -1, _('&GENERAR CUE'))
 		self.bt_generar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
-		self.Bind(wx.EVT_KEY_DOWN, self.detectar_tecla_principal)
 
 
 #creación de sizers
@@ -258,11 +264,6 @@ class Programa(wx.Frame):
 			self.borrar_item(None)
 		elif tecla == wx.WXK_WINDOWS_MENU:
 			self.desplegar_contextual(event)
-
-	def detectar_tecla_principal(self, event):
-		tecla = event.GetKeyCode()
-		if tecla == wx.WXK_F1:
-			self.abrir_documentacion(None)
 
 	def posicionar_marca(self, event):
 		''' Posiciona el inicio de reproducción según el tiempo de inicio de cada marca '''
