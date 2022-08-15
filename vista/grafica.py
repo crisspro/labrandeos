@@ -184,8 +184,6 @@ class Programa(wx.Frame):
 		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_contextual, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
 #		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.seleccionar_multiple, self.lista)
-		self.bt_editar = wx.Button(self.panel2, -1, _('&Editar'))
-		self.Bind(wx.EVT_BUTTON, self.abrir_editar2, self.bt_editar)
 		self.bt_generar= wx.Button(self.panel2, -1, _('&GENERAR CUE'))
 		self.bt_generar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
@@ -223,7 +221,6 @@ class Programa(wx.Frame):
 
 		sz4 = wx.BoxSizer(wx.VERTICAL)
 		sz3.Add(sz4)
-		sz4.Add(self.bt_editar)
 		sz4.Add(self.bt_generar)
 
 		self.panel2.SetSizer (sz1)
@@ -313,6 +310,7 @@ class Programa(wx.Frame):
 			self.vn_disco.getComentarios())
 			self.mn_metadatos_disco.Enable(True)
 			self.l_encabezado.SetLabel(self.controlador.consultar_disco().titulo + ' - ' + self.controlador.consultar_disco(). autor)
+			self.mn_deshacer.Enable(True)
 
 
 
@@ -575,6 +573,8 @@ class Programa(wx.Frame):
 		self.controlador.deshacer()
 		self.lector.output(_('Deshacer'))
 		self.refrescar_lista()
+		if self.controlador.pila.es_vacia():
+			self.mn_deshacer.Enable(False)
 
 
 

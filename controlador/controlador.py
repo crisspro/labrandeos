@@ -1,5 +1,6 @@
 import pdb
 
+import copy
 import os
 import pickle
 import requests
@@ -40,7 +41,8 @@ class Controlador():
 		return self.disco
 
 	def crearMarca(self, *args, **kwargs):
-		self.pila.apilar(self.data)
+		data = copy.deepcopy(self.data)
+		self.pila.apilar(data)
 		marca = Marca(*args, **kwargs)
 		self.data.agregarMarca(marca)
 		self.data.ordenar()
@@ -50,7 +52,7 @@ class Controlador():
 		return self.data.getMarcas()
 
 	def borrar_marca(self, id):
-		self.pila.apilar(self.data)
+		self.pila.apilar(copy.deepcopy(self.data))
 		self.data.borrar_marca(id)
 		self.data.ordenar()
 
@@ -61,6 +63,7 @@ class Controlador():
 			self.data = pickle.load(f)
 			self.pista = pickle.load(f)
 			self.disco = pickle.load(f)
+			self.pila = pickle.load(f)
 			f.close()
 		except FileNotFoundError:
 			self.data = Data()
@@ -73,6 +76,7 @@ class Controlador():
 		pickle.dump(self.data, f)
 		pickle.dump(self.pista, f)
 		pickle.dump(self.disco, f)
+		pickle.dump(self.pila, f)
 		f.close()
 
 	def limpiar_proyecto(self):
@@ -157,3 +161,4 @@ class Controlador():
 			self.data = objeto
 		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
 			self.disco = objeto
+
