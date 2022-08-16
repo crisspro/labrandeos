@@ -53,12 +53,12 @@ class Programa(wx.Frame):
 
 
 # creacion de la barra de menu.
-		barrademenu= wx.MenuBar()
-		self.SetMenuBar(barrademenu)
+		self.barrademenu= wx.MenuBar()
+		self.SetMenuBar(self.barrademenu)
 
 	#creación del menú archivo
 		menu1= wx.Menu()
-		archivo = barrademenu.Append(menu1, _('&Archivo'))
+		archivo = self.barrademenu.Append(menu1, _('&Archivo'))
 		self.mn_nuevo_proyecto = menu1.Append(self.id_mn_nuevo_proyecto, _('&Nuevo proyecto \ Ctrl+n'))
 		self.mn_nuevo_proyecto.Enable(False)
 		self.Bind(wx.EVT_MENU, self.crear_proyecto, self.mn_nuevo_proyecto)
@@ -83,7 +83,7 @@ class Programa(wx.Frame):
 
 		#creacion del menu editar
 		menu2= wx.Menu()
-		self.mn_editar =  barrademenu.Append(menu2, _('&Editar'))
+		self.mn_editar =  self.barrademenu.Append(menu2, _('&Editar'))
 		self.mn_deshacer = menu2.Append(self.id_mn_deshacer, _('&Deshacer \t Ctrl+Z'))
 		self.mn_deshacer.Enable(False)
 		self.Bind(wx.EVT_MENU, self.deshacer, self.id_mn_deshacer)
@@ -92,7 +92,7 @@ class Programa(wx.Frame):
 
 		# creación del menú herramientas
 		menu3= wx.Menu()
-		herramientas =  barrademenu.Append(menu3, _('&Herramientas'))
+		herramientas =  self.barrademenu.Append(menu3, _('&Herramientas'))
 		self.mn_metadatos_disco = menu3.Append(self.id_mn_metadatos_disco, _('&Metadatos del álbum \t Ctrl+Shift+M'))
 		self.mn_metadatos_disco.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_disco, self.mn_metadatos_disco)
@@ -103,7 +103,7 @@ class Programa(wx.Frame):
 
 	#creación del menú ayuda
 		menu4= wx.Menu()
-		ayuda= barrademenu.Append(menu4, _('A&yuda'))
+		ayuda= self.barrademenu.Append(menu4, _('A&yuda'))
 		self.mn_documentacion = menu4.Append(self.id_mn_documentacion, _('&Documentación \t F1'))
 		self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.mn_documentacion)
 		self.atajo_documentacion = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F1, self.id_mn_documentacion) 
@@ -250,6 +250,7 @@ class Programa(wx.Frame):
 	def refrescar_principal(self):
 		self.graficar()
 		self.refrescar_lista()
+		self.reproductor.Load(self.controlador.pista.ruta)
 		self.habilitar_controles()
 		self.desactivar_controles()
 
