@@ -11,7 +11,8 @@ from modelo.disco import Disco
 from modelo.marca import *
 from modelo.tiempo import Tiempo
 from modelo.pista import Pista
-from modelo.pila import Pila
+from modelo.historial import Historial
+from modelo.reproductor import Reproductor
 
 
 class Controlador():
@@ -21,14 +22,15 @@ class Controlador():
 		self.disco = Disco()
 		self.tiempo = Tiempo()
 		self.ruta_proyecto = 'temp.proyecto.cgp'
-		self.pila = Pila()
+		self.historial = Historial()
+		self.reproductor = Reproductor()
 
 
 	def crear_proyecto(self):
 		self.data = Data()
 
 	def crear_disco(self, titulo, autor, fecha, genero, comentarios):
-		self.pila.apilar(self.disco)
+		self.historial.apilar(self.disco)
 		self.disco = Disco()
 		self.disco.titulo = titulo
 		self.disco.autor = autor
@@ -42,17 +44,25 @@ class Controlador():
 
 	def crearMarca(self, *args, **kwargs):
 		data = copy.deepcopy(self.data)
-		self.pila.apilar(data)
+		self.historial.apilar(data)
 		marca = Marca(*args, **kwargs)
 		self.data.agregarMarca(marca)
 		self.data.ordenar()
 		return marca
 
+	def editarMarca(self, *args, **kwargs):
+		data = copy.deepcopy(self.data)
+		self.historial.apilar(data)
+		marca = Marca(*args, **kwargs)
+		self.data.editarMarca(marca.id, marca)
+		self.data.ordenar()
+		return marca
+		
 	def getMarcas(self):
 		return self.data.getMarcas()
 
 	def borrar_marca(self, id):
-		self.pila.apilar(copy.deepcopy(self.data))
+		self.historial.apilar(copy.deepcopy(self.data))
 		self.data.borrar_marca(id)
 		self.data.ordenar()
 
@@ -63,7 +73,8 @@ class Controlador():
 			self.data = pickle.load(f)
 			self.pista = pickle.load(f)
 			self.disco = pickle.load(f)
-			self.pila = pickle.load(f)
+			self.historial = pickle.load(f)
+			self.reproductor = pickle.load(f)
 			f.close()
 		except FileNotFoundError:
 			self.data = Data()
@@ -76,7 +87,8 @@ class Controlador():
 		pickle.dump(self.data, f)
 		pickle.dump(self.pista, f)
 		pickle.dump(self.disco, f)
-		pickle.dump(self.pila, f)
+		pickle.dump(self.historial, f)
+		pickle.dump(self.reproductor, f)
 		f.close()
 
 	def limpiar_proyecto(self):
@@ -144,19 +156,27 @@ class Controlador():
 
 	def consultar_datos(self, id):
 		marca = self.data.getMarcas()
-		return marca(id)
+		return marca[id]
 
-	def comprobar_multimedia(self, archivo):
+	def comprobar_medios(self, archivo):
 		archivo_info= pymediainfo.MediaInfo.parse(archivo)
 		for track in archivo_info.tracks:
 			if track.track_type == 'Audio':
-				return 'audio'
+				return 'audio', track.to_data
 			if track.track_type == 'Video':
 				return 'otro'
 				break
 
 	def deshacer(self):
-		objeto = self.pila.desapilar()
+		objeto = self.historial.desapilar()
+		if objeto.__class__.__name__ == self.data.__class__.__name__:
+			self.data = objeto
+		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
+			self.disco = objeto
+
+
+	def rehacer(self):
+		objeto =self.historial.pila2[-1]
 		if objeto.__class__.__name__ == self.data.__class__.__name__:
 			self.data = objeto
 		elif objeto.__class__.__name__ == self.disco.__class__.__name__:

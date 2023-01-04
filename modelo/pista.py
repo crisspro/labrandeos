@@ -5,4 +5,4 @@ class Pista():
 		self.direccion = direccion
 		self.ruta = ruta
 		self.duracion = duracion
-		self.reproduccion_actual = 0
+

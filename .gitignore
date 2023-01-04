@@ -7,7 +7,6 @@ files/documentation/*
 # C extensions
 *.so
 *.bak
-*.txt
 *.ini
 
 # Distribution / packaging

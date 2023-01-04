@@ -8,11 +8,9 @@ class Editar(wx.Dialog):
 		self.Center()
 		self.controlador = controlador
 		self.reproductor = reproductor
-		self.tiempo_actual = self.controlador.pista.reproduccion_actual 
+		self.tiempo_actual = self.controlador.reproductor.tiempo_actual 
 		self.duracion_milesimas = self.controlador.pista.duracion
 		self.duracion_tiempo = ''
-
-
 
 
 		# Creación de controles
@@ -146,16 +144,14 @@ class Editar(wx.Dialog):
 
 
 class Editar2(Editar):
-	def __init__(self, parent, title, controlador):
-		super().__init__(parent, title= title, controlador = controlador)
-		self.id = 1
-		self.tiempo_actual = 1
+	def __init__(self, parent, title, controlador, reproductor):
+		super().__init__(parent, title= title, controlador = controlador, reproductor= reproductor)
+#		self.tiempo_actual = self.controlador.consultar_datos(0)[0].milesimas
 		self.llenar_valores()
 
 
+
 	def llenar_valores(self):
-		marca = self.controlador.getMarcas()
-		for marca in marca:
-			if marca.id == self.id:
-				self.in_titulo.SetValue(marca.titulo)
-				self.in_autor.SetValue(marca.autor)
+		marca = self.controlador.consultar_datos(self.controlador.reproductor.marca_id)
+		self.in_titulo.SetValue(marca.titulo)
+		self.in_autor.SetValue(marca.autor)

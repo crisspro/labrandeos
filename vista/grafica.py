@@ -1,5 +1,4 @@
 import pdb
-import pdb
 import os
 
 import accessible_output2.outputs.auto
@@ -16,6 +15,7 @@ from controlador.traductor import Traductor
 from .editar import Editar
 from .editar import Editar2
 from .acerca_de import Acerca_de
+from .informacion_medios import Informacion_medios
 
 
 class Programa(wx.Frame):
@@ -41,7 +41,6 @@ class Programa(wx.Frame):
 		self.id_bt_tiempo_actual= wx.NewIdRef()
 		self.id_hablar_duracion= wx.NewIdRef()
 		self.id_mn_deshacer = wx.NewIdRef()
-		self.id_bt_rehacer = wx.NewIdRef()
 		self.id_mn_nuevo_proyecto = wx.NewIdRef()
 		self.id_mn_abrir_proyecto = wx.NewIdRef()
 		self.id_mn_guardar = wx.NewIdRef()
@@ -49,6 +48,9 @@ class Programa(wx.Frame):
 		self.id_mn_metadatos_disco = wx.NewIdRef()
 		self.id_mn_opciones = wx.NewIdRef()
 		self.id_mn_documentacion = wx.NewIdRef()
+		self.id_mn_editar_marca = wx.NewIdRef()
+		self.id_mn_informacion = wx.NewIdRef()
+		
 
 
 
@@ -88,6 +90,20 @@ class Programa(wx.Frame):
 		self.mn_deshacer.Enable(False)
 		self.Bind(wx.EVT_MENU, self.deshacer, self.id_mn_deshacer)
 		self.atajo_deshacer = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('z'), self.id_mn_deshacer)
+		self.mn_rehacer = menu2.Append(self.id_mn_rehacer, _('&Rehacer \t Ctrl+Shift+Z'))
+		self.Bind(wx.EVT_MENU, self.rehacer, self.id_mn_rehacer)
+		self.mn_rehacer.Enable(False)
+		self.atajo_rehacer = wx.AcceleratorEntry(wx.ACCEL_CTRL|wx.ACCEL_SHIFT, ord ('z'), self.id_mn_rehacer)
+		self.mn_eliminar = menu2.Append(-1, _('&Eliminar \t Supr'))
+		self.Bind(wx.EVT_MENU, self.borrar_item, self.mn_eliminar)
+		self.mn_eliminar.Enable(False)
+		self.mn_marca = menu2.Append(self.id_mn_editar_marca, _('&Marca \t Ctrl+e'))
+		self.Bind(wx.EVT_MENU, self.editar_marca, self.id_mn_editar_marca)
+		self.mn_marca.Enable(False)
+		self.atajo_editar_marca = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('e'), self.id_mn_editar_marca)
+
+
+
 
 
 		# creación del menú herramientas
@@ -97,6 +113,9 @@ class Programa(wx.Frame):
 		self.mn_metadatos_disco.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_disco, self.mn_metadatos_disco)
 		self.atajo_metadatos_disco = wx.AcceleratorEntry(wx.ACCEL_CTRL|wx.ACCEL_SHIFT, ord ('m'), self.id_mn_metadatos_disco)
+		self.mn_informacion = menu3.Append(self.id_mn_informacion, _('&Información de medios \t Ctrl+I'))
+		self.Bind(wx.EVT_MENU, self.informar_medios, self.id_mn_informacion)
+		self.atajo_informacion = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('i'), self.id_mn_informacion)
 		self.mn_opciones = menu3.Append(self.id_mn_opciones, _('&Opciones \t Ctrl+P'))
 		self.Bind(wx.EVT_MENU, self.abrir_opciones, self.mn_opciones)
 		self.atajo_opciones = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('p'), self.id_mn_opciones)
@@ -170,12 +189,13 @@ class Programa(wx.Frame):
 		bt_detener= wx.Button(self.panel2, -1, _('&Detener'))
 		self.Bind(wx.EVT_BUTTON, self.detener, bt_detener)
 		l_volumen= wx.StaticText(self.panel2, -1, _('Volumen'))
-		self.volumen= wx.Slider(self.panel2, -1, 100, 0, 100)
+		self.volumen= wx.Slider(self.panel2, -1, self.controlador.reproductor.volumen * 100, 0, 100)
 		self.Bind(wx.EVT_SLIDER, self.volumenear,self.volumen)
 		self.bt_marcar= wx.Button(self.panel2, -1, _('&Marcar'))
+		self.bt_marcar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
 		self.atajo_tiempo_actual= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('t'), self.id_bt_tiempo_actual)
-		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar, self.atajo_deshacer, self.atajo_mn_nuevo_proyecto, self.atajo_abrir_proyecto, self.atajo_metadatos_disco, self.atajo_opciones, self.atajo_documentacion]
+		self.entradas_atajos= [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar, self.atajo_deshacer, self.atajo_rehacer, self.atajo_mn_nuevo_proyecto, self.atajo_abrir_proyecto, self.atajo_metadatos_disco, self.atajo_opciones, self.atajo_documentacion, self.atajo_editar_marca, self.atajo_informacion]
 		self.tabla_atajos= wx.AcceleratorTable(self.entradas_atajos)
 		self.SetAcceleratorTable(self.tabla_atajos)
 
@@ -269,6 +289,7 @@ class Programa(wx.Frame):
 	def posicionar_marca(self, event):
 		''' Posiciona el inicio de reproducción según el tiempo de inicio de cada marca '''
 		item = self.lista.GetFocusedItem()
+		self.controlador.reproductor.marca_id = item
 		marca =self.controlador.getMarcas()[item]
 		self.reproductor.Seek(marca.milesimas)
 
@@ -320,8 +341,8 @@ class Programa(wx.Frame):
 		self.dialogo= wx.FileDialog(self, _('Cargar audio'), style=wx.FD_OPEN)
 		if self.dialogo.ShowModal() == wx.ID_OK:
 			self.path = self.dialogo.GetPath()
-			tipo_archivo = self.controlador.comprobar_multimedia(self.path)
-			if tipo_archivo != 'audio':
+			tipo_archivo = self.controlador.comprobar_medios(self.path)
+			if tipo_archivo[0] != 'audio':
 				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención.', style= wx.ICON_ERROR)
 			else:
 				self.reproductor.Load(self.path)
@@ -350,11 +371,15 @@ class Programa(wx.Frame):
 			self.mn_metadatos_disco.Enable(True)
 			self.mn_nuevo_proyecto.Enable(True)
 			self.mn_deshacer.Enable(True)
+			self.bt_marcar.Enable(True)
 		if self.controlador.data != None:
 			self.mn_generar.Enable(True)
 			self.mn_guardar.Enable(True)
 			self.mn_guardar_como.Enable(True)
 			self.bt_generar.Enable(True)
+		if self.controlador.data.lista_marcas != []:
+			self.mn_eliminar.Enable(True)
+			self.mn_marca.Enable(True)
 
 	# desactiva controles
 	def desactivar_controles(self):
@@ -479,6 +504,7 @@ class Programa(wx.Frame):
 		a= self.volumen.GetValue()
 		b= a /100
 		self.reproductor.SetVolume(b)
+		self.controlador.reproductor.volumen = b
 
 #busca un momento de la pista cuando el usuario mueve la aguja del control
 	def mover (self, event):
@@ -499,7 +525,7 @@ class Programa(wx.Frame):
 		valores= ' : '.join(str_valores)
 		self.l_reloj.SetLabel(valores)
 		if self.controlador.pista != None:
-			self.controlador.pista.reproducción_actual = self.tiempo
+			self.controlador.reproductor.tiempo_actual = self.tiempo
 
 # calcula y muestra el tiempo de la pista en horas,minutos,segundos y marcos.
 	def calcular_tiempo (self, tiempo):
@@ -555,12 +581,26 @@ class Programa(wx.Frame):
 #			self.mn_generar.Enable(True)
 #			self.mn_guardar_como.Enable(True)
 
-	def abrir_editar2(self,event):
-		self.editar2 = Editar2(self, _('Editar marca'), self.controlador)
+	def editar_marca(self,event):
+		self.editar2 = Editar2(self, _('Editar marca'), self.controlador, self.reproductor)
 		item = self.lista.GetFocusedItem()
-		self.editar2.id = item
+		marca = self.controlador.consultar_datos(item)
+		self.editar2.getTiempo(marca.milesimas)
 		if self.editar2.ShowModal() == wx.ID_OK:
-			pass
+			self.pausar(None)
+			marca = self.controlador.editarMarca(item,
+				self.editar2.getTitulo(),
+				self.editar2.getAutor(),
+				self.editar2.getTiempoInicio(),
+				self.editar2.tiempo_actual)
+			self.lista.SetItem(item, 0,   str(marca.id))
+			self.lista.SetItem(item, 1, marca.titulo)
+			self.lista.SetItem(item, 2, marca.autor)
+			self.lista.SetItem(item, 3, marca.tiempo_inicio)
+			self.refrescar_lista()
+			self.habilitar_controles()
+		else:
+			self.pausar(None)
 
 	def generar(self, event):
 		self.controlador.generar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
@@ -574,26 +614,38 @@ class Programa(wx.Frame):
 	def deshacer(self, event):
 		self.controlador.deshacer()
 		self.lector.output(_('Deshacer'))
+		self.mn_rehacer.Enable(True)
 		self.refrescar_lista()
-		if self.controlador.pila.es_vacia():
+		if self.controlador.historial.es_vacia()[0]:
 			self.mn_deshacer.Enable(False)
 
+
+	def rehacer(self, event):
+		if self.controlador.historial.es_vacia()[1] == False: 
+			self.controlador.rehacer()
+			self.refrescar_lista()
+			self.lector.output(_('Rehacer'))
+
+	def informar_medios(self, event):
+		self.vn_informacion = Informacion_medios(None, _('Información de medios'), self.controlador)
+		if self.vn_informacion.ShowModal() == wx.OK:
+			self.vn_informacion.close()
 
 
 class Contextual(wx.Menu):
 	def __init__(self, parent):
 		super(Contextual, self).__init__()
 		self.parent = parent
-		self.m1 = wx.MenuItem(self, wx.NewId(), _('&Editar'))
-		self.AppendItem(self.m1)
+		self.m1 = wx.MenuItem(self, wx.NewId(), _('&Editar \t Ctrl+E'))
+		self.Append(self.m1)
 		self.Bind(wx.EVT_MENU, self.abrir_editar2, self.m1)
 		self.m2 = wx.MenuItem(self, -1, _('E&liminar'))
-		self.AppendItem(self.m2)
+		self.Append(self.m2)
 		self.Bind(wx.EVT_MENU, self.borrar_item, self.m2)
 
 
 	def abrir_editar2(self, event):
-		self.parent.abrir_editar2(None)
+		self.parent.editar_marca(None)
 
 	def borrar_item(self, event):
 		self.parent.borrar_item(None)

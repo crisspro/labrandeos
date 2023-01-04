@@ -22,13 +22,19 @@ class Data():
 			marca.id = id+1
 			id = id+1
 
+	def editarMarca(self, id, marca):
+		self.lista_marcas[id] = marca
+
 	def borrar_marca(self, id):
 		self.lista_marcas.pop(id)
 
 	# limpia la lista de marcas.
 	def limpiar (self):
 		self.lista_marcas.clear()
-	
+
+	def es_vacia(self):
+		return self.lista_marcas == []
+
 	def getMarcas(self):
 		return self.lista_marcas
 
