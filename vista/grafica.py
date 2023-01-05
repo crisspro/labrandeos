@@ -555,7 +555,6 @@ class Programa(wx.Frame):
 			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'marca.wav'))
 		self.vn_editar()
 
-
 	def vn_editar(self):
 		self.editar = Editar(self, _('Crear marca'), self.controlador, self.reproductor)
 		self.editar.getTiempo(self.reproductor.Tell())
@@ -577,12 +576,10 @@ class Programa(wx.Frame):
 			self.habilitar_controles()
 		else:
 			self.pausar(None)
-#			self.bt_generar.Enable(True)
-#			self.mn_generar.Enable(True)
-#			self.mn_guardar_como.Enable(True)
 
 	def editar_marca(self,event):
 		self.editar2 = Editar2(self, _('Editar marca'), self.controlador, self.reproductor)
+		self.pausar(None)
 		item = self.lista.GetFocusedItem()
 		marca = self.controlador.consultar_datos(item)
 		self.editar2.getTiempo(marca.milesimas)

@@ -132,6 +132,7 @@ class Editar(wx.Dialog):
 		self.in_autor.SetValue(self.controlador.consultar_disco().autor)
 
 	def reproducir(self, event):
+		self.retomar_tiempo(None)
 		self.reproductor.Seek(self.tiempo_actual)
 		if self.reproductor.GetState() == 1 or self.reproductor.GetState() == 0:
 			self.reproductor.Play()
