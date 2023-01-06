@@ -1,4 +1,3 @@
-import pdb
 
 import copy
 import os
@@ -162,10 +161,12 @@ class Controlador():
 		archivo_info= pymediainfo.MediaInfo.parse(archivo)
 		for track in archivo_info.tracks:
 			if track.track_type == 'Audio':
-				return 'audio', track.to_data
+				info = track.to_data()
+				return 'audio', info
 			if track.track_type == 'Video':
 				return 'otro'
 				break
+
 
 	def deshacer(self):
 		objeto = self.historial.desapilar()

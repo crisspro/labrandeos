@@ -1,4 +1,3 @@
-import pdb
 import os
 
 import accessible_output2.outputs.auto
@@ -627,6 +626,7 @@ class Programa(wx.Frame):
 		self.vn_informacion = Informacion_medios(None, _('Información de medios'), self.controlador)
 		if self.vn_informacion.ShowModal() == wx.OK:
 			self.vn_informacion.close()
+
 
 
 class Contextual(wx.Menu):
