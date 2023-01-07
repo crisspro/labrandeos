@@ -1,3 +1,4 @@
+import pdb
 import os
 
 import accessible_output2.outputs.auto
@@ -67,7 +68,7 @@ class Programa(wx.Frame):
 		self.mn_cargar_audio = menu1.Append(-1, _('&Cargar audio'))
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, self.mn_cargar_audio)
 		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto \t Ctrl+O'))
-		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.id_mn_abrir_proyecto)
+		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.mn_abrir_proyecto)
 		self.atajo_abrir_proyecto = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('o'), self.id_mn_abrir_proyecto)
 		self.mn_guardar = menu1.Append(self.id_mn_guardar, _('&Guardar \t Ctrl+S'))
 		self.mn_guardar.Enable(False)
@@ -342,7 +343,7 @@ class Programa(wx.Frame):
 		if self.dialogo.ShowModal() == wx.ID_OK:
 			self.path = self.dialogo.GetPath()
 			tipo_archivo = self.controlador.comprobar_medios(self.path)
-			if tipo_archivo[0] != 'audio':
+			if tipo_archivo == None or tipo_archivo[0] != 'audio':
 				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención.', style= wx.ICON_ERROR)
 			else:
 				self.reproductor.Load(self.path)
@@ -434,6 +435,10 @@ class Programa(wx.Frame):
 					self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
 					self.controlador.save()
 					self.controlador.limpiar_temporal()
+			else:
+				self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
+				self.controlador.save()
+				self.controlador.limpiar_temporal()
 
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):
