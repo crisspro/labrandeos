@@ -67,7 +67,7 @@ class Programa(wx.Frame):
 		self.atajo_mn_nuevo_proyecto = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('n'), self.id_mn_nuevo_proyecto)
 		self.mn_cargar_audio = menu1.Append(-1, _('&Cargar audio'))
 		self.Bind(wx.EVT_MENU, self.abrir_archivo, self.mn_cargar_audio)
-		self.mn_abrir_proyecto = menu1.Append(-1, _('&Abrir proyecto \t Ctrl+O'))
+		self.mn_abrir_proyecto = menu1.Append(self.id_mn_abrir_proyecto, _('&Abrir proyecto \t Ctrl+O'))
 		self.Bind(wx.EVT_MENU, self.abrir_proyecto, self.mn_abrir_proyecto)
 		self.atajo_abrir_proyecto = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('o'), self.id_mn_abrir_proyecto)
 		self.mn_guardar = menu1.Append(self.id_mn_guardar, _('&Guardar \t Ctrl+S'))
@@ -613,6 +613,8 @@ class Programa(wx.Frame):
 				wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
 			msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
 			msg.Show(5)
+			if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
+				wx.LaunchDefaultBrowser(self.controlador.pista.direccion)
 
 	def deshacer(self, event):
 		self.controlador.deshacer()
