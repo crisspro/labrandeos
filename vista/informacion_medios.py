@@ -20,6 +20,7 @@ class Informacion_medios(wx.Dialog):
 		_('Velocidad de muestreo: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('sampling_rate')),
 		_('Canales: ' + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('channel_s')))]
 		self.lista = wx.ListBox(self.panel, -1, choices= self.lista_datos)
+		self.lista.SetSelection(0)
 		self.bt_cerrar = wx.Button(self.panel, wx.ID_OK, _('&Cerrar'))
 
 #creación de sizers

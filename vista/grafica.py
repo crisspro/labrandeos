@@ -115,6 +115,7 @@ class Programa(wx.Frame):
 		self.mn_informacion = menu3.Append(self.id_mn_informacion, _('&Información de medios \t Ctrl+I'))
 		self.Bind(wx.EVT_MENU, self.informar_medios, self.id_mn_informacion)
 		self.atajo_informacion = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('i'), self.id_mn_informacion)
+		self.mn_informacion.Enable(False)
 		self.mn_opciones = menu3.Append(self.id_mn_opciones, _('&Opciones \t Ctrl+P'))
 		self.Bind(wx.EVT_MENU, self.abrir_opciones, self.mn_opciones)
 		self.atajo_opciones = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('p'), self.id_mn_opciones)
@@ -368,6 +369,7 @@ class Programa(wx.Frame):
 		if self.controlador.pista != None:
 			self.panel2.Enable(True)
 			self.mn_metadatos_disco.Enable(True)
+			self.mn_informacion.Enable(True)
 			self.mn_nuevo_proyecto.Enable(True)
 			self.mn_deshacer.Enable(True)
 			self.bt_marcar.Enable(True)
