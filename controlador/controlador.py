@@ -29,7 +29,7 @@ class Controlador():
 		self.data = Data()
 
 	def crear_disco(self, titulo, autor, fecha, genero, comentarios):
-		self.historial.apilar(self.disco)
+		self.historial.apilar('pila1', self.disco)
 		self.disco = Disco()
 		self.disco.titulo = titulo
 		self.disco.autor = autor
@@ -43,7 +43,7 @@ class Controlador():
 
 	def crearMarca(self, *args, **kwargs):
 		data = copy.deepcopy(self.data)
-		self.historial.apilar(data)
+		self.historial.apilar('pila1', data)
 		marca = Marca(*args, **kwargs)
 		self.data.agregarMarca(marca)
 		self.data.ordenar()
@@ -51,7 +51,7 @@ class Controlador():
 
 	def editarMarca(self, *args, **kwargs):
 		data = copy.deepcopy(self.data)
-		self.historial.apilar(data)
+		self.historial.apilar('pila1', data)
 		marca = Marca(*args, **kwargs)
 		self.data.editarMarca(marca.id, marca)
 		self.data.ordenar()
@@ -61,7 +61,7 @@ class Controlador():
 		return self.data.getMarcas()
 
 	def borrar_marca(self, id):
-		self.historial.apilar(copy.deepcopy(self.data))
+		self.historial.apilar('pila1', copy.deepcopy(self.data))
 		self.data.borrar_marca(id)
 		self.data.ordenar()
 
@@ -72,7 +72,6 @@ class Controlador():
 			self.data = pickle.load(f)
 			self.pista = pickle.load(f)
 			self.disco = pickle.load(f)
-			self.historial = pickle.load(f)
 			self.reproductor = pickle.load(f)
 			f.close()
 		except FileNotFoundError:
@@ -86,7 +85,6 @@ class Controlador():
 		pickle.dump(self.data, f)
 		pickle.dump(self.pista, f)
 		pickle.dump(self.disco, f)
-		pickle.dump(self.historial, f)
 		pickle.dump(self.reproductor, f)
 		f.close()
 
@@ -94,7 +92,9 @@ class Controlador():
 		self.data.limpiar()
 		self.data = None
 		self.pista = None
-		self.disco = Disco() 
+		self.disco = Disco()
+		self.historial.limpiar()
+		self.historial = None
 
 	def limpiar_temporal(self):
 		if os.path.exists('temp.proyecto.cgp'):
@@ -169,7 +169,8 @@ class Controlador():
 
 
 	def deshacer(self):
-		objeto = self.historial.desapilar()
+		self.historial.apilar('pila2', copy.deepcopy(self.data))
+		objeto = self.historial.desapilar('pila1')
 		if objeto.__class__.__name__ == self.data.__class__.__name__:
 			self.data = objeto
 		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
@@ -177,9 +178,11 @@ class Controlador():
 
 
 	def rehacer(self):
-		objeto =self.historial.pila2[-1]
+		objeto =self.historial.desapilar('pila2')
 		if objeto.__class__.__name__ == self.data.__class__.__name__:
 			self.data = objeto
 		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
 			self.disco = objeto
+		self.historial.apilar('pila1', copy.deepcopy(self.data))
+
 
