@@ -137,7 +137,6 @@ class Programa(wx.Frame):
 
 		self.panel1 = wx.Panel(self)
 		self.panel2= wx.Panel(self.panel1)
-		self.panel2.Enable(False)
 		self.l_abrir= wx.StaticText (self.panel1, -1, _('Carga el archivo de audio que quieres procesar.'))
 		self.bt_abrir= wx.Button(self.panel1, -1, _('&Cargar audio'))
 		self.bt_abrir.SetFocus()
@@ -215,6 +214,7 @@ class Programa(wx.Frame):
 		self.bt_generar= wx.Button(self.panel2, -1, _('&GENERAR CUE'))
 		self.bt_generar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
+		self.panel2.Enable(False)
 
 
 #creación de sizers
@@ -269,9 +269,10 @@ class Programa(wx.Frame):
 
 
 	def refrescar_principal(self):
-		self.graficar()
 		self.refrescar_lista()
-		self.reproductor.Load(self.controlador.pista.ruta)
+		self.graficar()
+		if self.controlador.pista != None:
+			self.reproductor.Load(self.controlador.pista.ruta)
 		self.habilitar_controles()
 		self.desactivar_controles()
 
@@ -403,6 +404,7 @@ class Programa(wx.Frame):
 				self.controlador.load()
 				self.reproductor.Load(self.controlador.pista.ruta)
 				self.refrescar_lista()
+				self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
 				self.habilitar_controles()
 				self.desactivar_controles()
 
@@ -416,6 +418,7 @@ class Programa(wx.Frame):
 			self.controlador.limpiar_proyecto()
 			self.controlador.crear_proyecto()
 			self.habilitar_controles()
+#			self.refrescar_lista()
 			self.refrescar_principal()
 		elif mensaje == wx.YES:
 			self.guardar_proyecto(event)

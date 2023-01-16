@@ -78,6 +78,7 @@ class Controlador():
 			self.data = Data()
 			self.disco = Disco()
 			self.pista = None
+			self.reproductor = Reproductor()
 
 	def save(self):
 		""" guarda la información del modelo """
@@ -94,7 +95,7 @@ class Controlador():
 		self.pista = None
 		self.disco = Disco()
 		self.historial.limpiar()
-		self.historial = None
+		self.historial = Historial()
 
 	def limpiar_temporal(self):
 		if os.path.exists('temp.proyecto.cgp'):
