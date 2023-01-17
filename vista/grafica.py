@@ -452,16 +452,16 @@ class Programa(wx.Frame):
 
 	def abrir_documentacion(self, event):
 		if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':
-			os.startfile(os.path.join('files', 'documentation', 'es.html'))
+			os.startfile(os.path.join('vista', 'files', 'documentation', 'es.html'))
 		else:
-			os.startfile(os.path.join('files', 'documentation', 'en.html'))
+			os.startfile(os.path.join('vista', 'files', 'documentation', 'en.html'))
 
 	#busca actualizaciones
 	def buscar_actualizacion(self, event):
 		self.controlador_app.verificarNuevaVersion()
 		if self.controlador_app.actualizado == False:
 			if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'):
-				wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'nueva_version.wav'))
+				wx.adv.Sound.PlaySound(os.path.join('vista', 'files', 'sounds', 'nueva_version.wav'))
 			res =wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), style= wx.YES_NO)
 			if res == wx.YES:
 				self.controlador_app.descargar_version()
@@ -561,7 +561,7 @@ class Programa(wx.Frame):
 		self.reproductor.Pause()
 		self.bt_reproducir.SetLabel(_('&Reproducir'))
 		if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'): 
-			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'marca.wav'))
+			wx.adv.Sound.PlaySound( os.path.join('vista', 'files', 'sounds', 'marca.wav'))
 		self.vn_editar()
 
 	def vn_editar(self):
@@ -613,7 +613,7 @@ class Programa(wx.Frame):
 		existe = self.controlador.verificar_exportacion()
 		if existe == True:
 			if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_generar'):
-				wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
+				wx.adv.Sound.PlaySound( os.path.join('vista', 'files', 'sounds', 'ok.wav'))
 			msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
 			msg.Show(5)
 			if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):

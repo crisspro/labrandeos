@@ -4,10 +4,14 @@ files/documentation/*
 *.py[cod]
 *$py.class
 
+
+
+
 # C extensions
 *.so
 *.bak
 *.ini
+
 
 # Distribution / packaging
 .Python
