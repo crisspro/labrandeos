@@ -1,3 +1,4 @@
+import pdb
 import wx
 
 from controlador.traductor import Traductor
@@ -77,10 +78,17 @@ class Disco(wx.Dialog):
 		self.evalua_llenado()
 
 	def evalua_llenado(self):
+		titulo = _('Sin título')
+		autor = _('Sin autor')
+		if self.controlador.disco.titulo == '' and self.controlador.disco.autor == '':
+			self.controlador.disco.titulo = titulo
+			self.controlador.disco.autor = autor
+			self.controlador.disco.autor = autor
 		if self.in_autor.GetValue() != '' and self.in_titulo.GetValue() != '':
 			self.bt_aceptar.Enable(True)
 		else:
 			self.bt_aceptar.Enable(False)
+
 
 	def admitir_numeros(self, event):
 		texto = self.in_fecha.GetValue().strip()
@@ -92,7 +100,7 @@ class Disco(wx.Dialog):
 
 	def completar_valores(self):
 		if self.controlador.disco != None:
-			disco = self.controlador.consultar_disco()
+			disco = self.controlador.disco
 			self.in_titulo.SetValue(disco.titulo)
 			self.in_autor.SetValue(disco.autor)
 			self.in_fecha.SetValue(disco.fecha)

@@ -14,7 +14,7 @@ class Traductor():
 
 
 	def traducir(self):
-		t = gettext.translation(self.modulo, localedir= self.ruta, languages=[self.idioma])
+		t = gettext.translation(self.modulo, localedir= self.ruta, languages=[self.idioma], fallback=True)
 		t.install()
 
 	def consultar_idioma_defecto(self):

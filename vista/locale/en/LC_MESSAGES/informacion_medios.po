@@ -1,12 +1,11 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR ORGANIZATION
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-04 16:25-0300\n"
-"PO-Revision-Date: 2022-09-04 16:46-0300\n"
+"POT-Creation-Date: 2023-01-17 23:41-0300\n"
+"PO-Revision-Date: 2023-01-17 23:53-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -15,4 +14,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: informacion_medios.py:15
+msgid "Fichero: "
+msgstr "File: "
+
+#: informacion_medios.py:16
+msgid "Duración: "
+msgstr "Duration: "
+
+#: informacion_medios.py:16
+msgid "horas "
+msgstr "ours "
+
+#: informacion_medios.py:16
+msgid "marcos"
+msgstr "frames"
+
+#: informacion_medios.py:16
+msgid "minutos "
+msgstr "minutes "
+
+#: informacion_medios.py:16
+msgid "segundos "
+msgstr "seconds "
+
+#: informacion_medios.py:17
+msgid "Formato: "
+msgstr "Format: "
+
+#: informacion_medios.py:18
+msgid "Tasa de bits: "
+msgstr "Bitrate: "
+
+#: informacion_medios.py:19
+msgid "Modo de taza de bits: "
+msgstr "Bitrate mode: "
+
+#: informacion_medios.py:20
+msgid "Velocidad de muestreo: "
+msgstr "Sampling rate: "
+
+#: informacion_medios.py:21
+msgid "Canales: "
+msgstr "Channels: "
+
+#: informacion_medios.py:24
+msgid "&Cerrar"
+msgstr "&Close"

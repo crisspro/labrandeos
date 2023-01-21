@@ -1,12 +1,11 @@
-﻿# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR ORGANIZATION
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-23 18:34-0400\n"
-"PO-Revision-Date: 2022-07-23 18:41-0400\n"
+"POT-Creation-Date: 2023-01-17 23:17-0300\n"
+"PO-Revision-Date: 2023-01-18 00:17-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -15,266 +14,296 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
-#: grafica.py:50
+#: grafica.py:63
 msgid "&Archivo"
 msgstr "&File"
 
-#: grafica.py:51
+#: grafica.py:64
 msgid "&Nuevo proyecto"
 msgstr "&New project"
 
-#: grafica.py:54 grafica.py:94
+#: grafica.py:68 grafica.py:141
 msgid "&Cargar audio"
 msgstr "&Load audio file"
 
-#: grafica.py:56
+#: grafica.py:70
 msgid "&Abrir proyecto"
 msgstr "&Open project"
 
-#: grafica.py:58
-msgid "&Guardar proyecto como..."
-msgstr "&Save Project as..."
+#: grafica.py:73
+msgid "&Guardar"
+msgstr "&Save"
 
-#: grafica.py:62
+#: grafica.py:77
+msgid "G&uardar como..."
+msgstr "S&ave Project as..."
+
+#: grafica.py:80
 msgid "&Generar CUE"
 msgstr "&CUE generate"
 
-#: grafica.py:65
+#: grafica.py:83
 msgid "&Salir"
 msgstr "&Quit"
 
-#: grafica.py:70
-msgid "&Herramientas"
-msgstr "&Tools"
-
-#: grafica.py:71
-msgid "&Metadatos del álbum"
-msgstr "&Album metadata"
-
-#: grafica.py:74
-msgid "&Opciones"
-msgstr "&Options"
-
-#: grafica.py:79
-msgid "A&yuda"
-msgstr "&Help"
-
-#: grafica.py:80
-msgid "&Documentación"
-msgstr "&Documentation"
-
-#: grafica.py:82
-msgid "&Buscar  actualizaciones"
-msgstr "&Update"
-
-#: grafica.py:84 grafica.py:401
-msgid "Acerca de..."
-msgstr "About..."
-
-#: grafica.py:93
-msgid "Carga el archivo de audio que quieres procesar."
-msgstr "Load an audio file for processing."
-
-#: grafica.py:104
-msgid "Nuevo proyecto"
-msgstr "New project"
-
-#: grafica.py:113
-msgid "Línea de tiempo"
-msgstr "Timeline"
-
-#: grafica.py:120 grafica.py:421 grafica.py:428 grafica.py:435 grafica.py:439
-#: grafica.py:501
-msgid "&Reproducir"
-msgstr "&Play"
-
-#: grafica.py:127
-msgid "línea de tiempo"
-msgstr "Timeline"
-
-#: grafica.py:131
-msgid "enfocar lista"
-msgstr "List focus"
-
-#: grafica.py:135
-msgid "Duración"
-msgstr "Duration"
-
-#: grafica.py:139
-msgid "tiempo actual"
-msgstr "Current time"
-
-#: grafica.py:142
-msgid "&Detener"
-msgstr "&Stop"
-
-#: grafica.py:144
-msgid "Volumen"
-msgstr "Volume"
-
-#: grafica.py:147
-msgid "&Marcar"
-msgstr "&Bookmarck"
-
-#: grafica.py:156
-msgid "Marcas"
-msgstr "Marks"
-
-#: grafica.py:159
-msgid "Título"
-msgstr "Title"
-
-#: grafica.py:160
-msgid "Autor"
-msgstr "Author"
-
-#: grafica.py:161
-msgid "Tiempo de inicio"
-msgstr "Start time"
-
-#: grafica.py:166 grafica.py:555
+#: grafica.py:88 grafica.py:650
 msgid "&Editar"
 msgstr "&Edit"
 
-#: grafica.py:168
+#: grafica.py:89
+msgid "&Deshacer"
+msgstr "&Undo"
+
+#: grafica.py:93
+msgid "&Rehacer"
+msgstr "&Redo"
+
+#: grafica.py:97
+#, fuzzy
+#| msgid "E&liminar"
+msgid "&Eliminar"
+msgstr "&Delete"
+
+#: grafica.py:100
+#, fuzzy
+#| msgid "&Marcar"
+msgid "&Marca"
+msgstr "&Bookmarck"
+
+#: grafica.py:111
+msgid "&Herramientas"
+msgstr "&Tools"
+
+#: grafica.py:112
+msgid "&Metadatos del álbum"
+msgstr "&Album metadata"
+
+#: grafica.py:116
+msgid "&Información de medios"
+msgstr "&Media information"
+
+#: grafica.py:120
+msgid "&Opciones"
+msgstr "&Options"
+
+#: grafica.py:126
+msgid "A&yuda"
+msgstr "&Help"
+
+#: grafica.py:127
+msgid "&Documentación"
+msgstr "&Documentation"
+
+#: grafica.py:130
+msgid "&Buscar  actualizaciones"
+msgstr "&Update"
+
+#: grafica.py:132 grafica.py:473
+msgid "Acerca de..."
+msgstr "About..."
+
+#: grafica.py:140
+msgid "Carga el archivo de audio que quieres procesar."
+msgstr "Load an audio file for processing."
+
+#: grafica.py:151
+msgid "Nuevo proyecto"
+msgstr "New project"
+
+#: grafica.py:160
+msgid "Línea de tiempo"
+msgstr "Timeline"
+
+#: grafica.py:167 grafica.py:493 grafica.py:500 grafica.py:507 grafica.py:509
+#: grafica.py:562
+msgid "&Reproducir"
+msgstr "&Play"
+
+#: grafica.py:174
+msgid "línea de tiempo"
+msgstr "Timeline"
+
+#: grafica.py:178
+msgid "enfocar lista"
+msgstr "List focus"
+
+#: grafica.py:182
+msgid "Duración"
+msgstr "Duration"
+
+#: grafica.py:186
+msgid "tiempo actual"
+msgstr "Current time"
+
+#: grafica.py:189
+msgid "&Detener"
+msgstr "&Stop"
+
+#: grafica.py:191
+msgid "Volumen"
+msgstr "Volume"
+
+#: grafica.py:194
+msgid "&Marcar"
+msgstr "&Bookmarck"
+
+#: grafica.py:204
+msgid "Marcas"
+msgstr "Marks"
+
+#: grafica.py:207
+msgid "Título"
+msgstr "Title"
+
+#: grafica.py:208
+msgid "Autor"
+msgstr "Author"
+
+#: grafica.py:209
+msgid "Tiempo de inicio"
+msgstr "Start time"
+
+#: grafica.py:214
 msgid "&GENERAR CUE"
 msgstr "&CUE generate"
 
-#: grafica.py:263
+#: grafica.py:308
 msgid "Eliminado"
 msgstr "deleted"
 
-#: grafica.py:271
+#: grafica.py:316
 msgid ""
-"Estás a punto de cerrar el programa. Los cambios que hayas echo al proyecto "
-"no se guardarán. \n"
-" ¿Deseas salir?"
+"Estás a punto de cerrar el programa. \n"
+" ¿Deseas guardar los cambios que hayas realizado?"
 msgstr ""
 "You are about to close the program. The changes you have made to the project "
-"will not be saved.\n"
-"\n"
-"Do you want to go out?"
+"will not be saved. \n"
+" Do you want to go out?"
 
-#: grafica.py:271 grafica.py:345 grafica.py:357
+#: grafica.py:316 grafica.py:399 grafica.py:413 grafica.py:436
 msgid "Advertencia."
-msgstr "Caveat."
+msgstr "Warning."
 
-#: grafica.py:279
+#: grafica.py:329
 msgid "Metadatos del álbum"
 msgstr "Albumn metadata"
 
-#: grafica.py:292
+#: grafica.py:343
 msgid "Cargar audio"
 msgstr "Load audio file"
 
-#: grafica.py:303
+#: grafica.py:348
 msgid "No es posible cargar el fichero, sólo se admiten archivos de audio."
 msgstr "Impossible to load the file. Only audio files are accepted."
 
-#: grafica.py:342
+#: grafica.py:395
 msgid "Abrir proyecto"
 msgstr "Open project"
 
-#: grafica.py:345
-msgid ""
-"Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
-"perderán. \n"
-" ¿Deseas continuar de todos modos?"
-msgstr ""
-"You are about to close the program. The changes you have made to the project "
-"will not be saved.\n"
-"\n"
-"Do you want to go out?"
-
-#: grafica.py:357
+#: grafica.py:399
 #, fuzzy
 #| msgid ""
 #| "Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
 #| "perderán. \n"
 #| " ¿Deseas continuar de todos modos?"
 msgid ""
-"Estás a punto de crear un nuevo proyecto. Los cambios que hayas hecho se "
+"Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
 "perderán. \n"
-" ¿Deseas continuar de todos modos?"
+" ¿Deseas continuar?"
 msgstr ""
 "You are about to close the program. The changes you have made to the project "
 "will not be saved.\n"
 "\n"
 "Do you want to go out?"
 
-#: grafica.py:368
+#: grafica.py:413
+msgid ""
+"Hay cambios en este proyecto que no han sido guardados. \n"
+" ¿Deseas guardarlos?"
+msgstr ""
+"There are changes in this project that have not been saved. \n"
+"Do you want to save them?"
+
+#: grafica.py:429
+msgid "guardado"
+msgstr "saved"
+
+#: grafica.py:433
 msgid "Guardar proyecto"
 msgstr "Save project"
 
-#: grafica.py:376
+#: grafica.py:436
+msgid "Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?"
+msgstr ""
+"There are changes in this project that have not been saved. Do you want to "
+"save them?"
+
+#: grafica.py:448
 msgid "Opciones"
 msgstr "Options"
 
-#: grafica.py:393
+#: grafica.py:465
 msgid "Hay una nueva versión disponible. ¿Deseas descargarla ahora?"
 msgstr "There is a new versión. Do you want to download it?"
 
-#: grafica.py:397
+#: grafica.py:469
 msgid "Aviso."
 msgstr "Message."
 
-#: grafica.py:397
+#: grafica.py:469
 msgid "No hay ninguna nueva versión disponible"
 msgstr "No updates."
 
-#: grafica.py:416
+#: grafica.py:488
 msgid "&Pausar"
 msgstr "&Pause"
 
-#: grafica.py:491 grafica.py:497
+#: grafica.py:552 grafica.py:558
 msgid "horas"
 msgstr "hours"
 
-#: grafica.py:491 grafica.py:497
+#: grafica.py:552 grafica.py:558
 msgid "marcos"
 msgstr "frames"
 
-#: grafica.py:491 grafica.py:497
+#: grafica.py:552 grafica.py:558
 msgid "minutos"
 msgstr "minutes"
 
-#: grafica.py:491 grafica.py:497
+#: grafica.py:552 grafica.py:558
 msgid "segundos"
 msgstr "seconds"
 
-#: grafica.py:497
+#: grafica.py:558
 msgid "Duración de la pista. "
 msgstr "Track's time"
 
-#: grafica.py:508
+#: grafica.py:568
 msgid "Crear marca"
 msgstr "Make mark"
 
-#: grafica.py:535
+#: grafica.py:590
 msgid "Editar marca"
 msgstr "Edit mark"
 
-#: grafica.py:547
+#: grafica.py:617
 msgid "Cue generado exitosamente."
 msgstr "CUE successfully generated."
 
-#: grafica.py:558
+#: grafica.py:624
+msgid "Deshacer"
+msgstr "Undo"
+
+#: grafica.py:635
+msgid "Rehacer"
+msgstr "Redo"
+
+#: grafica.py:640
+msgid "Información de medios"
+msgstr "Media information"
+
+#: grafica.py:653
 msgid "E&liminar"
 msgstr "&Delete"
-
-#~ msgid "&Nuevo"
-#~ msgstr "&New"
-
-#~ msgid "Acerca de"
-#~ msgstr "About"
-
-#~ msgid "Abrir archivo"
-#~ msgstr "Open file"
-
-#~ msgid "Marcado"
-#~ msgstr "marked"
-
-#~ msgid " en tiempo actual"
-#~ msgstr "now"

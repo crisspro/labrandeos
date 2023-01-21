@@ -93,6 +93,7 @@ class Controlador():
 		self.data.limpiar()
 		self.data = None
 		self.pista = None
+		self.disco.limpiar()
 		self.disco = Disco()
 		self.historial.limpiar()
 		self.historial = Historial()

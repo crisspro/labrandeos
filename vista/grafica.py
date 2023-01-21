@@ -29,10 +29,13 @@ class Programa(wx.Frame):
 		self.graficar()
 		self.Show()
 
+
+
 	#creación de controles
 	def graficar(self):
-		Traductor('grafica')
-# creación de lector
+		self.traductor = Traductor('grafica')
+
+		# creación de lector
 		self.lector= accessible_output2.outputs.auto.Auto()
 
 		#ID personalizados
@@ -159,7 +162,7 @@ class Programa(wx.Frame):
 		self.l_reloj.SetFont(self.font_reloj)
 		self.l_pista= wx.StaticText(self.panel2, -1, _('Línea de tiempo'))
 		self.minutaje= 1
-		self.linea_tiempo= wx.Slider(self.panel2, -1, 0, 0, self.minutaje,size= (400, -1))
+		self.linea_tiempo= wx.Slider(self.panel2, -1, self.controlador.reproductor.tiempo_actual, 0, self.minutaje,size= (400, -1))
 		self.linea_tiempo.SetLineSize(5000)
 		self.linea_tiempo.SetPageSize(60000)
 
@@ -214,43 +217,43 @@ class Programa(wx.Frame):
 		self.bt_generar= wx.Button(self.panel2, -1, _('&GENERAR CUE'))
 		self.bt_generar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
+
+
+# creación de sizers
+
+		self.sz0 = wx.BoxSizer(wx.VERTICAL)
+		self.sz0.Add(self.l_abrir)
+		self.sz0.Add(self.bt_abrir)
+		self.sz0.Add(self.panel2,  wx.SizerFlags().Expand())
+		self.panel1.SetSizer(self.sz0)
+
+
+		self.sz1= wx.BoxSizer(wx.VERTICAL)
+
+		self.sz1.Add(self.l_encabezado, wx.SizerFlags().Center())
+		self.sz1.Add(self.l_reloj, wx.SizerFlags().Center())
+		self.sz1.Add(self.reproductor)
+
+		self.sz1.Add(self.linea_tiempo, wx.SizerFlags().Expand())
+
+
+		self.sz2= wx.BoxSizer(wx.HORIZONTAL)
+		self.sz1.Add(self.sz2)
+		self.sz2.Add(self.bt_reproducir)
+		self.sz2.Add(bt_detener)
+		self.sz2.Add(self.volumen)
+		self.sz2.Add(self.bt_marcar)
+
+		self.sz3 = wx.BoxSizer(wx.HORIZONTAL)
+		self.sz1.Add(self.sz3, wx.SizerFlags().Center())
+		self.sz3.Add(self.lista, wx.SizerFlags().Expand())
+
+		self.sz4 = wx.BoxSizer(wx.VERTICAL)
+		self.sz3.Add(self.sz4)
+		self.sz4.Add(self.bt_generar)
+
+		self.panel2.SetSizer (self.sz1)
 		self.panel2.Enable(False)
-
-
-#creación de sizers
-
-		sz0 = wx.BoxSizer(wx.VERTICAL)
-		sz0.Add(self.l_abrir)
-		sz0.Add(self.bt_abrir)
-		sz0.Add(self.panel2,  wx.SizerFlags().Expand())
-		self.panel1.SetSizer(sz0)
-
-
-		sz1= wx.BoxSizer(wx.VERTICAL)
-
-		sz1.Add(self.l_encabezado, wx.SizerFlags().Center())
-		sz1.Add(self.l_reloj, wx.SizerFlags().Center())
-		sz1.Add(self.reproductor)
-
-		sz1.Add(self.linea_tiempo, wx.SizerFlags().Expand())
-
-
-		sz2= wx.BoxSizer(wx.HORIZONTAL)
-		sz1.Add(sz2)
-		sz2.Add(self.bt_reproducir)
-		sz2.Add(bt_detener)
-		sz2.Add(self.volumen)
-		sz2.Add(self.bt_marcar)
-
-		sz3 = wx.BoxSizer(wx.HORIZONTAL)
-		sz1.Add(sz3, wx.SizerFlags().Center())
-		sz3.Add(self.lista, wx.SizerFlags().Expand())
-
-		sz4 = wx.BoxSizer(wx.VERTICAL)
-		sz3.Add(sz4)
-		sz4.Add(self.bt_generar)
-
-		self.panel2.SetSizer (sz1)
 
 		#llamado a funciones
 		self.buscar_actualizacion(None)
@@ -269,12 +272,16 @@ class Programa(wx.Frame):
 
 
 	def refrescar_principal(self):
-		self.refrescar_lista()
+#		self.refrescar_lista()
+		self.panel1.Destroy()
 		self.graficar()
+		self.Show()
+		self.Layout()
 		if self.controlador.pista != None:
 			self.reproductor.Load(self.controlador.pista.ruta)
 		self.habilitar_controles()
 		self.desactivar_controles()
+
 
 	def refrescar_lista(self):
 		self.lista.DeleteAllItems()
@@ -334,10 +341,10 @@ class Programa(wx.Frame):
 			self.vn_disco.getGenero(),
 			self.vn_disco.getComentarios())
 			self.mn_metadatos_disco.Enable(True)
-			self.l_encabezado.SetLabel(self.controlador.consultar_disco().titulo + ' - ' + self.controlador.consultar_disco(). autor)
+			self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
 			self.mn_deshacer.Enable(True)
-
-
+		else:
+			self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
 
 	def abrir_archivo (self, event):
 		self.dialogo= wx.FileDialog(self, _('Cargar audio'), style=wx.FD_OPEN)
@@ -354,7 +361,6 @@ class Programa(wx.Frame):
 				self.habilitar_controles()
 				self.desactivar_controles()
 				self.linea_tiempo.SetFocus()
-
 
 	def registrar_pista(self):
 		direccion = os.path.dirname(self.path)
@@ -418,7 +424,6 @@ class Programa(wx.Frame):
 			self.controlador.limpiar_proyecto()
 			self.controlador.crear_proyecto()
 			self.habilitar_controles()
-#			self.refrescar_lista()
 			self.refrescar_principal()
 		elif mensaje == wx.YES:
 			self.guardar_proyecto(event)
@@ -647,7 +652,7 @@ class Contextual(wx.Menu):
 	def __init__(self, parent):
 		super(Contextual, self).__init__()
 		self.parent = parent
-		self.m1 = wx.MenuItem(self, wx.NewId(), _('&Editar' + '\t Ctrl+E'))
+		self.m1 = wx.MenuItem(self, wx.NewId(), _('&Editar') +  '\tCtrl+E')
 		self.Append(self.m1)
 		self.Bind(wx.EVT_MENU, self.abrir_editar2, self.m1)
 		self.m2 = wx.MenuItem(self, -1, _('E&liminar'))

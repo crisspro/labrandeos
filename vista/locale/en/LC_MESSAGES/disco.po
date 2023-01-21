@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-18 12:43-0400\n"
-"PO-Revision-Date: 2022-07-18 12:55-0400\n"
+"POT-Creation-Date: 2023-01-19 15:11-0300\n"
+"PO-Revision-Date: 2023-01-19 15:15-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -15,40 +15,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
-#: disco.py:14
+#: disco.py:16
 msgid "Título:"
 msgstr "Title:"
 
-#: disco.py:18
+#: disco.py:20
 msgid "Autor:"
 msgstr "Author:"
 
-#: disco.py:22
+#: disco.py:24
 msgid "Año:"
 msgstr "Year:"
 
-#: disco.py:26
+#: disco.py:28
 msgid "Género:"
 msgstr "Genre:"
 
-#: disco.py:29
+#: disco.py:31
 msgid "Comentarios:"
 msgstr "Comments:"
 
-#: disco.py:31
+#: disco.py:33
 msgid "&Aceptar"
 msgstr "&OK"
 
-#: disco.py:34
+#: disco.py:36
 msgid "&Cancelar"
 msgstr "&Cancel"
 
-#: disco.py:87
+#: disco.py:80
+msgid "Sin título"
+msgstr "Untitled"
+
+#: disco.py:81
+msgid "Sin autor"
+msgstr "Unauthored"
+
+#: disco.py:96
 msgid "Aviso:"
 msgstr "Message:"
 
-#: disco.py:87
+#: disco.py:96
 msgid "Solo se admiten números"
 msgstr "Only numbers are accepted. "
