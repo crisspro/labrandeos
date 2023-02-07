@@ -319,6 +319,7 @@ class Programa(wx.Frame):
 		self.PopupMenu(Contextual(self))
 
 	def cerrar (self, event):
+		self.controlador_opciones.guardar_opciones('general', 'idioma', str(self.controlador_opciones.idioma))
 		if self.controlador.pista != None:
 			resp = wx.MessageBox(_('Estás a punto de cerrar el programa. \n ¿Deseas guardar los cambios que hayas realizado?'), _('Advertencia.'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
 			if resp == wx.NO:
@@ -450,10 +451,13 @@ class Programa(wx.Frame):
 
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):
-		vn_opciones = vista.opciones.Opciones(self, _('Opciones'))
-		if vn_opciones.ShowModal() == wx.ID_OK:
-			vn_opciones.guardar_opciones()
-			self.refrescar_principal()
+		self.vn_opciones = vista.opciones.Opciones(self, opciones= self.controlador_opciones)
+		idioma_anterior = self.vn_opciones.com_idioma.GetValue()
+		if self.vn_opciones.ShowModal() == wx.ID_OK:
+			self.vn_opciones.guardar_opciones()
+			idioma_posterior = self.vn_opciones.com_idioma.GetValue()
+			if idioma_anterior != idioma_posterior:
+				wx.MessageBox(_('Debes reiniciar el programa para que los cambios de idioma surtan  efecto.'), _('Atención.'))
 
 	def abrir_documentacion(self, event):
 		if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':

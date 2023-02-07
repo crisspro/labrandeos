@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-17 20:53-0400\n"
-"PO-Revision-Date: 2022-07-18 12:59-0400\n"
+"POT-Creation-Date: 2023-02-05 15:45-0300\n"
+"PO-Revision-Date: 2023-02-05 15:46-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,17 +15,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: opciones.py:10
+msgid "Opciones"
+msgstr ""
 
 #: opciones.py:18
 msgid "Idioma"
 msgstr ""
 
-#: opciones.py:19
+#: opciones.py:19 opciones.py:66 opciones.py:72
 msgid "Español"
 msgstr ""
 
-#: opciones.py:19
+#: opciones.py:19 opciones.py:68 opciones.py:74
 msgid "Inglés"
 msgstr ""
 
@@ -34,21 +38,25 @@ msgid "Añadir índice al exportar marcas"
 msgstr ""
 
 #: opciones.py:24
-msgid "Sonido al detectar nueva actualización"
+msgid "Abrir carpeta de destino al exportar"
 msgstr ""
 
 #: opciones.py:26
-msgid "Sonido al crear una nueva marca"
+msgid "Sonido al detectar nueva actualización"
 msgstr ""
 
 #: opciones.py:28
-msgid "Sonido al generar el archivo CUE"
+msgid "Sonido al crear una nueva marca"
 msgstr ""
 
 #: opciones.py:30
-msgid "&Aceptar"
+msgid "Sonido al generar el archivo CUE"
 msgstr ""
 
 #: opciones.py:32
+msgid "&Aceptar"
+msgstr ""
+
+#: opciones.py:34
 msgid "&Cancelar"
 msgstr ""

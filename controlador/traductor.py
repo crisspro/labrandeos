@@ -18,4 +18,4 @@ class Traductor():
 		t.install()
 
 	def consultar_idioma_defecto(self):
-		returngetdefaultlocale()[0]
+		return getdefaultlocale()[0]

@@ -47,6 +47,7 @@ class Opciones():
 		self.configparser = ConfigParser()
 		self.archivo_configuracion = os.path.join('vista', 'files', 'user.ini')
 		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
+		self.idioma = self.consultar_opciones('str', 'general', 'idioma')
 
 
 	def chequear_ini(self):

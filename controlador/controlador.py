@@ -169,7 +169,6 @@ class Controlador():
 				return 'otro'
 				break
 
-
 	def deshacer(self):
 		self.historial.apilar('pila2', copy.deepcopy(self.data))
 		objeto = self.historial.desapilar('pila1')
