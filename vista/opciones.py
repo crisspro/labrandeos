@@ -1,17 +1,14 @@
 import wx
 
 import controlador.configuracion
-import controlador.traductor
 
 
 class Opciones(wx.Dialog):
-	def __init__(self, parent, opciones):
-		super().__init__(parent)
-		self.SetTitle(_('Opciones'))
+	def __init__(self, parent, title, opciones):
+		super().__init__(parent, title= title)
 		self.Center()
 		self.controlador_app = controlador.configuracion.App()
 		self.controlador_opciones = opciones
-		controlador.traductor.Traductor('opciones')
 
 		# Creación de controles
 		panel1 = wx.Panel(self)

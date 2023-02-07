@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-05 15:33-0300\n"
-"PO-Revision-Date: 2023-02-05 16:07-0300\n"
+"POT-Creation-Date: 2023-02-06 22:53-0300\n"
+"PO-Revision-Date: 2023-02-06 22:56-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -61,16 +61,12 @@ msgid "&Rehacer"
 msgstr "&Redo"
 
 #: grafica.py:100
-#, fuzzy
-#| msgid "E&liminar"
 msgid "&Eliminar"
 msgstr "&Delete"
 
 #: grafica.py:103
-#, fuzzy
-#| msgid "&Marcar"
 msgid "&Marca"
-msgstr "&Bookmarck"
+msgstr "&Marck"
 
 #: grafica.py:114
 msgid "&Herramientas"
@@ -203,11 +199,6 @@ msgid "Abrir proyecto"
 msgstr "Open project"
 
 #: grafica.py:406
-#, fuzzy
-#| msgid ""
-#| "Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
-#| "perderán. \n"
-#| " ¿Deseas continuar de todos modos?"
 msgid ""
 "Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
 "perderán. \n"
@@ -241,8 +232,6 @@ msgstr ""
 "save them?"
 
 #: grafica.py:460
-#, fuzzy
-#| msgid "Advertencia."
 msgid "Atención."
 msgstr "Warning."
 
@@ -314,3 +303,139 @@ msgstr "Media information"
 #: grafica.py:662
 msgid "E&liminar"
 msgstr "&Delete"
+
+#: opciones.py:15
+msgid "Idioma"
+msgstr "Language"
+
+#: opciones.py:16 opciones.py:63 opciones.py:69
+msgid "Español"
+msgstr "Spanish"
+
+#: opciones.py:16 opciones.py:65 opciones.py:71
+msgid "Inglés"
+msgstr "English"
+
+#: opciones.py:19
+msgid "Añadir índice al exportar marcas"
+msgstr "Add Id to export marks"
+
+#: opciones.py:21
+msgid "Abrir carpeta de destino al exportar"
+msgstr "Open Destiny folder to export "
+
+#: opciones.py:23
+msgid "Sonido al detectar nueva actualización"
+msgstr "Sound when detecting an update."
+
+#: opciones.py:25
+msgid "Sonido al crear una nueva marca"
+msgstr "Sound when makeing an mark."
+
+#: opciones.py:27
+msgid "Sonido al generar el archivo CUE"
+msgstr "Sound when CUE it's generated."
+
+#: opciones.py:29
+msgid "&Aceptar"
+msgstr "&OK"
+
+#: opciones.py:31
+msgid "&Cancelar"
+msgstr "&Cancel"
+
+#~ msgid "Autor: "
+#~ msgstr "Author:"
+
+#~ msgid "Licencia: "
+#~ msgstr "License:"
+
+#~ msgid "&Visitar sitio del proyecto"
+#~ msgstr "&Go to projec site"
+
+#~ msgid "&Cerrar"
+#~ msgstr "&Close"
+
+#~ msgid "Título:"
+#~ msgstr "Title:"
+
+#~ msgid "Autor:"
+#~ msgstr "Author:"
+
+#~ msgid "Año:"
+#~ msgstr "Year:"
+
+#~ msgid "Género:"
+#~ msgstr "Genre:"
+
+#~ msgid "Comentarios:"
+#~ msgstr "Comments:"
+
+#~ msgid "Sin título"
+#~ msgstr "untitled"
+
+#~ msgid "Sin autor"
+#~ msgstr "unauthored"
+
+#~ msgid "Aviso:"
+#~ msgstr "Message:"
+
+#~ msgid "Solo se admiten números"
+#~ msgstr "Only numbers are allowed."
+
+#~ msgid "Horas"
+#~ msgstr "Hours:"
+
+#~ msgid "Minutos"
+#~ msgstr "Minutes:"
+
+#~ msgid "Segundos"
+#~ msgstr "Seconds:"
+
+#~ msgid "Marcos"
+#~ msgstr "Frames:"
+
+#~ msgid "Debes ingresar un autor."
+#~ msgstr "You must write an autor."
+
+#~ msgid "Alerta."
+#~ msgstr "Alert."
+
+#~ msgid "Debes ingresar un título."
+#~ msgstr "You must write a title."
+
+#~ msgid "El tiempo ingresado supera el tiempo de duración del audio."
+#~ msgstr "The time ingresed is over them audio duration time."
+
+#~ msgid "Fichero: "
+#~ msgstr "File: "
+
+#~ msgid "Duración: "
+#~ msgstr "Duration: "
+
+#~ msgid "horas "
+#~ msgstr "ours "
+
+#~ msgid "minutos "
+#~ msgstr "minutes "
+
+#~ msgid "segundos "
+#~ msgstr "seconds "
+
+#~ msgid "Formato: "
+#~ msgstr "Format: "
+
+#~ msgid "Tasa de bits: "
+#~ msgstr "Bitrate: "
+
+#~ msgid "Modo de taza de bits: "
+#~ msgstr "Bitrate mode: "
+
+#~ msgid "Velocidad de muestreo: "
+#~ msgstr "Sampling rate: "
+
+#~ msgid "Canales: "
+#~ msgstr "Channels: "
+
+#~ msgid "Opciones"
+#~ msgstr "Options"

@@ -1,16 +1,13 @@
 import pdb
 import wx
-from controlador.traductor import Traductor
 
 
 class Informacion_medios(wx.Dialog):
 	def __init__(self, parent, title, controlador):
 		super().__init__(parent, title= title)
 		self.Center()
-		Traductor('informacion_medios')
 		self.controlador = controlador
 		self.controlador.tiempo.convertir(self.controlador.pista.duracion)
-
 		self.panel = wx.Panel(self)
 		self.lista_datos = [_('Fichero: ') + self.controlador.pista.nombre + self.controlador.pista.extencion,
 		_('Duración: ') + str(self.controlador.tiempo.horas) + _('horas ') + str(self.controlador.tiempo.minutos) + _('minutos ') + str(self.controlador.tiempo.segundos) + _('segundos ') + str(self.controlador.tiempo.marcos) + _('marcos'),

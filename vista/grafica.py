@@ -33,7 +33,7 @@ class Programa(wx.Frame):
 
 	#creación de controles
 	def graficar(self):
-		self.traductor = Traductor('grafica')
+		self.traductor = Traductor('CueGenesis')
 
 		# creación de lector
 		self.lector= accessible_output2.outputs.auto.Auto()
@@ -451,7 +451,7 @@ class Programa(wx.Frame):
 
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):
-		self.vn_opciones = vista.opciones.Opciones(self, opciones= self.controlador_opciones)
+		self.vn_opciones = vista.opciones.Opciones(self, 'Opciones', opciones= self.controlador_opciones)
 		idioma_anterior = self.vn_opciones.com_idioma.GetValue()
 		if self.vn_opciones.ShowModal() == wx.ID_OK:
 			self.vn_opciones.guardar_opciones()

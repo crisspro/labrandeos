@@ -1,7 +1,6 @@
 import pdb
 import wx
 
-from controlador.traductor import Traductor
 
 class Disco(wx.Dialog):
 	def __init__ (self, parent, title, controlador):
@@ -9,8 +8,6 @@ class Disco(wx.Dialog):
 		self.Center()
 		self.Size = (200,300)
 		self.controlador = controlador
-		Traductor('disco')
-
 
 		#creación de controles
 		panel1 = wx.Panel(self)
