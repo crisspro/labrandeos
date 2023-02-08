@@ -15,3 +15,7 @@ class Disco():
 		self.genero = ''
 		self.fecha = ''
 		self.comentarios = ''
+
+	def __eq__(self, otro):
+		if isinstance(otro, Disco):
+			return vars(self) == vars(otro)

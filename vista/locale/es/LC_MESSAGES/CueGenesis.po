@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-06 22:10-0300\n"
-"PO-Revision-Date: 2023-02-06 22:23-0300\n"
+"POT-Creation-Date: 2023-02-06 23:05-0300\n"
+"PO-Revision-Date: 2023-02-06 23:08-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -17,63 +17,63 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: acerca_de.py:13
+#: acerca_de.py:10
 msgid "Autor: "
 msgstr ""
 
-#: acerca_de.py:13
+#: acerca_de.py:10
 msgid "Licencia: "
 msgstr ""
 
-#: acerca_de.py:14
+#: acerca_de.py:11
 msgid "&Visitar sitio del proyecto"
 msgstr ""
 
-#: acerca_de.py:16 informacion_medios.py:24
+#: acerca_de.py:13 informacion_medios.py:21
 msgid "&Cerrar"
 msgstr ""
 
-#: disco.py:17 editar.py:18
+#: disco.py:14 editar.py:18
 msgid "Título:"
 msgstr ""
 
-#: disco.py:21 editar.py:22
+#: disco.py:18 editar.py:22
 msgid "Autor:"
 msgstr ""
 
-#: disco.py:25
+#: disco.py:22
 msgid "Año:"
 msgstr ""
 
-#: disco.py:29
+#: disco.py:26
 msgid "Género:"
 msgstr ""
 
-#: disco.py:32
+#: disco.py:29
 msgid "Comentarios:"
 msgstr ""
 
-#: disco.py:34 editar.py:43 opciones.py:32
+#: disco.py:31 editar.py:43 opciones.py:29
 msgid "&Aceptar"
 msgstr ""
 
-#: disco.py:37 editar.py:46 opciones.py:34
+#: disco.py:34 editar.py:46 opciones.py:31
 msgid "&Cancelar"
 msgstr ""
 
-#: disco.py:81
+#: disco.py:78
 msgid "Sin título"
 msgstr ""
 
-#: disco.py:82
+#: disco.py:79
 msgid "Sin autor"
 msgstr ""
 
-#: disco.py:97
+#: disco.py:94
 msgid "Aviso:"
 msgstr ""
 
-#: disco.py:97
+#: disco.py:94
 msgid "Solo se admiten números"
 msgstr ""
 
@@ -350,7 +350,7 @@ msgstr ""
 msgid "segundos"
 msgstr ""
 
-#: grafica.py:561 grafica.py:567 informacion_medios.py:16
+#: grafica.py:561 grafica.py:567 informacion_medios.py:13
 msgid "marcos"
 msgstr ""
 
@@ -386,78 +386,74 @@ msgstr ""
 msgid "E&liminar"
 msgstr ""
 
-#: informacion_medios.py:15
+#: informacion_medios.py:12
 msgid "Fichero: "
 msgstr ""
 
-#: informacion_medios.py:16
+#: informacion_medios.py:13
 msgid "Duración: "
 msgstr ""
 
-#: informacion_medios.py:16
+#: informacion_medios.py:13
 msgid "horas "
 msgstr ""
 
-#: informacion_medios.py:16
+#: informacion_medios.py:13
 msgid "minutos "
 msgstr ""
 
-#: informacion_medios.py:16
+#: informacion_medios.py:13
 msgid "segundos "
 msgstr ""
 
-#: informacion_medios.py:17
+#: informacion_medios.py:14
 msgid "Formato: "
 msgstr ""
 
-#: informacion_medios.py:18
+#: informacion_medios.py:15
 msgid "Tasa de bits: "
 msgstr ""
 
-#: informacion_medios.py:19
+#: informacion_medios.py:16
 msgid "Modo de taza de bits: "
 msgstr ""
 
-#: informacion_medios.py:20
+#: informacion_medios.py:17
 msgid "Velocidad de muestreo: "
 msgstr ""
 
-#: informacion_medios.py:21
+#: informacion_medios.py:18
 msgid "Canales: "
 msgstr ""
 
-#: opciones.py:10
-msgid "Opciones"
-msgstr ""
-
-#: opciones.py:18
+#: opciones.py:15
 msgid "Idioma"
 msgstr ""
 
-#: opciones.py:19 opciones.py:66 opciones.py:72
+#: opciones.py:16 opciones.py:63 opciones.py:69
 msgid "Español"
 msgstr ""
 
-#: opciones.py:19 opciones.py:68 opciones.py:74
+#: opciones.py:16 opciones.py:65 opciones.py:71
 msgid "Inglés"
 msgstr ""
 
-#: opciones.py:22
+#: opciones.py:19
 msgid "Añadir índice al exportar marcas"
 msgstr ""
 
-#: opciones.py:24
+#: opciones.py:21
 msgid "Abrir carpeta de destino al exportar"
 msgstr ""
 
-#: opciones.py:26
+#: opciones.py:23
 msgid "Sonido al detectar nueva actualización"
 msgstr ""
 
-#: opciones.py:28
+#: opciones.py:25
 msgid "Sonido al crear una nueva marca"
 msgstr ""
 
-#: opciones.py:30
+#: opciones.py:27
 msgid "Sonido al generar el archivo CUE"
 msgstr ""

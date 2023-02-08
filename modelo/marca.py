@@ -38,6 +38,17 @@ class Data():
 	def getMarcas(self):
 		return self.lista_marcas
 
+	def __eq__(self, otro):
+		if isinstance(otro, Data) and len(otro.lista_marcas) == len(self.lista_marcas):
+			for i, j in zip(otro.lista_marcas, self.lista_marcas):
+				valor = vars(i) == vars(j)
+				if valor ==False:
+					break
+					return False
+				else:
+					return True
+		else:
+			return False
 
 class Marca():
 	def __init__(self, id, titulo, autor, tiempo_inicio, milesimas):

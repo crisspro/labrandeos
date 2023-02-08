@@ -245,12 +245,13 @@ class Programa(wx.Frame):
 		self.sz2.Add(self.bt_marcar)
 
 		self.sz3 = wx.BoxSizer(wx.HORIZONTAL)
-		self.sz1.Add(self.sz3, wx.SizerFlags().Center())
-		self.sz3.Add(self.lista, wx.SizerFlags().Expand())
+		self.sz1.Add(self.sz3, flag= wx.ALL|wx.CENTER) 
+		self.sz3.Add(self.lista,flag= wx.ALL|wx.CENTER)
 
 		self.sz4 = wx.BoxSizer(wx.VERTICAL)
 		self.sz3.Add(self.sz4)
 		self.sz4.Add(self.bt_generar)
+
 
 		self.panel2.SetSizer (self.sz1)
 		self.panel2.Enable(False)
@@ -415,19 +416,28 @@ class Programa(wx.Frame):
 				self.habilitar_controles()
 				self.desactivar_controles()
 
-	# Crea un nuevo proyecto
+	def detectar_cambios(self):
+		''' Detecta si se han hecho cambios en el proyecto actual para que sean guardados '''
+		if self.controlador.comparar_modelo() == False:
+			mensaje = wx.MessageBox(_('Hay cambios en este proyecto que no han sido guardados. \n ¿Deseas guardarlos?'), _('Advertencia.'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
+			if mensaje == wx.NO:
+				self.controlador.limpiar_temporal()
+				self.controlador.load()
+				self.path = ''
+				self.controlador.limpiar_proyecto()
+			elif mensaje == wx.YES and self.controlador.es_temporal:
+				self.guardar_proyecto(None)
+			elif mensaje == wx.YES and self.es_temporal == False:
+				self.guardar(None)
+
+
 	def crear_proyecto(self, event):
-		mensaje = wx.MessageBox(_('Hay cambios en este proyecto que no han sido guardados. \n ¿Deseas guardarlos?'), _('Advertencia.'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
-		if mensaje == wx.NO:
-			self.controlador.limpiar_temporal()
-			self.controlador.load()
-			self.path = ''
-			self.controlador.limpiar_proyecto()
-			self.controlador.crear_proyecto()
-			self.habilitar_controles()
-			self.refrescar_principal()
-		elif mensaje == wx.YES:
-			self.guardar_proyecto(event)
+		''' Crea un nuevo proyecto '''
+		self.detectar_cambios()
+		self.controlador.crear_proyecto()
+		self.habilitar_controles()
+		self.refrescar_principal()
+
 
 	#guardar cambios en proyecto actual
 	def guardar(self, event):
@@ -451,7 +461,7 @@ class Programa(wx.Frame):
 
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):
-		self.vn_opciones = vista.opciones.Opciones(self, 'Opciones', opciones= self.controlador_opciones)
+		self.vn_opciones = vista.opciones.Opciones(self, _('Opciones'), opciones= self.controlador_opciones)
 		idioma_anterior = self.vn_opciones.com_idioma.GetValue()
 		if self.vn_opciones.ShowModal() == wx.ID_OK:
 			self.vn_opciones.guardar_opciones()

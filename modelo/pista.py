@@ -6,3 +6,6 @@ class Pista():
 		self.ruta = ruta
 		self.duracion = duracion
 
+	def __eq__(self, otro):
+		if isinstance(otro, Pista):
+			return vars(self) == vars(otro)

@@ -104,7 +104,6 @@ class Controlador():
 		self.ruta_proyecto = 'temp.proyecto.cgp'
 		self.data = None
 
-
 	def temporizar(self, milesimas):
 		self.tiempo.milesimas = milesimas
 		self.tiempo.convertir(milesimas)
@@ -168,6 +167,18 @@ class Controlador():
 			if track.track_type == 'Video':
 				return 'otro'
 				break
+
+	def es_temporal(self):
+		return self.ruta_proyecto == 'proyecto.temp.cgp'
+
+	def comparar_modelo(self, ):
+		f = open(self.ruta_proyecto , "rb")
+		data = pickle.load(f)
+		pista = pickle.load(f)
+		disco = pickle.load(f)
+		f.close()
+		pdb.set_trace()
+		return disco == self.disco and pista == self.pista and data == self.data   
 
 	def deshacer(self):
 		self.historial.apilar('pila2', copy.deepcopy(self.data))
