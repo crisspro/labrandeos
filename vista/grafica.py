@@ -404,7 +404,7 @@ class Programa(wx.Frame):
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			mensaje = 0
 			if self.controlador.pista != None:
-				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Advertencia.'), style= wx.YES_NO| wx.NO_DEFAULT| wx.ICON_WARNING)
+				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Advertencia.'), style= wx.OK|wx.CANCEL| wx.CANCEL_DEFAULT| wx.ICON_WARNING)
 			if self.controlador.pista == None or mensaje == 2:
 				self.controlador.limpiar_temporal()
 				self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
@@ -438,8 +438,10 @@ class Programa(wx.Frame):
 		self.path = ''
 		self.controlador.limpiar_proyecto()
 		self.controlador.crear_proyecto()
+		self.controlador.save()
 		self.habilitar_controles()
 		self.refrescar_principal()
+		self.lector.output(_('Nuevo proyecto'))
 
 
 	#guardar cambios en proyecto actual
