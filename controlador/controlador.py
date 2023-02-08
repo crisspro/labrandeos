@@ -97,6 +97,7 @@ class Controlador():
 		self.disco = Disco()
 		self.historial.limpiar()
 		self.historial = Historial()
+		self.ruta_proyecto = 'temp.proyecto.cgp'
 
 	def limpiar_temporal(self):
 		if os.path.exists('temp.proyecto.cgp'):
@@ -169,7 +170,7 @@ class Controlador():
 				break
 
 	def es_temporal(self):
-		return self.ruta_proyecto == 'proyecto.temp.cgp'
+		return self.ruta_proyecto == 'temp.proyecto.cgp'
 
 	def comparar_modelo(self, ):
 		f = open(self.ruta_proyecto , "rb")
@@ -177,7 +178,6 @@ class Controlador():
 		pista = pickle.load(f)
 		disco = pickle.load(f)
 		f.close()
-		pdb.set_trace()
 		return disco == self.disco and pista == self.pista and data == self.data   
 
 	def deshacer(self):

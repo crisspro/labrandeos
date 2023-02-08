@@ -425,15 +425,18 @@ class Programa(wx.Frame):
 				self.controlador.load()
 				self.path = ''
 				self.controlador.limpiar_proyecto()
-			elif mensaje == wx.YES and self.controlador.es_temporal:
+			elif mensaje == wx.YES and self.controlador.es_temporal() == True:
 				self.guardar_proyecto(None)
-			elif mensaje == wx.YES and self.es_temporal == False:
+			elif mensaje == wx.YES and self.controlador.es_temporal() == False:
 				self.guardar(None)
-
 
 	def crear_proyecto(self, event):
 		''' Crea un nuevo proyecto '''
 		self.detectar_cambios()
+		self.controlador.limpiar_temporal()
+		self.controlador.load()
+		self.path = ''
+		self.controlador.limpiar_proyecto()
 		self.controlador.crear_proyecto()
 		self.habilitar_controles()
 		self.refrescar_principal()
@@ -458,6 +461,8 @@ class Programa(wx.Frame):
 				self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
 				self.controlador.save()
 				self.controlador.limpiar_temporal()
+		else:
+			raise Exception('cancelado')
 
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):
