@@ -420,12 +420,7 @@ class Programa(wx.Frame):
 		''' Detecta si se han hecho cambios en el proyecto actual para que sean guardados '''
 		if self.controlador.comparar_modelo() == False:
 			mensaje = wx.MessageBox(_('Hay cambios en este proyecto que no han sido guardados. \n ¿Deseas guardarlos?'), _('Advertencia.'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
-			if mensaje == wx.NO:
-				self.controlador.limpiar_temporal()
-				self.controlador.load()
-				self.path = ''
-				self.controlador.limpiar_proyecto()
-			elif mensaje == wx.YES and self.controlador.es_temporal() == True:
+			if mensaje == wx.YES and self.controlador.es_temporal() == True:
 				self.guardar_proyecto(None)
 			elif mensaje == wx.YES and self.controlador.es_temporal() == False:
 				self.guardar(None)
