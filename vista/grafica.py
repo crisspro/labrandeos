@@ -322,17 +322,13 @@ class Programa(wx.Frame):
 	def cerrar (self, event):
 		self.controlador_opciones.guardar_opciones('general', 'idioma', str(self.controlador_opciones.idioma))
 		if self.controlador.pista != None:
-			resp = wx.MessageBox(_('Estás a punto de cerrar el programa. \n ¿Deseas guardar los cambios que hayas realizado?'), _('Advertencia.'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
-			if resp == wx.NO:
-				self.controlador.limpiar_temporal()
-				self.Destroy()
-			elif resp == wx.YES:
-				self.controlador.save()
-				self.controlador.limpiar_temporal()
-				if self.controlador.ruta_proyecto == 'temp.proyecto.cgp':
-					self.guardar_proyecto(event)
-		else:
+			self.detectar_cambios()
+			self.controlador.limpiar_temporal()
 			self.Destroy()
+		else:
+			self.controlador.limpiar_temporal()
+			self.Destroy()
+
 
 	def guardar_disco(self, event):
 		self.vn_disco = vista.disco.Disco(self, _('Metadatos del álbum'), self.controlador)
