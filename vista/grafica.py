@@ -415,11 +415,13 @@ class Programa(wx.Frame):
 	def detectar_cambios(self):
 		''' Detecta si se han hecho cambios en el proyecto actual para que sean guardados '''
 		if self.controlador.comparar_modelo() == False:
-			mensaje = wx.MessageBox(_('Hay cambios en este proyecto que no han sido guardados. \n ¿Deseas guardarlos?'), _('Advertencia.'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
+			mensaje = wx.MessageBox(_('Hay cambios en este proyecto que no han sido guardados. \n ¿Deseas guardarlos?'), _('Advertencia.'), style= wx.YES_NO | wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
 			if mensaje == wx.YES and self.controlador.es_temporal() == True:
 				self.guardar_proyecto(None)
 			elif mensaje == wx.YES and self.controlador.es_temporal() == False:
 				self.guardar(None)
+			elif mensaje == wx.CANCEL:
+				raise Exception('Cancelado')
 
 	def crear_proyecto(self, event):
 		''' Crea un nuevo proyecto '''
@@ -455,7 +457,7 @@ class Programa(wx.Frame):
 				self.controlador.save()
 				self.controlador.limpiar_temporal()
 		else:
-			raise Exception('cancelado')
+			raise Exception('Cancelado')
 
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):

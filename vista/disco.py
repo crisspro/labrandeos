@@ -80,7 +80,6 @@ class Disco(wx.Dialog):
 		if self.controlador.disco.titulo == '' and self.controlador.disco.autor == '':
 			self.controlador.disco.titulo = titulo
 			self.controlador.disco.autor = autor
-			self.controlador.disco.autor = autor
 		if self.in_autor.GetValue() != '' and self.in_titulo.GetValue() != '':
 			self.bt_aceptar.Enable(True)
 		else:
