@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-08 22:22-0300\n"
-"PO-Revision-Date: 2023-02-08 22:26-0300\n"
+"POT-Creation-Date: 2023-02-10 14:21-0300\n"
+"PO-Revision-Date: 2023-02-10 14:32-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -15,6 +15,54 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.2.2\n"
+
+#: Informacion_medios.py:12
+msgid "Fichero: "
+msgstr "File: "
+
+#: Informacion_medios.py:13
+msgid "Duración: "
+msgstr "Duration: "
+
+#: Informacion_medios.py:13
+msgid "horas "
+msgstr "ours "
+
+#: Informacion_medios.py:13
+msgid "minutos "
+msgstr "minutes "
+
+#: Informacion_medios.py:13
+msgid "segundos "
+msgstr "seconds "
+
+#: Informacion_medios.py:13 grafica.py:585 grafica.py:591
+msgid "marcos"
+msgstr "frames"
+
+#: Informacion_medios.py:14
+msgid "Formato: "
+msgstr "Format: "
+
+#: Informacion_medios.py:15
+msgid "Tasa de bits: "
+msgstr "Bitrate: "
+
+#: Informacion_medios.py:16
+msgid "Modo de taza de bits: "
+msgstr "Bitrate mode: "
+
+#: Informacion_medios.py:17
+msgid "Velocidad de muestreo: "
+msgstr "Sampling rate: "
+
+#: Informacion_medios.py:18
+msgid "Canales: "
+msgstr "Channels: "
+
+#: Informacion_medios.py:21 acerca_de.py:13
+msgid "&Cerrar"
+msgstr "&Close"
 
 #: acerca_de.py:10
 msgid "Autor: "
@@ -27,10 +75,6 @@ msgstr "License:"
 #: acerca_de.py:11
 msgid "&Visitar sitio del proyecto"
 msgstr "&Go to projec site"
-
-#: acerca_de.py:13 informacion_medios.py:21
-msgid "&Cerrar"
-msgstr "&Close"
 
 #: disco.py:14 editar.py:18
 msgid "Título:"
@@ -56,23 +100,15 @@ msgstr "Comments:"
 msgid "&Aceptar"
 msgstr "&OK"
 
-#: disco.py:34 editar.py:46 opciones.py:31
+#: disco.py:33 editar.py:46 opciones.py:31
 msgid "&Cancelar"
 msgstr "&Cancel"
 
-#: disco.py:78
-msgid "Sin título"
-msgstr "untitled"
-
-#: disco.py:79
-msgid "Sin autor"
-msgstr "unauthored"
-
-#: disco.py:94
+#: disco.py:91
 msgid "Aviso:"
 msgstr "Message:"
 
-#: disco.py:94
+#: disco.py:91
 msgid "Solo se admiten números"
 msgstr "Only numbers are allowed."
 
@@ -92,8 +128,8 @@ msgstr "Seconds:"
 msgid "Marcos"
 msgstr "Frames:"
 
-#: editar.py:41 editar.py:142 grafica.py:170 grafica.py:512 grafica.py:519
-#: grafica.py:526 grafica.py:528 grafica.py:581
+#: editar.py:41 editar.py:142 grafica.py:170 grafica.py:526 grafica.py:533
+#: grafica.py:540 grafica.py:542 grafica.py:595
 msgid "&Reproducir"
 msgstr "&Play"
 
@@ -110,12 +146,12 @@ msgid "Debes ingresar un título."
 msgstr "You must write a title."
 
 #: editar.py:124
-msgid "El tiempo ingresado supera el tiempo de duración del audio."
-msgstr "The time ingresed is over them audio duration time."
-
-#: editar.py:124 grafica.py:403 grafica.py:418 grafica.py:450
 msgid "Advertencia."
 msgstr "Warning."
+
+#: editar.py:124
+msgid "El tiempo ingresado supera el tiempo de duración del audio."
+msgstr "The time ingresed is over them audio duration time."
 
 #: editar.py:139 grafica.py:192
 msgid "&Detener"
@@ -153,7 +189,7 @@ msgstr "&CUE generate"
 msgid "&Salir"
 msgstr "&Quit"
 
-#: grafica.py:91 grafica.py:669
+#: grafica.py:91 grafica.py:683
 msgid "&Editar"
 msgstr "&Edit"
 
@@ -201,7 +237,7 @@ msgstr "&Documentation"
 msgid "&Buscar  actualizaciones"
 msgstr "&Update"
 
-#: grafica.py:135 grafica.py:492
+#: grafica.py:135 grafica.py:506
 msgid "Acerca de..."
 msgstr "About..."
 
@@ -209,7 +245,7 @@ msgstr "About..."
 msgid "Carga el archivo de audio que quieres procesar."
 msgstr "Load an audio file for processing."
 
-#: grafica.py:154 grafica.py:437
+#: grafica.py:154 grafica.py:451
 msgid "Nuevo proyecto"
 msgstr "New project"
 
@@ -269,19 +305,27 @@ msgstr "deleted"
 msgid "Metadatos del álbum"
 msgstr "Albumn metadata"
 
-#: grafica.py:348
+#: grafica.py:351 grafica.py:357
+msgid "Sin autor"
+msgstr "unauthored"
+
+#: grafica.py:353 grafica.py:357
+msgid "Sin título"
+msgstr "untitled"
+
+#: grafica.py:362
 msgid "Cargar audio"
 msgstr "Load audio file"
 
-#: grafica.py:353
+#: grafica.py:367
 msgid "No es posible cargar el fichero, sólo se admiten archivos de audio."
 msgstr "Impossible to load the file. Only audio files are accepted."
 
-#: grafica.py:399
+#: grafica.py:413
 msgid "Abrir proyecto"
 msgstr "Open project"
 
-#: grafica.py:403
+#: grafica.py:417
 msgid ""
 "Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
 "perderán. \n"
@@ -292,144 +336,108 @@ msgstr ""
 "\n"
 "Do you want to go out?"
 
-#: grafica.py:418
-msgid ""
-"Hay cambios en este proyecto que no han sido guardados. \n"
-" ¿Deseas guardarlos?"
-msgstr ""
-"There are changes in this project that have not been saved. \n"
-"Do you want to save them?"
+#: grafica.py:417 grafica.py:464
+msgid "Advertencia"
+msgstr "Warning"
 
-#: grafica.py:443
+#: grafica.py:432
+msgid "Guardar"
+msgstr "Save"
+
+#: grafica.py:432
+msgid "¿Deseas guardar los cambios realizados?"
+msgstr "Do you want to save the changes you have made?"
+
+#: grafica.py:457
 msgid "guardado"
 msgstr "saved"
 
-#: grafica.py:447
+#: grafica.py:461
 msgid "Guardar proyecto"
 msgstr "Save project"
 
-#: grafica.py:450
+#: grafica.py:464
 msgid "Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?"
 msgstr ""
 "There are changes in this project that have not been saved. Do you want to "
 "save them?"
 
-#: grafica.py:464
+#: grafica.py:478
 msgid "Opciones"
 msgstr "Options"
 
-#: grafica.py:470
-msgid "Atención."
-msgstr "Warning."
+#: grafica.py:484
+msgid "Atención"
+msgstr "Warning"
 
-#: grafica.py:470
+#: grafica.py:484
 msgid ""
 "Debes reiniciar el programa para que los cambios de idioma surtan  efecto."
 msgstr "Restart the program to change language."
 
-#: grafica.py:484
+#: grafica.py:498
+msgid "Actualización"
+msgstr "update"
+
+#: grafica.py:498
 msgid "Hay una nueva versión disponible. ¿Deseas descargarla ahora?"
 msgstr "There is a new versión. Do you want to download it?"
 
-#: grafica.py:488
-msgid "Aviso."
-msgstr "Message."
+#: grafica.py:502
+msgid "Aviso"
+msgstr "Message"
 
-#: grafica.py:488
+#: grafica.py:502
 msgid "No hay ninguna nueva versión disponible"
 msgstr "No updates."
 
-#: grafica.py:507
+#: grafica.py:521
 msgid "&Pausar"
 msgstr "&Pause"
 
-#: grafica.py:571 grafica.py:577
+#: grafica.py:585 grafica.py:591
 msgid "horas"
 msgstr "hours"
 
-#: grafica.py:571 grafica.py:577
+#: grafica.py:585 grafica.py:591
 msgid "minutos"
 msgstr "minutes"
 
-#: grafica.py:571 grafica.py:577
+#: grafica.py:585 grafica.py:591
 msgid "segundos"
 msgstr "seconds"
 
-#: grafica.py:571 grafica.py:577 informacion_medios.py:13
-msgid "marcos"
-msgstr "frames"
-
-#: grafica.py:577
+#: grafica.py:591
 msgid "Duración de la pista. "
 msgstr "Track's time"
 
-#: grafica.py:587
+#: grafica.py:601
 msgid "Crear marca"
 msgstr "Make mark"
 
-#: grafica.py:609
+#: grafica.py:623
 msgid "Editar marca"
 msgstr "Edit mark"
 
-#: grafica.py:636
+#: grafica.py:650
 msgid "Cue generado exitosamente."
 msgstr "CUE successfully generated."
 
-#: grafica.py:643
+#: grafica.py:657
 msgid "Deshacer"
 msgstr "Undo"
 
-#: grafica.py:654
+#: grafica.py:668
 msgid "Rehacer"
 msgstr "Redo"
 
-#: grafica.py:659
+#: grafica.py:673
 msgid "Información de medios"
 msgstr "Media information"
 
-#: grafica.py:672
+#: grafica.py:686
 msgid "E&liminar"
 msgstr "&Delete"
-
-#: informacion_medios.py:12
-msgid "Fichero: "
-msgstr "File: "
-
-#: informacion_medios.py:13
-msgid "Duración: "
-msgstr "Duration: "
-
-#: informacion_medios.py:13
-msgid "horas "
-msgstr "ours "
-
-#: informacion_medios.py:13
-msgid "minutos "
-msgstr "minutes "
-
-#: informacion_medios.py:13
-msgid "segundos "
-msgstr "seconds "
-
-#: informacion_medios.py:14
-msgid "Formato: "
-msgstr "Format: "
-
-#: informacion_medios.py:15
-msgid "Tasa de bits: "
-msgstr "Bitrate: "
-
-#: informacion_medios.py:16
-msgid "Modo de taza de bits: "
-msgstr "Bitrate mode: "
-
-#: informacion_medios.py:17
-msgid "Velocidad de muestreo: "
-msgstr "Sampling rate: "
-
-#: informacion_medios.py:18
-msgid "Canales: "
-msgstr "Channels: "
 
 #: opciones.py:15
 msgid "Idioma"

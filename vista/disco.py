@@ -14,11 +14,11 @@ class Disco(wx.Dialog):
 		self.l_titulo= wx.StaticText(panel1, -1, _('Título:'))
 		self.in_titulo= wx.TextCtrl(panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_titulo.SetMaxLength(80)
-		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
+#		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
 		self.l_autor= wx.StaticText(panel1, -1, _('Autor:'))
 		self.in_autor= wx.TextCtrl(panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_autor.SetMaxLength(80)
-		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_autor)
+#		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_autor)
 		self.l_fecha= wx.StaticText(panel1, -1, _('Año:'))
 		self.in_fecha= wx.TextCtrl(panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_fecha.SetMaxLength(4)
@@ -29,7 +29,6 @@ class Disco(wx.Dialog):
 		self.l_comentarios= wx.StaticText(panel1, -1, _('Comentarios:'))
 		self.in_comentarios= wx.TextCtrl(panel1, -1, style= wx.TE_MULTILINE|wx.TE_PROCESS_ENTER)
 		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, _('&Aceptar'))
-		self.bt_aceptar.Enable(False)
 		self.bt_aceptar.SetDefault()
 		self.bt_cancelar = wx.Button(panel1, wx.ID_CANCEL, _('&Cancelar'))
 
@@ -72,18 +71,17 @@ class Disco(wx.Dialog):
 		return self.in_comentarios.GetValue()
 
 	def evento_texto (self, event):
-		self.evalua_llenado()
+		self.guardar_datos()
 
-	def evalua_llenado(self):
-		titulo = _('Sin título')
-		autor = _('Sin autor')
-		if self.controlador.disco.titulo == '' and self.controlador.disco.autor == '':
-			self.controlador.disco.titulo = titulo
-			self.controlador.disco.autor = autor
-		if self.in_autor.GetValue() != '' and self.in_titulo.GetValue() != '':
-			self.bt_aceptar.Enable(True)
+	def guardar_datos(self):
+		if self.in_titulo.GetValue() == '':
+			self.controlador.data.titulo = _('Sin título')
 		else:
-			self.bt_aceptar.Enable(False)
+			self.controlador.data.titulo = self.in_titulo.GetValue()
+		if self.in_autor.GetValue() == '':
+			self.controlador.data.autor = _('Sin autor')
+		else:
+			self.controlador.data.autor = self.in_autor.GetValue()
 
 
 	def admitir_numeros(self, event):
@@ -95,7 +93,7 @@ class Disco(wx.Dialog):
 				self.in_fecha.SetValue('')
 
 	def completar_valores(self):
-		if self.controlador.disco != None:
+		if self.controlador.consultar_disco() != None:
 			disco = self.controlador.disco
 			self.in_titulo.SetValue(disco.titulo)
 			self.in_autor.SetValue(disco.autor)

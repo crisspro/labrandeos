@@ -1,8 +1,8 @@
 class Data():
 	def __init__(self, *ARGS, **KWARGS):
 		self.id = 0
-		self.titulo= 'Sin título'
-		self.autor= 'Sin autor'
+		self.titulo= ''
+		self.autor= ''
 		self.tiempo_inicio = 0
 		self.milesimas = 0
 

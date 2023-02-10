@@ -129,7 +129,7 @@ class Controlador():
 	def generar_cue (self, id):
 		tipo = self.pista.extencion
 		tipo = tipo[1:].upper()
-		archivo = open(os.path.join(self.pista.direccion,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'), 'w')
+		archivo = open(os.path.join(self.pista.direccion, self.data.titulo + ' - ' + self.data.autor + '.cue'), 'w')
 		archivo.write('TITLE "' + self.disco.titulo + '"\n')
 		archivo.write('PERFORMER "' + self.disco.autor + '"\n')
 		archivo.write('REM GENRE "' + self.disco.genero + '"\n')
@@ -152,7 +152,7 @@ class Controlador():
 
 
 	def verificar_exportacion(self):
-		existe = os.path.isfile(os.path.join(self.pista.direccion,  self.disco.titulo + ' - ' + self.disco.autor + '.cue'))
+		existe = os.path.isfile(os.path.join(self.pista.direccion,  self.data.titulo + ' - ' + self.data.autor + '.cue'))
 		return existe
 
 	def consultar_datos(self, id):

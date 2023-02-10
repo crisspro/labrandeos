@@ -339,10 +339,23 @@ class Programa(wx.Frame):
 			self.vn_disco.getGenero(),
 			self.vn_disco.getComentarios())
 			self.mn_metadatos_disco.Enable(True)
-			self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
 			self.mn_deshacer.Enable(True)
+			self.vn_disco.guardar_datos()
+			self.cambiar_encabezado()
 		else:
-			self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
+			self.cambiar_encabezado()
+
+	def cambiar_encabezado(self):
+		if self.controlador.data.titulo != '' and self.controlador.data.autor == '':
+			self.l_encabezado.SetLabel(self.controlador.data.titulo + ' - ' + _('Sin autor'))
+		elif self.controlador.data.titulo == '' and self.controlador.data.autor != '':
+			self.l_encabezado.SetLabel(_('Sin título') + ' - ' + self.controlador.data.autor)
+		elif self.controlador.data.titulo != '' and self.controlador.data.autor != '':
+			self.l_encabezado.SetLabel(self.controlador.data.titulo + ' - ' + self.controlador.data.autor)
+		else:
+			self.l_encabezado.SetLabel(_('Sin título') + ' - ' + _('Sin autor'))
+
+
 
 	def abrir_archivo (self, event):
 		self.dialogo= wx.FileDialog(self, _('Cargar audio'), style=wx.FD_OPEN)
@@ -350,7 +363,7 @@ class Programa(wx.Frame):
 			self.path = self.dialogo.GetPath()
 			tipo_archivo = self.controlador.comprobar_medios(self.path)
 			if tipo_archivo == None or tipo_archivo[0] != 'audio':
-				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención.', style= wx.ICON_ERROR)
+				wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption= 'Atención', style= wx.ICON_ERROR)
 			else:
 				self.reproductor.Load(self.path)
 				self.controlador.crear_proyecto()
@@ -400,7 +413,7 @@ class Programa(wx.Frame):
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			mensaje = 0
 			if self.controlador.pista != None:
-				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Advertencia.'), style= wx.OK|wx.CANCEL| wx.CANCEL_DEFAULT| wx.ICON_WARNING)
+				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Advertencia'), style= wx.OK|wx.CANCEL| wx.CANCEL_DEFAULT| wx.ICON_WARNING)
 			if self.controlador.pista == None or mensaje == 2:
 				self.controlador.limpiar_temporal()
 				self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
@@ -415,7 +428,7 @@ class Programa(wx.Frame):
 	def detectar_cambios(self):
 		''' Detecta si se han hecho cambios en el proyecto actual para que sean guardados '''
 		if self.controlador.comparar_modelo() == False:
-			mensaje = wx.MessageBox(_('Hay cambios en este proyecto que no han sido guardados. \n ¿Deseas guardarlos?'), _('Advertencia.'), style= wx.YES_NO | wx.CANCEL|wx.YES_DEFAULT| wx.ICON_WARNING)
+			mensaje = wx.MessageBox(_('¿Deseas guardar los cambios realizados?'), _('Guardar'), style= wx.YES_NO | wx.CANCEL|wx.YES_DEFAULT| wx.ICON_QUESTION)
 			if mensaje == wx.YES and self.controlador.es_temporal() == True:
 				self.guardar_proyecto(None)
 			elif mensaje == wx.YES and self.controlador.es_temporal() == False:
@@ -447,7 +460,7 @@ class Programa(wx.Frame):
 		self.dialogo_guardar = wx.FileDialog(self, _('Guardar proyecto'), style=wx.FD_SAVE, wildcard= '*.CGP')
 		if self.dialogo_guardar.ShowModal() == wx.ID_OK:
 			if os.path.isfile(self.dialogo_guardar.GetPath()):
-				mensaje = wx.MessageBox(_('Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?'), _('Advertencia.'), style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
+				mensaje = wx.MessageBox(_('Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?'), _('Advertencia'), style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
 				if mensaje == 2:
 					self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
 					self.controlador.save()
@@ -467,7 +480,7 @@ class Programa(wx.Frame):
 			self.vn_opciones.guardar_opciones()
 			idioma_posterior = self.vn_opciones.com_idioma.GetValue()
 			if idioma_anterior != idioma_posterior:
-				wx.MessageBox(_('Debes reiniciar el programa para que los cambios de idioma surtan  efecto.'), _('Atención.'))
+				wx.MessageBox(_('Debes reiniciar el programa para que los cambios de idioma surtan  efecto.'), _('Atención'))
 
 	def abrir_documentacion(self, event):
 		if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':
@@ -481,11 +494,11 @@ class Programa(wx.Frame):
 		if self.controlador_app.actualizado == False:
 			if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'):
 				wx.adv.Sound.PlaySound(os.path.join('vista', 'files', 'sounds', 'nueva_version.wav'))
-			res =wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), style= wx.YES_NO)
+			res =wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), _('Actualización'), style= wx.YES_NO|wx.ICON_QUESTION)
 			if res == wx.YES:
 				self.controlador_app.descargar_version()
 		elif self.controlador_app.actualizado == True and event != None:
-			wx.MessageBox(_('No hay ninguna nueva versión disponible'), _('Aviso.'))
+			wx.MessageBox(_('No hay ninguna nueva versión disponible'), _('Aviso'))
 
 # muestra información acerca del programa
 	def mg_acerca(self, event):
