@@ -18,7 +18,7 @@ from .acerca_de import Acerca_de
 from .informacion_medios import Informacion_medios
 
 
-class Programa(wx.Frame):
+class Frame(wx.Frame):
 	def __init__(self, parent, title, controlador, app, opciones):
 		super().__init__(parent, title= title, style = wx.DEFAULT_FRAME_STYLE|wx.MAXIMIZE)
 		self.syze = (800,800)

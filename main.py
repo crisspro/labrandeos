@@ -8,7 +8,7 @@ import wx
 
 from controlador.controlador import Controlador
 import controlador.configuracion
-from vista.grafica import Programa
+from vista.principal import Frame
 
 
 def alertar_instancia():
@@ -25,7 +25,7 @@ controlador_opciones = controlador.configuracion.Opciones()
 controlador_opciones.chequear_ini()
 controlador_controlador.limpiar_temporal()
 controlador_controlador.save()
-Programa(None, title= controlador_app.nombre_app, controlador = controlador_controlador, app= controlador_app, opciones= controlador_opciones)
+Frame(None, title= controlador_app.nombre_app, controlador = controlador_controlador, app= controlador_app, opciones= controlador_opciones)
 
 App.MainLoop()
 
