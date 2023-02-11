@@ -80,9 +80,9 @@ class Programa(wx.Frame):
 		self.mn_guardar_como = menu1.Append(-1, _('G&uardar como...'))
 		self.mn_guardar_como.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_proyecto, self.mn_guardar_como)
-		self.mn_generar = menu1.Append(-1, _('&Generar CUE'))
-		self.mn_generar.Enable(False)
-		self.Bind(wx.EVT_MENU, self.generar, self.mn_generar)
+		self.mn_exportar = menu1.Append(-1, _('&Exportar CUE'))
+		self.mn_exportar.Enable(False)
+		self.Bind(wx.EVT_MENU, self.exportar, self.mn_exportar)
 		salir= menu1.Append(-1, _('&Salir'))
 		self.Bind(wx.EVT_MENU, self.cerrar, salir)
 
@@ -132,7 +132,7 @@ class Programa(wx.Frame):
 		self.atajo_documentacion = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F1, self.id_mn_documentacion) 
 		self.mn_buscar_actualizacion = menu4.Append(-1, _('&Buscar  actualizaciones'))
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
-		acercade= menu4.Append(-1, _('Acerca de...'))
+		acercade= menu4.Append(-1, _('Acerca de ') + self.controlador_app.nombre_app)
 		self.Bind(wx.EVT_MENU, self.mg_acerca, acercade)
 
 
@@ -214,9 +214,9 @@ class Programa(wx.Frame):
 		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_contextual, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
 #		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.seleccionar_multiple, self.lista)
-		self.bt_generar= wx.Button(self.panel2, -1, _('&GENERAR CUE'))
-		self.bt_generar.Enable(False)
-		self.Bind(wx.EVT_BUTTON, self.generar, self.bt_generar)
+		self.bt_exportar= wx.Button(self.panel2, -1, _('E&XPORTAR CUE'))
+		self.bt_exportar.Enable(False)
+		self.Bind(wx.EVT_BUTTON, self.exportar, self.bt_exportar)
 
 
 # creación de sizers
@@ -250,7 +250,7 @@ class Programa(wx.Frame):
 
 		self.sz4 = wx.BoxSizer(wx.VERTICAL)
 		self.sz3.Add(self.sz4)
-		self.sz4.Add(self.bt_generar)
+		self.sz4.Add(self.bt_exportar)
 
 
 		self.panel2.SetSizer (self.sz1)
@@ -393,10 +393,10 @@ class Programa(wx.Frame):
 			self.mn_deshacer.Enable(True)
 			self.bt_marcar.Enable(True)
 		if self.controlador.data != None:
-			self.mn_generar.Enable(True)
+			self.mn_exportar.Enable(True)
 			self.mn_guardar.Enable(True)
 			self.mn_guardar_como.Enable(True)
-			self.bt_generar.Enable(True)
+			self.bt_exportar.Enable(True)
 		if self.controlador.data.lista_marcas != []:
 			self.mn_eliminar.Enable(True)
 			self.mn_marca.Enable(True)
@@ -502,7 +502,7 @@ class Programa(wx.Frame):
 
 # muestra información acerca del programa
 	def mg_acerca(self, event):
-		dlg = Acerca_de(self, title= _('Acerca de...'))
+		dlg = Acerca_de(self, title= _('Acerca de ') + self.controlador_app.nombre_app)
 		if dlg.ShowModal() == wx.ID_OK:
 			dlg.close()
 
@@ -640,16 +640,14 @@ class Programa(wx.Frame):
 		else:
 			self.pausar(None)
 
-	def generar(self, event):
-		self.controlador.generar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
-		existe = self.controlador.verificar_exportacion()
-		if existe == True:
-			if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_generar'):
-				wx.adv.Sound.PlaySound( os.path.join('vista', 'files', 'sounds', 'ok.wav'))
-			msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
-			msg.Show(5)
-			if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
-				wx.LaunchDefaultBrowser(self.controlador.pista.direccion)
+	def exportar(self, event):
+		self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
+		if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar'):
+			wx.adv.Sound.PlaySound( os.path.join('vista', 'files', 'sounds', 'ok.wav'))
+		msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
+		msg.Show(5)
+		if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
+			wx.LaunchDefaultBrowser(self.controlador.pista.direccion)
 
 	def deshacer(self, event):
 		self.controlador.deshacer()

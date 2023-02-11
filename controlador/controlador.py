@@ -1,11 +1,12 @@
-import pdb
 import copy
 import os
+import pdb
 import pickle
-import requests
 
 import pymediainfo
+import requests
 import wx
+
 from modelo.disco import Disco
 from modelo.marca import *
 from modelo.tiempo import Tiempo
@@ -126,7 +127,7 @@ class Controlador():
 		milesimas = self.tiempo.reconvertir()
 		return milesimas
 
-	def generar_cue (self, id):
+	def exportar_cue (self, id):
 		tipo = self.pista.extencion
 		tipo = tipo[1:].upper()
 		archivo = open(os.path.join(self.pista.direccion, self.data.titulo + ' - ' + self.data.autor + '.cue'), 'w')
@@ -152,8 +153,7 @@ class Controlador():
 
 
 	def verificar_exportacion(self):
-		existe = os.path.isfile(os.path.join(self.pista.direccion,  self.data.titulo + ' - ' + self.data.autor + '.cue'))
-		return existe
+		return os.path.isfile(os.path.join(self.pista.direccion,  self.data.titulo + ' - ' + self.data.autor + '.cue'))
 
 	def consultar_datos(self, id):
 		marca = self.data.getMarcas()

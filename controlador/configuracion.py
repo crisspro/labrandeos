@@ -1,8 +1,14 @@
+import sys
+
+import psutil
 from configparser import ConfigParser
 from locale import getdefaultlocale
 import os
-import requests
+import platform
 import webbrowser
+
+
+import requests
 
 import modelo.configuracion
 
@@ -13,6 +19,7 @@ class App():
 		self.licencia_app = 'GPL 3.0'
 		self.sitio_app = 'https://github.com/crisspro/cuegenesis'
 		self.api_app = 'https://api.github.com/repos/crisspro/cuegenesis/releases/latest'
+		self.arquitectura_app = platform.architecture()[0]
 		self.version_app = 'v0.1'
 		self.actualizado = True
 
@@ -39,6 +46,17 @@ class App():
 		for i in dw:
 			dw= i['browser_download_url']
 		webbrowser.open(dw)
+
+	def verificar_instancia(self):
+		''' Verifica si se está ejecutando otra instancia del programa '''
+		proceso = psutil.Process()
+		procesos = psutil.process_iter()
+		cantidad = 0
+		for i in procesos:
+			if i.name() == proceso.name():
+				cantidad += 1
+				if cantidad > 1:
+					return True
 
 
 
