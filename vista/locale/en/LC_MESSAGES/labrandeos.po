@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2023-02-11 20:13-0300\n"
-"PO-Revision-Date: 2023-02-11 20:17-0300\n"
+"PO-Revision-Date: 2023-02-12 00:13-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -26,7 +26,7 @@ msgstr "Version "
 
 #: acerca_de.py:11
 msgid "&Visitar sitio del proyecto"
-msgstr ""
+msgstr "&Go to Project site"
 
 #: acerca_de.py:13 informacion_medios.py:21
 msgid "&Cerrar"

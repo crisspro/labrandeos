@@ -14,11 +14,11 @@ import modelo.configuracion
 
 class App():
 	def __init__(self):
-		self.nombre_app = 'CUE Genesis'
+		self.nombre_app = 'Labrandeos'
 		self.autor_app = 'Crisspro'
 		self.licencia_app = 'GPL 3.0'
-		self.sitio_app = 'https://github.com/crisspro/cuegenesis'
-		self.api_app = 'https://api.github.com/repos/crisspro/cuegenesis/releases/latest'
+		self.sitio_app = 'https://github.com/crisspro/labrandeos'
+		self.api_app = 'https://api.github.com/repos/crisspro/labrandeos/releases/latest'
 		self.arquitectura_app = platform.architecture()[0]
 		self.version_app = 'v0.1'
 		self.actualizado = True

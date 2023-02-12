@@ -408,7 +408,7 @@ class Frame(wx.Frame):
 
 	#abre un proyecto existente
 	def abrir_proyecto(self, event):
-		self.dialogo_abrir_proyecto = wx.FileDialog(self, _('Abrir proyecto'), style=wx.FD_OPEN, wildcard= '*.cgp')
+		self.dialogo_abrir_proyecto = wx.FileDialog(self, _('Abrir proyecto'), style=wx.FD_OPEN, wildcard= '*.lap')
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			mensaje = 0
 			if self.controlador.pista != None:
@@ -456,7 +456,7 @@ class Frame(wx.Frame):
 
 	#guarda el proyecto en una ruta específica
 	def guardar_proyecto(self, event):
-		self.dialogo_guardar = wx.FileDialog(self, _('Guardar proyecto'), style=wx.FD_SAVE, wildcard= '*.CGP')
+		self.dialogo_guardar = wx.FileDialog(self, _('Guardar proyecto'), style=wx.FD_SAVE, wildcard= '*.lap')
 		if self.dialogo_guardar.ShowModal() == wx.ID_OK:
 			if os.path.isfile(self.dialogo_guardar.GetPath()):
 				mensaje = wx.MessageBox(_('Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?'), _('Atención'), style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_EXCLAMATION)

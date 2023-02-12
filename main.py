@@ -1,4 +1,4 @@
-#título: CUE Genesis
+#título: Labrandeos
 #Copyriht (C) 2023 Crisspro <crisspro@hotmail.com>
 #lisencia: GPL-3.0
 
@@ -13,7 +13,7 @@ from vista.principal import Frame
 
 
 App= wx.App()
-traductor = Traductor('CueGenesis')
+traductor = Traductor('Labrandeos')
 controlador_app = controlador.configuracion.App()
 controlador_controlador = Controlador()
 controlador_opciones = controlador.configuracion.Opciones()

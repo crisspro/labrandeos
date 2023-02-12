@@ -21,7 +21,7 @@ class Controlador():
 		self.data = None
 		self.disco = Disco()
 		self.tiempo = Tiempo()
-		self.ruta_proyecto = 'temp.proyecto.cgp'
+		self.ruta_proyecto = 'temp.proyecto.lap'
 		self.historial = Historial()
 		self.reproductor = Reproductor()
 
@@ -98,12 +98,12 @@ class Controlador():
 		self.disco = Disco()
 		self.historial.limpiar()
 		self.historial = Historial()
-		self.ruta_proyecto = 'temp.proyecto.cgp'
+		self.ruta_proyecto = 'temp.proyecto.lap'
 
 	def limpiar_temporal(self):
-		if os.path.exists('temp.proyecto.cgp'):
-			os.remove('temp.proyecto.cgp')
-		self.ruta_proyecto = 'temp.proyecto.cgp'
+		if os.path.exists('temp.proyecto.lap'):
+			os.remove('temp.proyecto.lap')
+		self.ruta_proyecto = 'temp.proyecto.lap'
 		self.data = None
 
 	def temporizar(self, milesimas):
@@ -170,7 +170,7 @@ class Controlador():
 				break
 
 	def es_temporal(self):
-		return self.ruta_proyecto == 'temp.proyecto.cgp'
+		return self.ruta_proyecto == 'temp.proyecto.lap'
 
 	def comparar_modelo(self, ):
 		f = open(self.ruta_proyecto , "rb")
