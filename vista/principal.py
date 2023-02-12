@@ -1,5 +1,6 @@
 import pdb
 import os
+import sys
 
 import accessible_output2.outputs.auto
 import pymediainfo
@@ -11,7 +12,6 @@ import wx.adv
 import vista.disco
 import vista.opciones
 from controlador.controlador import Controlador
-from controlador.traductor import Traductor 
 from .editar import Editar
 from .editar import Editar2
 from .acerca_de import Acerca_de
@@ -26,6 +26,7 @@ class Frame(wx.Frame):
 		self.controlador_app = app
 		self.controlador_opciones = opciones
 		self.Center()
+		self.alertar_instancia()
 		self.graficar()
 		self.Show()
 
@@ -33,8 +34,6 @@ class Frame(wx.Frame):
 
 	#creación de controles
 	def graficar(self):
-		self.traductor = Traductor('CueGenesis')
-
 		# creación de lector
 		self.lector= accessible_output2.outputs.auto.Auto()
 
@@ -130,7 +129,7 @@ class Frame(wx.Frame):
 		self.mn_documentacion = menu4.Append(self.id_mn_documentacion, _('&Documentación') + '\tF1')
 		self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.mn_documentacion)
 		self.atajo_documentacion = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F1, self.id_mn_documentacion) 
-		self.mn_buscar_actualizacion = menu4.Append(-1, _('&Buscar  actualizaciones'))
+		self.mn_buscar_actualizacion = menu4.Append(-1, _('&Buscar actualizaciones'))
 		self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
 		acercade= menu4.Append(-1, _('Acerca de ') + self.controlador_app.nombre_app)
 		self.Bind(wx.EVT_MENU, self.mg_acerca, acercade)
@@ -413,7 +412,7 @@ class Frame(wx.Frame):
 		if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
 			mensaje = 0
 			if self.controlador.pista != None:
-				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Advertencia'), style= wx.OK|wx.CANCEL| wx.CANCEL_DEFAULT| wx.ICON_WARNING)
+				mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Atención'), style= wx.OK|wx.CANCEL| wx.CANCEL_DEFAULT| wx.ICON_EXCLAMATION)
 			if self.controlador.pista == None or mensaje == 2:
 				self.controlador.limpiar_temporal()
 				self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
@@ -460,7 +459,7 @@ class Frame(wx.Frame):
 		self.dialogo_guardar = wx.FileDialog(self, _('Guardar proyecto'), style=wx.FD_SAVE, wildcard= '*.CGP')
 		if self.dialogo_guardar.ShowModal() == wx.ID_OK:
 			if os.path.isfile(self.dialogo_guardar.GetPath()):
-				mensaje = wx.MessageBox(_('Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?'), _('Advertencia'), style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_WARNING)
+				mensaje = wx.MessageBox(_('Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?'), _('Atención'), style= wx.YES_NO|wx.NO_DEFAULT| wx.ICON_EXCLAMATION)
 				if mensaje == 2:
 					self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
 					self.controlador.save()
@@ -480,7 +479,7 @@ class Frame(wx.Frame):
 			self.vn_opciones.guardar_opciones()
 			idioma_posterior = self.vn_opciones.com_idioma.GetValue()
 			if idioma_anterior != idioma_posterior:
-				wx.MessageBox(_('Debes reiniciar el programa para que los cambios de idioma surtan  efecto.'), _('Atención'))
+				wx.MessageBox(_('Debes reiniciar el programa para que los cambios de idioma surtan efecto.'), _('Atención'), style= wx.ICON_EXCLAMATION)
 
 	def abrir_documentacion(self, event):
 		if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':
@@ -488,17 +487,23 @@ class Frame(wx.Frame):
 		else:
 			os.startfile(os.path.join('vista', 'files', 'documentation', 'en.html'))
 
-	#busca actualizaciones
+	def alertar_instancia(self):
+		''' Muestra alerta si se abre una nueva instancia del programa ''' 
+		if self.controlador_app.verificar_instancia():
+			wx.MessageBox(self.controlador_app.nombre_app + _(' ya se está ejecutando.'), _('Aviso'), style= wx.ICON_INFORMATION)
+			sys.exit(1)
+
 	def buscar_actualizacion(self, event):
+		''' Muestra mensajes si hay o no actualizaciones '''
 		self.controlador_app.verificarNuevaVersion()
 		if self.controlador_app.actualizado == False:
 			if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'):
 				wx.adv.Sound.PlaySound(os.path.join('vista', 'files', 'sounds', 'nueva_version.wav'))
-			res =wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), _('Actualización'), style= wx.YES_NO|wx.ICON_QUESTION)
+			res =wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), _('Actualización'), style= wx.YES_NO|wx.ICON_ASTERISK)
 			if res == wx.YES:
 				self.controlador_app.descargar_version()
 		elif self.controlador_app.actualizado == True and event != None:
-			wx.MessageBox(_('No hay ninguna nueva versión disponible'), _('Aviso'))
+			wx.MessageBox(_('No hay ninguna nueva versión disponible'), _('Aviso'), style= wx.ICON_INFORMATION)
 
 # muestra información acerca del programa
 	def mg_acerca(self, event):

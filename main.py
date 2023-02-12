@@ -8,18 +8,13 @@ import wx
 
 from controlador.controlador import Controlador
 import controlador.configuracion
+from controlador.traductor import Traductor
 from vista.principal import Frame
 
 
-def alertar_instancia():
-	if controlador_app.verificar_instancia():
-		wx.MessageBox(controlador_app.nombre_app + ' ya se está ejecutando.', 'Aviso')
-		sys.exit(1)
-
-
 App= wx.App()
+traductor = Traductor('CueGenesis')
 controlador_app = controlador.configuracion.App()
-alertar_instancia()
 controlador_controlador = Controlador()
 controlador_opciones = controlador.configuracion.Opciones()
 controlador_opciones.chequear_ini()

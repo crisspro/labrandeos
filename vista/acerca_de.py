@@ -1,4 +1,4 @@
-import wx
+﻿import wx
 import controlador.configuracion
 
 
@@ -7,7 +7,7 @@ class Acerca_de(wx.Dialog):
 		super().__init__(parent, title= title)
 		self.Center()
 		panel = wx.Panel(self)
-		self.in_info = wx.TextCtrl(panel, -1,'Versión ' + controlador_app.version_app + ' (' + controlador_app.arquitectura_app + ')' + '\n' + '© ' + controlador_app.autor_app + '\n' + _('Licencia ') + controlador_app.licencia_app, style= wx.TE_MULTILINE|wx.TE_READONLY)
+		self.in_info = wx.TextCtrl(panel, -1, _('Versión ') + controlador_app.version_app + ' (' + controlador_app.arquitectura_app + ')' + '\n' + '© ' + controlador_app.autor_app + '\n' + _('Licencia GPL 3.0') , style= wx.TE_MULTILINE|wx.TE_READONLY)
 		self.bt_visitar = wx.Button(panel, -1, _('&Visitar sitio del proyecto'))
 		self.Bind(wx.EVT_BUTTON, self.visitar_sitio, self.bt_visitar)
 		self.bt_cerrar = wx.Button(panel, wx.ID_OK, _('&Cerrar'))
