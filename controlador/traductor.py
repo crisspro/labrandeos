@@ -9,7 +9,7 @@ class Traductor():
 		self.controlador_opciones = controlador.configuracion.Opciones()
 		self.idioma = self.controlador_opciones.consultar_opciones('str', 'general', 'idioma')
 		self.modulo = modulo
-		self.ruta = os.path.join('vista', 'locale')
+		self.ruta = os.path.join('locale')
 		self.traducir()
 
 

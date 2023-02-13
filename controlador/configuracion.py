@@ -63,7 +63,7 @@ class App():
 class Opciones():
 	def __init__(self):
 		self.configparser = ConfigParser()
-		self.archivo_configuracion = os.path.join('vista', 'files', 'user.ini')
+		self.archivo_configuracion = os.path.join('files', 'user.ini')
 		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
 		self.idioma = self.consultar_opciones('str', 'general', 'idioma')
 
@@ -94,7 +94,7 @@ class Opciones():
 
 	def refrescar_ini(self):
 		self.configparser = ConfigParser()
-		self.archivo_configuracion = os.path.join('vista', 'files', 'user.ini')
+		self.archivo_configuracion = os.path.join('files', 'user.ini')
 		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
 
 # creación de instancias
