@@ -66,7 +66,6 @@ class Opciones():
 		self.archivo_configuracion = os.path.join('files', 'user.ini')
 		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
 		self.modelo_configuracion = modelo.configuracion.Configuracion()
-#		self.idioma = '' self.consultar_opciones('str', 'general', 'idioma')
 
 
 	def chequear_ini(self):
