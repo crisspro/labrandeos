@@ -8,16 +8,15 @@ import wx
 
 from controlador.controlador import Controlador
 import controlador.configuracion
-from controlador.traductor import Traductor
 from vista.principal import Frame
 
 
 App= wx.App()
-traductor = Traductor('Labrandeos')
 controlador_app = controlador.configuracion.App()
 controlador_controlador = Controlador()
 controlador_opciones = controlador.configuracion.Opciones()
 controlador_opciones.chequear_ini()
+controlador_opciones.guardar_idioma()
 controlador_controlador.limpiar_temporal()
 controlador_controlador.save()
 Frame(None, title= controlador_app.nombre_app, controlador = controlador_controlador, app= controlador_app, opciones= controlador_opciones)

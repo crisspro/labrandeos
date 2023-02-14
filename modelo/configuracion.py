@@ -2,6 +2,7 @@ from locale import getdefaultlocale
 
 class Configuracion():
 	def __init__(self):
+		self.idioma_app = ''
 		self.dic_general = {'idioma': 'en',
 		'cue_id': True,
 		'abrir_carpeta': True,

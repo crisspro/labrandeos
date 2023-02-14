@@ -49,7 +49,7 @@ class Opciones(wx.Dialog):
 		panel1.SetSizer(sz1)
 
 	def guardar_opciones(self):
-		self.controlador_opciones.idioma = self.resumir_idioma()
+		self.controlador_opciones.modelo_configuracion.idioma_app = self.resumir_idioma()
 		self.controlador_opciones.guardar_opciones('general', 'cue_id', str(self.cas_cue_id.GetValue()))
 		self.controlador_opciones.guardar_opciones('general', 'abrir_carpeta', str(self.cas_abrir_carpeta.GetValue()))
 		self.controlador_opciones.guardar_opciones('general', 'sonido_actualizacion', str(self.cas_sonido_actualizacion.GetValue()))

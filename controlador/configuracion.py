@@ -65,7 +65,8 @@ class Opciones():
 		self.configparser = ConfigParser()
 		self.archivo_configuracion = os.path.join('files', 'user.ini')
 		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
-		self.idioma = self.consultar_opciones('str', 'general', 'idioma')
+		self.modelo_configuracion = modelo.configuracion.Configuracion()
+#		self.idioma = '' self.consultar_opciones('str', 'general', 'idioma')
 
 
 	def chequear_ini(self):
@@ -73,10 +74,13 @@ class Opciones():
 			self.guardar_defecto()
 
 	def guardar_defecto(self):
-		self.configparser['general']= modelo_configuracion.dic_general
+		self.configparser['general']= self.modelo_configuracion.dic_general
 		archivo = open(self.archivo_configuracion, 'w', encoding= 'UTF-8')
 		self.configparser.write(archivo)
 		archivo.close()
+
+	def guardar_idioma(self):
+		self.modelo_configuracion.idioma_app = self.consultar_opciones('str', 'general', 'idioma')
 
 	def guardar_opciones(self, seccion, clave, valor):
 		self.configparser.set(seccion, clave, str(valor))
@@ -92,12 +96,8 @@ class Opciones():
 			return self.configparser.get(seccion, clave)
 
 
+
 	def refrescar_ini(self):
 		self.configparser = ConfigParser()
 		self.archivo_configuracion = os.path.join('files', 'user.ini')
 		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
-
-# creación de instancias
-
-modelo_configuracion = modelo.configuracion.Configuracion()
-

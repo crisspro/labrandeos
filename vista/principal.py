@@ -12,6 +12,7 @@ import wx.adv
 import vista.disco
 import vista.opciones
 from controlador.controlador import Controlador
+from controlador.traductor import Traductor
 from .editar import Editar
 from .editar import Editar2
 from .acerca_de import Acerca_de
@@ -34,6 +35,8 @@ class Frame(wx.Frame):
 
 	#creación de controles
 	def graficar(self):
+		traductor = Traductor('labrandeos')
+		
 		# creación de lector
 		self.lector= accessible_output2.outputs.auto.Auto()
 
@@ -319,7 +322,7 @@ class Frame(wx.Frame):
 		self.PopupMenu(Contextual(self))
 
 	def cerrar (self, event):
-		self.controlador_opciones.guardar_opciones('general', 'idioma', str(self.controlador_opciones.idioma))
+		self.controlador_opciones.guardar_opciones('general', 'idioma', str(self.controlador_opciones.modelo_configuracion.idioma_app))
 		if self.controlador.pista != None:
 			self.detectar_cambios()
 			self.controlador.limpiar_temporal()
