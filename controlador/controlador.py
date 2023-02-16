@@ -30,7 +30,7 @@ class Controlador():
 		self.data = Data()
 
 	def crear_disco(self, titulo, autor, fecha, genero, comentarios):
-		self.historial.apilar('pila1', self.disco)
+		self.historial.apilar(self.disco)
 		self.disco = Disco()
 		self.disco.titulo = titulo
 		self.disco.autor = autor
@@ -44,7 +44,7 @@ class Controlador():
 
 	def crearMarca(self, *args, **kwargs):
 		data = copy.deepcopy(self.data)
-		self.historial.apilar('pila1', data)
+		self.historial.apilar(data)
 		marca = Marca(*args, **kwargs)
 		self.data.agregarMarca(marca)
 		self.data.ordenar()
@@ -52,7 +52,7 @@ class Controlador():
 
 	def editarMarca(self, *args, **kwargs):
 		data = copy.deepcopy(self.data)
-		self.historial.apilar('pila1', data)
+		self.historial.apilar(data)
 		marca = Marca(*args, **kwargs)
 		self.data.editarMarca(marca.id, marca)
 		self.data.ordenar()
@@ -62,7 +62,7 @@ class Controlador():
 		return self.data.getMarcas()
 
 	def borrar_marca(self, id):
-		self.historial.apilar('pila1', copy.deepcopy(self.data))
+		self.historial.apilar(copy.deepcopy(self.data))
 		self.data.borrar_marca(id)
 		self.data.ordenar()
 
@@ -181,8 +181,7 @@ class Controlador():
 		return disco == self.disco and pista == self.pista and data == self.data   
 
 	def deshacer(self):
-		self.historial.apilar('pila2', copy.deepcopy(self.data))
-		objeto = self.historial.desapilar('pila1')
+		objeto = self.historial.desapilar()
 		if objeto.__class__.__name__ == self.data.__class__.__name__:
 			self.data = objeto
 		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
@@ -190,11 +189,4 @@ class Controlador():
 
 
 	def rehacer(self):
-		objeto =self.historial.desapilar('pila2')
-		if objeto.__class__.__name__ == self.data.__class__.__name__:
-			self.data = objeto
-		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
-			self.disco = objeto
-		self.historial.apilar('pila1', copy.deepcopy(self.data))
-
-
+		print('rehacer listo')

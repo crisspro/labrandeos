@@ -31,6 +31,8 @@ class Data():
 	# limpia la lista de marcas.
 	def limpiar (self):
 		self.lista_marcas.clear()
+		self.titulo = ''
+		self.autor = ''
 
 	def es_vacia(self):
 		return self.lista_marcas == []

@@ -92,7 +92,7 @@ class Frame(wx.Frame):
 		menu2= wx.Menu()
 		self.mn_editar =  self.barrademenu.Append(menu2, _('&Editar'))
 		self.mn_deshacer = menu2.Append(self.id_mn_deshacer, _('&Deshacer') + '\tCtrl+Z')
-		self.mn_deshacer.Enable(False)
+		self.mn_deshacer.Enable()
 		self.Bind(wx.EVT_MENU, self.deshacer, self.id_mn_deshacer)
 		self.atajo_deshacer = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('z'), self.id_mn_deshacer)
 		self.mn_rehacer = menu2.Append(self.id_mn_rehacer, _('&Rehacer') + '\tCtrl+Shift+Z')
@@ -429,8 +429,8 @@ class Frame(wx.Frame):
 
 	def detectar_cambios(self):
 		''' Detecta si se han hecho cambios en el proyecto actual para que sean guardados '''
-		if self.controlador.comparar_modelo() == False:
-			mensaje = wx.MessageBox(_('¿Deseas guardar los cambios realizados?'), _('Guardar'), style= wx.YES_NO | wx.CANCEL|wx.YES_DEFAULT| wx.ICON_QUESTION)
+		if self.controlador.comparar_modelo() != True:
+			mensaje = wx.MessageBox(_('¿Deseas guardar los cambios realizados?'), _('Guardar'), style= wx.YES_NO|wx.CANCEL|wx.YES_DEFAULT| wx.ICON_QUESTION)
 			if mensaje == wx.YES and self.controlador.es_temporal() == True:
 				self.guardar_proyecto(None)
 			elif mensaje == wx.YES and self.controlador.es_temporal() == False:
