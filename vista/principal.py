@@ -652,8 +652,9 @@ class Frame(wx.Frame):
 			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
 		if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
 			subprocess.Popen('explorer /select,"' + exportacion + '"')
-		msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
-		msg.Show(5)
+		if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar') == False and self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA') == False:
+			msg = wx.adv.NotificationMessage('', _('Cue exportado exitosamente.'), self, wx.ICON_INFORMATION)
+			msg.Show(5)
 
 	def deshacer(self, event):
 		self.controlador.deshacer()
