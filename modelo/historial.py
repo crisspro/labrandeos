@@ -1,4 +1,3 @@
-import copy
 class Historial():
 	def __init__(self):
 		self.pila1 = []
@@ -11,7 +10,6 @@ class Historial():
 
 	def desapilar(self):
 		if len(self.pila1) > 0:
-#			self.pila2.append(copy.deepcopy(self.pila1[-1]))
 			return self.pila1.pop()
 
 	def reservar(self, objeto):

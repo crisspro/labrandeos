@@ -24,8 +24,8 @@ class Opciones(wx.Dialog):
 		self.cas_sonido_actualizacion.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'))
 		self.cast_sonido_marca = wx.CheckBox(panel1, -1, _('Sonido al crear una nueva marca'))
 		self.cast_sonido_marca.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'))
-		self.cas_sonido_generar = wx.CheckBox(panel1, -1, _('Sonido al generar el archivo CUE'))
-		self.cas_sonido_generar.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_generar'))
+		self.cas_sonido_exportar = wx.CheckBox(panel1, -1, _('Sonido al exportar el archivo CUE'))
+		self.cas_sonido_exportar.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar'))
 		self.bt_aceptar = wx.Button(panel1, wx.ID_OK, _('&Aceptar'))
 		self.bt_aceptar.SetDefault()
 		self.bt_cancelar = wx.Button(panel1, wx.ID_CANCEL, _('&Cancelar'))
@@ -39,7 +39,7 @@ class Opciones(wx.Dialog):
 		sz1.Add(self.cas_abrir_carpeta)
 		sz1.Add(self.cas_sonido_actualizacion)
 		sz1.Add(self.cast_sonido_marca)
-		sz1.Add(self.cas_sonido_generar)
+		sz1.Add(self.cas_sonido_exportar)
 
 		sz2 = wx.BoxSizer(wx.HORIZONTAL)
 		sz1.Add(sz2)
@@ -54,7 +54,7 @@ class Opciones(wx.Dialog):
 		self.controlador_opciones.guardar_opciones('general', 'abrir_carpeta', str(self.cas_abrir_carpeta.GetValue()))
 		self.controlador_opciones.guardar_opciones('general', 'sonido_actualizacion', str(self.cas_sonido_actualizacion.GetValue()))
 		self.controlador_opciones.guardar_opciones('general', 'sonido_marca', str(self.cast_sonido_marca.GetValue()))
-		self.controlador_opciones.guardar_opciones('general', 'sonido_generar', str(self.cas_sonido_generar.GetValue()))
+		self.controlador_opciones.guardar_opciones('general', 'sonido_exportar', str(self.cas_sonido_exportar.GetValue()))
 
 
 	def completar_idioma(self):

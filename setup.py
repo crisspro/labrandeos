@@ -25,44 +25,30 @@ excludes = []
 
 # archivos incluídos en la compilación 
 includes = [
-	os.path.join(base_dir, "locale"),
-	os.path.join(base_dir, "files")
-	] 
+    os.path.join(base_dir, "locale"),
+    os.path.join(base_dir, "files")
+    ] 
 
 # Ruta al archivo del icono
 icon_file = os.path.join(base_dir, "files", "labrandeos.ico")
 
-# Configuración de las opciones para compilar en MSI
-
-bdist_msi_options = {
-	"upgrade_code": "{e46a8049-e897-4b86-bf5f-d6e251596200}",
-	"add_to_path": False,
-	'all_users': True,
-	"initial_target_dir": r"[ProgramFilesFolder]\Labrandeos",
-	"data": {
-	"Shortcut": [
-	(app_name,
-'c:\\'	)
-	{"name": app_name, "icon": os.path.join('files', 'labrandeos.ico')}]}
-}
-
 # Configuración del ejecutable
 exe = Executable(
-	script=os.path.join(base_dir, "main.py"),
-	base="Win32GUI",
-	targetName=exe_name,
-	icon=icon_file,
+    script=os.path.join(base_dir, "main.py"),
+    base="Win32GUI",
+    targetName=exe_name,
+    icon=icon_file,
 	copyright=copyright
 	)
 
 # Configuración del setup
 setup(
-	name=app_name,
-	version=version,
-	author=author,
-	description=description,
-	options={"build_exe": {'include_files': includes, "excludes": excludes}, 'bdist_msi': bdist_msi_options},
-	executables=[exe]
+    name=app_name,
+    version=version,
+    author=author,
+    description=description,
+    options={"build_exe": {'include_files': includes, "excludes": excludes}},
+    executables=[exe]
 )
 
 

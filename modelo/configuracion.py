@@ -8,7 +8,7 @@ class Configuracion():
 		'abrir_carpeta': True,
 		'sonido_actualizacion': True,
 		'sonido_marca': True,
-		'sonido_generar': True}
+		'sonido_exportar': False}
 		self.añadir_idioma_defecto()
 
 	def añadir_idioma_defecto(self):
