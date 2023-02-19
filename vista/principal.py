@@ -92,7 +92,7 @@ class Frame(wx.Frame):
 		menu2= wx.Menu()
 		self.mn_editar =  self.barrademenu.Append(menu2, _('&Editar'))
 		self.mn_deshacer = menu2.Append(self.id_mn_deshacer, _('&Deshacer') + '\tCtrl+Z')
-		self.mn_deshacer.Enable()
+		self.mn_deshacer.Enable(False)
 		self.Bind(wx.EVT_MENU, self.deshacer, self.id_mn_deshacer)
 		self.atajo_deshacer = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('z'), self.id_mn_deshacer)
 		self.mn_rehacer = menu2.Append(self.id_mn_rehacer, _('&Rehacer') + '\tCtrl+Shift+Z')
@@ -660,10 +660,8 @@ class Frame(wx.Frame):
 	def deshacer(self, event):
 		self.controlador.deshacer()
 		self.lector.output(_('Deshacer'))
-		self.mn_rehacer.Enable(True)
 		self.refrescar_lista()
-		if self.controlador.historial.es_vacia()[0]:
-			self.mn_deshacer.Enable(False)
+		self.controlar_deshacer_reahcer()
 
 
 	def rehacer(self, event):
@@ -671,8 +669,18 @@ class Frame(wx.Frame):
 			self.controlador.rehacer()
 			self.refrescar_lista()
 			self.lector.output(_('Rehacer'))
-		if self.controlador.historial.es_vacia()[1] == True:
+		self.controlar_deshacer_reahcer()
+
+	def controlar_deshacer_reahcer(self):
+		''' controla si deshacer y rehacer se habilitan o ddesabilitan '''
+		if self.controlador.historial.es_vacia()[0]:
+			self.mn_deshacer.Enable(False)
+		else:
+			self.mn_deshacer.Enable(True)
+		if self.controlador.historial.es_vacia()[1]:
 			self.mn_rehacer.Enable(False)
+		else:
+			self.mn_rehacer.Enable(True)
 
 	def informar_medios(self, event):
 		self.vn_informacion = Informacion_medios(None, _('Información de medios'), self.controlador)

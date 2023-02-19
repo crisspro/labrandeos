@@ -183,10 +183,18 @@ class Controlador():
 	def deshacer(self):
 		objeto = self.historial.desapilar()
 		if objeto.__class__.__name__ == self.data.__class__.__name__:
+			self.historial.reservar(copy.deepcopy(self.data))
 			self.data = objeto
 		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
+			self.historial.reservar(copy.deepcopy(self.disco))
 			self.disco = objeto
 
 
 	def rehacer(self):
-		print('rehacer listo')
+		objeto = self.historial.reapilar()
+		if objeto.__class__.__name__ == self.data.__class__.__name__:
+			self.historial.apilar(copy.deepcopy(self.data), False)
+			self.data = objeto
+		elif objeto.__class__.__name__ == self.disco.__class__.__name__:
+			self.historial.apilar(copy.deepcopy(self.disco), False)
+			self.disco = objeto
