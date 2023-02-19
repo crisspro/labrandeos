@@ -130,7 +130,8 @@ class Controlador():
 	def exportar_cue (self, id):
 		tipo = self.pista.extencion
 		tipo = tipo[1:].upper()
-		archivo = open(os.path.join(self.pista.direccion, self.data.titulo + ' - ' + self.data.autor + '.cue'), 'w')
+		ruta_cue = os.path.join(self.pista.direccion, self.data.titulo + ' - ' + self.data.autor + '.cue')
+		archivo = open(ruta_cue, 'w')
 		archivo.write('TITLE "' + self.disco.titulo + '"\n')
 		archivo.write('PERFORMER "' + self.disco.autor + '"\n')
 		archivo.write('REM GENRE "' + self.disco.genero + '"\n')
@@ -147,6 +148,7 @@ class Controlador():
 			archivo.write('PERFORMER "' + marca.autor + '"\n')
 			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio_cue()) + '\n')
 		archivo.close()
+		return ruta_cue
 
 	def crear_pista(self, nombre, extencion, direccion, ruta, duracion):
 		self.pista = Pista(nombre, extencion, direccion, ruta, duracion)

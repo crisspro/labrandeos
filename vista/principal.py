@@ -1,5 +1,6 @@
 import pdb
 import os
+import subprocess
 import sys
 
 import accessible_output2.outputs.auto
@@ -12,7 +13,6 @@ import wx.adv
 import vista.disco
 import vista.opciones
 from controlador.controlador import Controlador
-from controlador.traductor import Traductor
 from .editar import Editar
 from .editar import Editar2
 from .acerca_de import Acerca_de
@@ -35,8 +35,6 @@ class Frame(wx.Frame):
 
 	#creación de controles
 	def graficar(self):
-		traductor = Traductor('labrandeos')
-		
 		# creación de lector
 		self.lector= accessible_output2.outputs.auto.Auto()
 
@@ -649,13 +647,13 @@ class Frame(wx.Frame):
 			self.pausar(None)
 
 	def exportar(self, event):
-		self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
+		exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
 		if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar'):
 			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
+		if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
+			subprocess.Popen('explorer /select,"' + exportacion + '"')
 		msg = wx.adv.NotificationMessage('', _('Cue generado exitosamente.'), self, wx.ICON_INFORMATION)
 		msg.Show(5)
-		if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
-			wx.LaunchDefaultBrowser(self.controlador.pista.direccion)
 
 	def deshacer(self, event):
 		self.controlador.deshacer()

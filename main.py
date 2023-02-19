@@ -6,11 +6,12 @@ import sys
 
 import wx
 
+from controlador.traductor import Traductor
 from controlador.controlador import Controlador
 import controlador.configuracion
 from vista.principal import Frame
 
-
+traductor = Traductor('labrandeos')
 App= wx.App()
 controlador_app = controlador.configuracion.App()
 controlador_controlador = Controlador()
