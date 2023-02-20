@@ -2,6 +2,7 @@
 #Copyriht (C) 2023 Crisspro <crisspro@hotmail.com>
 #lisencia: GPL-3.0
 
+import os
 import sys
 
 import wx
@@ -10,12 +11,17 @@ from controlador.traductor import Traductor
 from controlador.controlador import Controlador
 import controlador.configuracion
 from vista.principal import Frame
+def crear_carpeta():
+	''' crea la carpeta Labrandeos en appdata del usuario'''
+	if os.path.exists(os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos')) == False:
+		os.makedirs(os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos'))
 
 
 App= wx.App()
 controlador_app = controlador.configuracion.App()
 controlador_controlador = Controlador()
 controlador_opciones = controlador.configuracion.Opciones()
+crear_carpeta()
 controlador_opciones.chequear_ini()
 controlador_opciones.guardar_idioma()
 traductor = Traductor('labrandeos')

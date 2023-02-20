@@ -15,11 +15,11 @@ class Editar(wx.Dialog):
 
 		# Creación de controles
 		self.panel1= wx.Panel(self)
-		self.l_titulo = wx.StaticText(self.panel1, -1, _('Título:'))
+		self.l_titulo = wx.StaticText(self.panel1, -1, _('*Título:'))
 		self.in_titulo= wx.TextCtrl(self.panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.in_titulo.SetFocus()
 		self.Bind(wx.EVT_TEXT, self.evento_texto, self.in_titulo)
-		self.l_autor= wx.StaticText(self.panel1, -1, _('Autor:'))
+		self.l_autor= wx.StaticText(self.panel1, -1, _('*Autor:'))
 		self.in_autor= wx.TextCtrl(self.panel1, -1, style= wx.TE_PROCESS_ENTER)
 		self.Bind (wx.EVT_TEXT, self.evento_texto, self.in_autor)
 		self.l_horas= wx.StaticText(self.panel1, -1, _('Horas'))
