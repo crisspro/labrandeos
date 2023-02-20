@@ -312,6 +312,8 @@ class Frame(wx.Frame):
 			if sl == True:
 				self.controlador.borrar_marca(marca)
 		self.refrescar_lista()
+		self.lista.SetItemState(item - 1, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
+		self.lista.EnsureVisible(item -1)
 		if cantidad != 0:
 			self.lector.output(_('Eliminado'))
 
