@@ -63,7 +63,7 @@ class App():
 class Opciones():
 	def __init__(self):
 		self.configparser = ConfigParser()
-		self.archivo_configuracion = os.path.join('files', 'user.ini')
+		self.archivo_configuracion = os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos', 'user.ini')
 		self.configparser.read(self.archivo_configuracion,encoding= 'utf-8')
 		self.modelo_configuracion = modelo.configuracion.Configuracion()
 
