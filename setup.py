@@ -55,17 +55,14 @@ setup(
 # postcompilación
 
 # Crear una carpeta llamada "accessible_output2" en la carpeta de la compilación
-os.makedirs(os.path.join(base_dir, 'accessible_output2'))
+os.makedirs(os.path.join('build', 'accessible_output2'))
 
 # Mover la carpeta que está en la ruta "lib\accessible_output2\lib" dentro de la carpeta de compilación, hacia la carpeta "accessible_output2" creada anteriormente
-shutil.move(os.path.join(base_dir, 'lib', 'accessible_output2', 'lib'), os.path.join(base_dir, 'accessible_output2'))
+shutil.move(os.path.join('build', 'lib', 'accessible_output2', 'lib'), os.path.join('build', 'accessible_output2'))
 
 # Eliminar los  archivos .po de las traducciones 
-os.remove(os.path.join(base_dir, 'locale', 'en', 'LC_MESSAGES', 'labrandeos.po'))
-os.remove(os.path.join(base_dir, 'locale', 'es', 'LC_MESSAGES', 'labrandeos.po'))
-
-# Eliminar el archivo llamado user.ini dentro de la carpeta "files" 
-os.remove(os.path.join(base_dir, 'files', 'user.ini'))
+os.remove(os.path.join('build', 'locale', 'en', 'LC_MESSAGES', 'labrandeos.po'))
+os.remove(os.path.join('build', 'locale', 'es', 'LC_MESSAGES', 'labrandeos.po'))
 
 # Eliminar el archivo llamado "frozen_application_license.txt" dentro de la carpeta de compilación
-os.remove(os.path.join(base_dir, 'frozen_application_license.txt'))
+os.remove(os.path.join('build', 'frozen_application_license.txt'))

@@ -20,7 +20,7 @@ class App():
 		self.sitio_app = 'https://github.com/crisspro/labrandeos'
 		self.api_app = 'https://api.github.com/repos/crisspro/labrandeos/releases/latest'
 		self.arquitectura_app = platform.architecture()[0]
-		self.version_app = 'v0.1'
+		self.version_app = 'v1.0'
 		self.actualizado = True
 
 
@@ -45,7 +45,12 @@ class App():
 		dw= coneccion.json() ['assets']
 		for i in dw:
 			dw= i['browser_download_url']
-		webbrowser.open(dw)
+			if 'x64' in dw and self.arquitectura_app == '64bit':
+				webbrowser.open(dw)
+				break
+			elif 'x86' in dw and self.arquitectura_app == '32bit':
+				webbrowser.open(dw)
+				break
 
 	def verificar_instancia(self):
 		''' Verifica si se está ejecutando otra instancia del programa '''

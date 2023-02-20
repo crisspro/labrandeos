@@ -5,8 +5,8 @@ setup.py
 *.py[cod]
 *$py.class
 
-
-
+*.iss
+*.exe
 
 # C extensions
 *.so
