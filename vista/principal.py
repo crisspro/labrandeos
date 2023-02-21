@@ -257,7 +257,7 @@ class Frame(wx.Frame):
 		self.panel2.Enable(False)
 
 		#llamado a funciones
-		self.buscar_actualizacion(None)
+		self.detectar_actualizacion()
 
 
 	# carga marcas en  la lista
@@ -495,6 +495,10 @@ class Frame(wx.Frame):
 		if self.controlador_app.verificar_instancia():
 			wx.MessageBox(self.controlador_app.nombre_app + _(' ya se está ejecutando.'), _('Aviso'), style= wx.ICON_INFORMATION)
 			sys.exit(1)
+
+	def detectar_actualizacion(self):
+		if self.controlador_opciones.consultar_opciones('bool', 'general', 'detectar_actualizacion'):
+			self.buscar_actualizacion(None)
 
 	def buscar_actualizacion(self, event):
 		''' Muestra mensajes si hay o no actualizaciones '''

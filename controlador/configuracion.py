@@ -20,7 +20,7 @@ class App():
 		self.sitio_app = 'https://github.com/crisspro/labrandeos'
 		self.api_app = 'https://api.github.com/repos/crisspro/labrandeos/releases/latest'
 		self.arquitectura_app = platform.architecture()[0]
-		self.version_app = 'v1.0'
+		self.version_app = 'v1.1'
 		self.actualizado = True
 
 

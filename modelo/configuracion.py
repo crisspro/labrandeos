@@ -6,6 +6,7 @@ class Configuracion():
 		self.dic_general = {'idioma': 'en',
 		'cue_id': True,
 		'abrir_carpeta': True,
+		'detectar_actualizacion': True,
 		'sonido_actualizacion': True,
 		'sonido_marca': True,
 		'sonido_exportar': True}
