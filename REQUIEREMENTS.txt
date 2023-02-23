@@ -2,3 +2,4 @@ accessible-output2
 pymediainfo
 requests
 wxpython
+psutil
