@@ -3,6 +3,7 @@ import os
 import pdb
 import pickle
 
+#from pydub import AudioSegment
 import pymediainfo
 import requests
 import wx
@@ -149,6 +150,10 @@ class Controlador():
 			archivo.write('INDEX 01 ' +str(marca.filtrar_tiempo_inicio_cue()) + '\n')
 		archivo.close()
 		return ruta_cue
+
+#	def exportar_audio(self):
+#		''' Exporta en formato de audio '''
+#		archivo = AudioSegment.from_file(self.pista.ruta)
 
 	def crear_pista(self, nombre, extencion, direccion, ruta, duracion):
 		self.pista = Pista(nombre, extencion, direccion, ruta, duracion)

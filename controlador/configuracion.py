@@ -58,11 +58,10 @@ class App():
 		procesos = psutil.process_iter()
 		cantidad = 0
 		for i in procesos:
-			if i.name() == proceso.name():
+			if i.name() == proceso.name() and proceso.name() != 'python.exe':
 				cantidad += 1
 				if cantidad > 1:
 					return True
-
 
 
 class Opciones():
@@ -76,6 +75,9 @@ class Opciones():
 	def chequear_ini(self):
 		if os.path.isfile(self.archivo_configuracion) == False:
 			self.guardar_defecto()
+		if set(self.configparser['general']) != set(self.modelo_configuracion.dic_general.keys()):
+			self.guardar_defecto()
+
 
 	def guardar_defecto(self):
 		self.configparser['general']= self.modelo_configuracion.dic_general
