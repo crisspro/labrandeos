@@ -7,7 +7,7 @@ setup.py
 
 *.iss
 *.exe
-
+*.bat
 # C extensions
 *.so
 *.bak

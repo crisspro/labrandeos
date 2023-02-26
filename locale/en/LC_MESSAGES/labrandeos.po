@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-11 20:13-0300\n"
-"PO-Revision-Date: 2023-02-13 21:34-0300\n"
+"POT-Creation-Date: 2023-02-26 14:38-0300\n"
+"PO-Revision-Date: 2023-02-26 14:51-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -52,19 +52,19 @@ msgstr "Genre:"
 msgid "Comentarios:"
 msgstr "Comments:"
 
-#: disco.py:31 editar.py:43 opciones.py:29
+#: disco.py:31 editar.py:43 opciones.py:31
 msgid "&Aceptar"
 msgstr "&OK"
 
-#: disco.py:33 editar.py:46 opciones.py:31
+#: disco.py:33 editar.py:46 opciones.py:33
 msgid "&Cancelar"
 msgstr "&Cancel"
 
-#: disco.py:78 principal.py:351 principal.py:355
+#: disco.py:78 principal.py:354 principal.py:358
 msgid "Sin título"
 msgstr "Untitled"
 
-#: disco.py:82 principal.py:349 principal.py:355
+#: disco.py:82 principal.py:352 principal.py:358
 msgid "Sin autor"
 msgstr "Unauthored"
 
@@ -92,8 +92,8 @@ msgstr "Seconds:"
 msgid "Marcos"
 msgstr "Frames:"
 
-#: editar.py:41 editar.py:142 principal.py:169 principal.py:530
-#: principal.py:537 principal.py:544 principal.py:546 principal.py:599
+#: editar.py:41 editar.py:142 principal.py:170 principal.py:537
+#: principal.py:544 principal.py:551 principal.py:553 principal.py:606
 msgid "&Reproducir"
 msgstr "&Play"
 
@@ -117,7 +117,7 @@ msgstr "Warning."
 msgid "El tiempo ingresado supera el tiempo de duración del audio."
 msgstr "The time ingresed is over them audio duration time."
 
-#: editar.py:139 principal.py:191
+#: editar.py:139 principal.py:192
 msgid "&Detener"
 msgstr "&Stop"
 
@@ -141,7 +141,7 @@ msgstr "minutes "
 msgid "segundos "
 msgstr "seconds "
 
-#: informacion_medios.py:13 principal.py:589 principal.py:595
+#: informacion_medios.py:13 principal.py:596 principal.py:602
 msgid "marcos"
 msgstr "frames"
 
@@ -169,11 +169,11 @@ msgstr "Channels: "
 msgid "Idioma"
 msgstr "Language"
 
-#: opciones.py:16 opciones.py:63 opciones.py:69
+#: opciones.py:16 opciones.py:66 opciones.py:72
 msgid "Español"
 msgstr "Spanish"
 
-#: opciones.py:16 opciones.py:65 opciones.py:71
+#: opciones.py:16 opciones.py:68 opciones.py:74
 msgid "Inglés"
 msgstr "English"
 
@@ -186,178 +186,182 @@ msgid "Abrir carpeta de destino al exportar"
 msgstr "Open Destiny folder to export "
 
 #: opciones.py:23
+msgid "Detectar si hay actualizaciones al iniciar"
+msgstr "Detect if there are updates on startup"
+
+#: opciones.py:25
 msgid "Sonido al detectar nueva actualización"
 msgstr "Sound when detecting an update."
 
-#: opciones.py:25
+#: opciones.py:27
 msgid "Sonido al crear una nueva marca"
 msgstr "Sound when makeing an mark."
 
-#: opciones.py:27
-msgid "Sonido al generar el archivo CUE"
-msgstr "Sound when CUE it's generated."
+#: opciones.py:29
+msgid "Sonido al exportar el archivo CUE"
+msgstr "Sound when exporting the CUE file."
 
-#: principal.py:65
+#: principal.py:66
 msgid "&Archivo"
 msgstr "&File"
 
-#: principal.py:66
+#: principal.py:67
 msgid "&Nuevo proyecto"
 msgstr "&New project"
 
-#: principal.py:70 principal.py:143
+#: principal.py:71 principal.py:144
 msgid "&Cargar audio"
 msgstr "&Load audio file"
 
-#: principal.py:72
+#: principal.py:73
 msgid "&Abrir proyecto"
 msgstr "&Open project"
 
-#: principal.py:75
+#: principal.py:76
 msgid "&Guardar"
 msgstr "&Save"
 
-#: principal.py:79
+#: principal.py:80
 msgid "G&uardar como..."
 msgstr "S&ave Project as..."
 
-#: principal.py:82
+#: principal.py:83
 msgid "&Exportar CUE"
 msgstr "&Export CUE"
 
-#: principal.py:85
+#: principal.py:86
 msgid "&Salir"
 msgstr "&Quit"
 
-#: principal.py:90 principal.py:685
+#: principal.py:91 principal.py:701
 msgid "&Editar"
 msgstr "&Edit"
 
-#: principal.py:91
+#: principal.py:92
 msgid "&Deshacer"
 msgstr "&Undo"
 
-#: principal.py:95
+#: principal.py:96
 msgid "&Rehacer"
 msgstr "&Redo"
 
-#: principal.py:99
+#: principal.py:100
 msgid "&Eliminar"
 msgstr "&Delete"
 
-#: principal.py:102
+#: principal.py:103
 msgid "&Marca"
 msgstr "&Marck"
 
-#: principal.py:113
+#: principal.py:114
 msgid "&Herramientas"
 msgstr "&Tools"
 
-#: principal.py:114
+#: principal.py:115
 msgid "&Metadatos del álbum"
 msgstr "&Album metadata"
 
-#: principal.py:118
+#: principal.py:119
 msgid "&Información de medios"
 msgstr "&Media information"
 
-#: principal.py:122
+#: principal.py:123
 msgid "&Opciones"
 msgstr "&Options"
 
-#: principal.py:128
+#: principal.py:129
 msgid "A&yuda"
 msgstr "&Help"
 
-#: principal.py:129
+#: principal.py:130
 msgid "&Documentación"
 msgstr "&Documentation"
 
-#: principal.py:132
+#: principal.py:133
 msgid "&Buscar actualizaciones"
 msgstr "&Updates"
 
-#: principal.py:134 principal.py:510
+#: principal.py:135 principal.py:517
 msgid "Acerca de "
 msgstr "About "
 
-#: principal.py:142
+#: principal.py:143
 msgid "Carga el archivo de audio que quieres procesar."
 msgstr "Load an audio file for processing."
 
-#: principal.py:153 principal.py:449
+#: principal.py:154 principal.py:452
 msgid "Nuevo proyecto"
 msgstr "New project"
 
-#: principal.py:162
+#: principal.py:163
 msgid "Línea de tiempo"
 msgstr "Timeline"
 
-#: principal.py:176
+#: principal.py:177
 msgid "línea de tiempo"
 msgstr "Timeline"
 
-#: principal.py:180
+#: principal.py:181
 msgid "enfocar lista"
 msgstr "List focus"
 
-#: principal.py:184
+#: principal.py:185
 msgid "Duración"
 msgstr "Duration"
 
-#: principal.py:188
+#: principal.py:189
 msgid "tiempo actual"
 msgstr "Current time"
 
-#: principal.py:193
+#: principal.py:194
 msgid "Volumen"
 msgstr "Volume"
 
-#: principal.py:196
+#: principal.py:197
 msgid "&Marcar"
 msgstr "&Bookmarck"
 
-#: principal.py:206
+#: principal.py:207
 msgid "Marcas"
 msgstr "Marks"
 
-#: principal.py:209
+#: principal.py:210
 msgid "Título"
 msgstr "Title"
 
-#: principal.py:210
+#: principal.py:211
 msgid "Autor"
 msgstr "Author"
 
-#: principal.py:211
+#: principal.py:212
 msgid "Tiempo de inicio"
 msgstr "Start time"
 
-#: principal.py:216
+#: principal.py:217
 msgid "E&XPORTAR CUE"
 msgstr "E&XPORT CUE"
 
-#: principal.py:315
+#: principal.py:318
 msgid "Eliminado"
 msgstr "deleted"
 
-#: principal.py:333
+#: principal.py:336
 msgid "Metadatos del álbum"
 msgstr "Albumn metadata"
 
-#: principal.py:360
+#: principal.py:363
 msgid "Cargar audio"
 msgstr "Load audio file"
 
-#: principal.py:365
+#: principal.py:368
 msgid "No es posible cargar el fichero, sólo se admiten archivos de audio."
 msgstr "Impossible to load the file. Only audio files are accepted."
 
-#: principal.py:411
+#: principal.py:414
 msgid "Abrir proyecto"
 msgstr "Open project"
 
-#: principal.py:415
+#: principal.py:418
 msgid ""
 "Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
 "perderán. \n"
@@ -368,105 +372,105 @@ msgstr ""
 "\n"
 "Do you want to go out?"
 
-#: principal.py:415 principal.py:462 principal.py:482
+#: principal.py:418 principal.py:465 principal.py:485
 msgid "Atención"
 msgstr "Warning"
 
-#: principal.py:430
+#: principal.py:433
 msgid "Guardar"
 msgstr "Save"
 
-#: principal.py:430
+#: principal.py:433
 msgid "¿Deseas guardar los cambios realizados?"
 msgstr "Do you want to save the changes you have made?"
 
-#: principal.py:455
+#: principal.py:458
 msgid "guardado"
 msgstr "saved"
 
-#: principal.py:459
+#: principal.py:462
 msgid "Guardar proyecto"
 msgstr "Save project"
 
-#: principal.py:462
+#: principal.py:465
 msgid "Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?"
 msgstr ""
 "There are changes in this project that have not been saved. Do you want to "
 "save them?"
 
-#: principal.py:476
+#: principal.py:479
 msgid "Opciones"
 msgstr "Options"
 
-#: principal.py:482
+#: principal.py:485
 msgid ""
 "Debes reiniciar el programa para que los cambios de idioma surtan efecto."
 msgstr "Restart the program to change language."
 
-#: principal.py:493
+#: principal.py:496
 msgid " ya se está ejecutando."
 msgstr " is running."
 
-#: principal.py:493 principal.py:506
+#: principal.py:496 principal.py:513
 msgid "Aviso"
 msgstr "Message"
 
-#: principal.py:502
+#: principal.py:509
 msgid "Actualización"
 msgstr "update"
 
-#: principal.py:502
+#: principal.py:509
 msgid "Hay una nueva versión disponible. ¿Deseas descargarla ahora?"
 msgstr "There is a new version. Do you want to download it?"
 
-#: principal.py:506
+#: principal.py:513
 msgid "No hay ninguna nueva versión disponible"
 msgstr "No updates."
 
-#: principal.py:525
+#: principal.py:532
 msgid "&Pausar"
 msgstr "&Pause"
 
-#: principal.py:589 principal.py:595
+#: principal.py:596 principal.py:602
 msgid "horas"
 msgstr "hours"
 
-#: principal.py:589 principal.py:595
+#: principal.py:596 principal.py:602
 msgid "minutos"
 msgstr "minutes"
 
-#: principal.py:589 principal.py:595
+#: principal.py:596 principal.py:602
 msgid "segundos"
 msgstr "seconds"
 
-#: principal.py:595
+#: principal.py:602
 msgid "Duración de la pista. "
 msgstr "Track's time"
 
-#: principal.py:605
+#: principal.py:612
 msgid "Crear marca"
 msgstr "Make mark"
 
-#: principal.py:627
+#: principal.py:634
 msgid "Editar marca"
 msgstr "Edit mark"
 
-#: principal.py:652
-msgid "Cue generado exitosamente."
-msgstr "CUE successfully generated."
+#: principal.py:662
+msgid "Cue exportado exitosamente."
+msgstr "Successfully exported CUE."
 
-#: principal.py:659
+#: principal.py:667
 msgid "Deshacer"
 msgstr "Undo"
 
-#: principal.py:670
+#: principal.py:676
 msgid "Rehacer"
 msgstr "Redo"
 
-#: principal.py:675
+#: principal.py:691
 msgid "Información de medios"
 msgstr "Media information"
 
-#: principal.py:688
+#: principal.py:704
 msgid "E&liminar"
 msgstr "&Delete"
