@@ -80,8 +80,11 @@ class Frame(wx.Frame):
 		self.mn_guardar_como = menu1.Append(-1, _('G&uardar como...'))
 		self.mn_guardar_como.Enable(False)
 		self.Bind(wx.EVT_MENU, self.guardar_proyecto, self.mn_guardar_como)
-		self.mn_exportar = menu1.Append(-1, _('&Exportar CUE'))
+		self.sub_mn_exportar = wx.Menu()
+		self.mn_exportar = menu1.AppendSubMenu(self.sub_mn_exportar, _('&Exportar'))
 		self.mn_exportar.Enable(False)
+		self.sub_mn_exportar.Append(-1, _('&Imagen CUE'))
+		self.sub_mn_exportar.Append(-1, _('&Pistas separadas'))
 		self.Bind(wx.EVT_MENU, self.exportar, self.mn_exportar)
 		salir= menu1.Append(-1, _('&Salir'))
 		self.Bind(wx.EVT_MENU, self.cerrar, salir)
@@ -214,7 +217,11 @@ class Frame(wx.Frame):
 		self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_contextual, self.lista)
 		self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
 #		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.seleccionar_multiple, self.lista)
-		self.bt_exportar= wx.Button(self.panel2, -1, _('E&XPORTAR CUE'))
+		self.l_formato = wx.StaticText(self.panel2, -1, _('Modo de exportación'))
+		self.lista_formatos = [_('Imagen CUE'), _('Pistas separadas')]
+		self.com_modo = wx.ComboBox(self.panel2, -1, _('Imagen CUE'), choices= self.lista_formatos,  style= wx.CB_READONLY)
+		self.com_modo.Enable(False)
+		self.bt_exportar= wx.Button(self.panel2, -1, _('E&XPORTAR'))
 		self.bt_exportar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.exportar, self.bt_exportar)
 
@@ -250,6 +257,7 @@ class Frame(wx.Frame):
 
 		self.sz4 = wx.BoxSizer(wx.VERTICAL)
 		self.sz3.Add(self.sz4)
+		self.sz4.Add(self.com_modo)
 		self.sz4.Add(self.bt_exportar)
 
 
@@ -398,6 +406,7 @@ class Frame(wx.Frame):
 			self.mn_exportar.Enable(True)
 			self.mn_guardar.Enable(True)
 			self.mn_guardar_como.Enable(True)
+			self.com_modo.Enable(True)
 			self.bt_exportar.Enable(True)
 		if self.controlador.data.lista_marcas != []:
 			self.mn_eliminar.Enable(True)
@@ -653,7 +662,10 @@ class Frame(wx.Frame):
 			self.pausar(None)
 
 	def exportar(self, event):
-		exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'cue_id'))
+		if self.com_modo.GetValue() == _('Imagen CUE'):
+			exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
+		elif self.com_modo.GetValue() == _('Pistas separadas'):
+			exportacion = self.controlador.exportar_audio(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
 		if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar'):
 			wx.adv.Sound.PlaySound( os.path.join('files', 'sounds', 'ok.wav'))
 		if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
