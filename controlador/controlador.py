@@ -163,7 +163,7 @@ class Controlador():
 			segmento = archivo[marca.milesimas:fin]
 			fin = marca.milesimas
 			nombre = '{} - {}'.format(str(marca.id).zfill(2), marca.titulo) if indice ==True else marca.titulo
-			segmento.export(os.path.join(self.pista.direccion, carpeta, nombre + self.pista.extension), tags= {'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id})
+			segmento.export(os.path.join(self.pista.direccion, carpeta, nombre + self.pista.extension), bitrate= str(self.pista.taza_bit),  tags= {'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id})
 		return os.path.join(self.pista.direccion, carpeta) 
 
 	def crear_pista(self, nombre, extension, direccion, ruta, duracion):
@@ -192,7 +192,7 @@ class Controlador():
 		archivo_info= pymediainfo.MediaInfo.parse(archivo)
 		for track in archivo_info.tracks:
 			info = track.to_data()
-			self.pista.taza_bit = info.get('other_bit_rate')
+			self.pista.taza_bit = info.get('bit_rate')
 			self.pista.modo_taza_bit = info.get('bit_rate_mode')
 			self.pista.velocidad_muestreo = info.get('sampling_rate')
 			self.pista.canales = info.get('channel_s')

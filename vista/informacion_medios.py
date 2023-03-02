@@ -12,7 +12,7 @@ class Informacion_medios(wx.Dialog):
 		self.lista_datos = [_('Fichero: ') + self.controlador.pista.nombre + self.controlador.pista.extension,
 		_('Duración: ') + str(self.controlador.tiempo.horas) + _('horas ') + str(self.controlador.tiempo.minutos) + _('minutos ') + str(self.controlador.tiempo.segundos) + _('segundos ') + str(self.controlador.tiempo.marcos) + _('marcos'),
 		_('Formato: ') + self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('format'),
-		_('Tasa de bits: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('other_bit_rate')),
+		_('Tasa de bits: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('other_bit_rate')[0]),
 		_('Modo de taza de bits: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('bit_rate_mode')),
 		_('Velocidad de muestreo: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('sampling_rate')),
 		_('Canales: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('channel_s'))]

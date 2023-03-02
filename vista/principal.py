@@ -662,6 +662,10 @@ class Frame(wx.Frame):
 		else:
 			self.pausar(None)
 
+	def exportar_audio(self, event):
+		''' Exporta pistas por separado '''
+		exportacion = self.controlador.exportar_audio(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
+
 	def exportar(self, event):
 		if self.com_modo.GetValue() == _('Imagen CUE'):
 			exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
