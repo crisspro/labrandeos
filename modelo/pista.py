@@ -5,6 +5,10 @@ class Pista():
 		self.direccion = direccion
 		self.ruta = ruta
 		self.duracion = duracion
+		self.taza_bit = ''
+		self.modo_taza_bit = ''
+		self.velocidad_muestreo = ''
+		self.canales = 2
 
 	def __eq__(self, otro):
 		if isinstance(otro, Pista):

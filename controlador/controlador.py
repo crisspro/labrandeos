@@ -177,6 +177,7 @@ class Controlador():
 		return marca[id]
 
 	def comprobar_medios(self, archivo):
+		''' Comprueba si el archivo cargado es de audio '''
 		archivo_info= pymediainfo.MediaInfo.parse(archivo)
 		for track in archivo_info.tracks:
 			if track.track_type == 'Audio':
@@ -185,6 +186,16 @@ class Controlador():
 			if track.track_type == 'Video':
 				return 'otro'
 				break
+
+	def aplicar_informacion_medios(self, archivo):
+		''' agrega información de medios al modelo de la pista '''
+		archivo_info= pymediainfo.MediaInfo.parse(archivo)
+		for track in archivo_info.tracks:
+			info = track.to_data()
+			self.pista.taza_bit = info.get('other_bit_rate')
+			self.pista.modo_taza_bit = info.get('bit_rate_mode')
+			self.pista.velocidad_muestreo = info.get('sampling_rate')
+			self.pista.canales = info.get('channel_s')
 
 	def es_temporal(self):
 		return self.ruta_proyecto == os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos', 'temp.proyecto.lap')

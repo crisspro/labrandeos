@@ -393,6 +393,7 @@ class Frame(wx.Frame):
 		direccion,
 		self.path,
 		self.reproductor.Length())
+		self.controlador.aplicar_informacion_medios(self.path)
 
 	def habilitar_controles (self):
 		if self.controlador.pista != None:
