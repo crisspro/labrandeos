@@ -154,6 +154,8 @@ class Controlador():
 
 	def exportar_audio(self, indice):
 		''' Exporta en formato de audio '''
+		carpeta = '{} - {}'.format(self.data.titulo, self.data.autor)
+		os.makedirs(os.path.join(self.pista.direccion, carpeta))
 		archivo = AudioSegment.from_file(self.pista.ruta)
 		marca = self.getMarcas()
 		fin = self.pista.duracion
@@ -161,8 +163,8 @@ class Controlador():
 			segmento = archivo[marca.milesimas:fin]
 			fin = marca.milesimas
 			nombre = '{} - {}'.format(str(marca.id).zfill(2), marca.titulo) if indice ==True else marca.titulo
-			segmento.export(os.path.join(self.pista.direccion, nombre + self.pista.extension), tags= {'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id})
-		return os.path.join(self.pista.direccion, nombre + self.pista.extension) 
+			segmento.export(os.path.join(self.pista.direccion, carpeta, nombre + self.pista.extension), tags= {'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id})
+		return os.path.join(self.pista.direccion, carpeta) 
 
 	def crear_pista(self, nombre, extension, direccion, ruta, duracion):
 		self.pista = Pista(nombre, extension, direccion, ruta, duracion)
