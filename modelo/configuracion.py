@@ -4,7 +4,7 @@ class Configuracion():
 	def __init__(self):
 		self.idioma_app = ''
 		self.dic_general = {'idioma': 'en',
-		'cue_id': True,
+		'indice': True,
 		'abrir_carpeta': True,
 		'detectar_actualizacion': True,
 		'sonido_actualizacion': True,

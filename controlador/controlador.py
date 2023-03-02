@@ -1,9 +1,10 @@
+
 import copy
 import os
 import pdb
 import pickle
 
-#from pydub import AudioSegment
+from pydub import AudioSegment
 import pymediainfo
 import requests
 import wx
@@ -128,8 +129,8 @@ class Controlador():
 		milesimas = self.tiempo.reconvertir()
 		return milesimas
 
-	def exportar_cue (self, id):
-		tipo = self.pista.extencion
+	def exportar_cue (self, indice):
+		tipo = self.pista.extension
 		tipo = tipo[1:].upper()
 		ruta_cue = os.path.join(self.pista.direccion, self.data.titulo + ' - ' + self.data.autor + '.cue')
 		archivo = open(ruta_cue, 'w')
@@ -138,11 +139,11 @@ class Controlador():
 		archivo.write('REM GENRE "' + self.disco.genero + '"\n')
 		archivo.write('REM DATE "' + str(self.disco.fecha) + '"\n')
 		archivo.write('REM COMMENT "' + self.disco.comentarios + '"\n')
-		archivo.write('FILE "' + self.pista.nombre + self.pista.extencion + '" ' + tipo + '\n')
+		archivo.write('FILE "' + self.pista.nombre + self.pista.extension + '" ' + tipo + '\n')
 		marca = self.getMarcas()
 		for marca in marca:
 			archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
-			if id == True:
+			if indice == True:
 				archivo.write('TITLE "' + str(marca.id).zfill(2) + ' ' + marca.titulo + '"\n')
 			else:
 				archivo.write('TITLE "' + marca.titulo + '"\n')
@@ -151,13 +152,20 @@ class Controlador():
 		archivo.close()
 		return ruta_cue
 
-#	def exportar_audio(self):
-#		''' Exporta en formato de audio '''
-#		archivo = AudioSegment.from_file(self.pista.ruta)
+	def exportar_audio(self, indice):
+		''' Exporta en formato de audio '''
+		archivo = AudioSegment.from_file(self.pista.ruta)
+		marca = self.getMarcas()
+		fin = self.pista.duracion
+		for marca in reversed(marca):
+			segmento = archivo[marca.milesimas:fin]
+			fin = marca.milesimas
+			nombre = '{} - {}'.format(str(marca.id).zfill(2), marca.titulo) if indice ==True else marca.titulo
+			segmento.export(os.path.join(self.pista.direccion, nombre + self.pista.extension), tags= {'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id})
+		return os.path.join(self.pista.direccion, nombre + self.pista.extension) 
 
-	def crear_pista(self, nombre, extencion, direccion, ruta, duracion):
-		self.pista = Pista(nombre, extencion, direccion, ruta, duracion)
-
+	def crear_pista(self, nombre, extension, direccion, ruta, duracion):
+		self.pista = Pista(nombre, extension, direccion, ruta, duracion)
 
 	def verificar_exportacion(self):
 		return os.path.isfile(os.path.join(self.pista.direccion,  self.data.titulo + ' - ' + self.data.autor + '.cue'))

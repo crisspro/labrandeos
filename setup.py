@@ -13,7 +13,7 @@ app_name = "Labrandeos"
 # Nombre del ejecutable
 exe_name = "Labrandeos"
 # Versión de la aplicación
-version = "1.0"
+version = "1.2"
 # Nombre del autor
 author = "Crisspro"
 # Descripción de la aplicación

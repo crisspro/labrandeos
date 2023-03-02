@@ -9,7 +9,7 @@ class Informacion_medios(wx.Dialog):
 		self.controlador = controlador
 		self.controlador.tiempo.convertir(self.controlador.pista.duracion)
 		self.panel = wx.Panel(self)
-		self.lista_datos = [_('Fichero: ') + self.controlador.pista.nombre + self.controlador.pista.extencion,
+		self.lista_datos = [_('Fichero: ') + self.controlador.pista.nombre + self.controlador.pista.extension,
 		_('Duración: ') + str(self.controlador.tiempo.horas) + _('horas ') + str(self.controlador.tiempo.minutos) + _('minutos ') + str(self.controlador.tiempo.segundos) + _('segundos ') + str(self.controlador.tiempo.marcos) + _('marcos'),
 		_('Formato: ') + self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('format'),
 		_('Tasa de bits: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('other_bit_rate')),
