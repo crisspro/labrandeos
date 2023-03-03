@@ -221,6 +221,12 @@ class Frame(wx.Frame):
 		self.lista_formatos = [_('Imagen CUE'), _('Pistas separadas')]
 		self.com_modo = wx.ComboBox(self.panel2, -1, _('Imagen CUE'), choices= self.lista_formatos,  style= wx.CB_READONLY)
 		self.com_modo.Enable(False)
+		self.Bind(wx.EVT_COMBOBOX, self.seleccionar_modo, self.com_modo)
+		self.bt_opciones = wx.Button(self.panel2, -1, _('&Opciones'))
+		self.Bind(wx.EVT_BUTTON, self.abrir_opciones_audio, self.bt_opciones)
+		self.bt_opciones.Enable(False)
+		self.cas_carpeta_origen = wx.CheckBox(self.panel2, -1, _('Guardar en carpeta de origen'))
+		self.cas_carpeta_origen.Enable(False)
 		self.bt_exportar= wx.Button(self.panel2, -1, _('E&XPORTAR'))
 		self.bt_exportar.Enable(False)
 		self.Bind(wx.EVT_BUTTON, self.exportar, self.bt_exportar)
@@ -258,6 +264,8 @@ class Frame(wx.Frame):
 		self.sz4 = wx.BoxSizer(wx.VERTICAL)
 		self.sz3.Add(self.sz4)
 		self.sz4.Add(self.com_modo)
+		self.sz4.Add(self.bt_opciones)
+		self.sz4.Add(self.cas_carpeta_origen)
 		self.sz4.Add(self.bt_exportar)
 
 
@@ -662,9 +670,24 @@ class Frame(wx.Frame):
 		else:
 			self.pausar(None)
 
+	def seleccionar_modo(self, event):
+		''' maneja controles y funciones según modo seleccionado '''
+		if self.com_modo.GetValue() == _('Pistas separadas'):
+			self.bt_opciones.Enable(True)
+			self.cas_carpeta_origen.Enable(True)
+		else:
+			self.bt_opciones.Enable(False)
+			self.cas_carpeta_origen.Enable(False)
+
+	def abrir_opciones_audio(self, event):
+		''' abre las opciones de audio '''
+		pass
+
 	def exportar_audio(self, event):
 		''' Exporta pistas por separado '''
-		exportacion = self.controlador.exportar_audio(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
+		exportacion = self.controlador.exportar_audio(indice= self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'),
+		normalizar= False,
+		silencio= False)
 
 	def exportar(self, event):
 		if self.com_modo.GetValue() == _('Imagen CUE'):
