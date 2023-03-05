@@ -223,7 +223,7 @@ class Frame(wx.Frame):
 		self.com_modo.Enable(False)
 		self.Bind(wx.EVT_COMBOBOX, self.seleccionar_modo, self.com_modo)
 		self.bt_opciones = wx.Button(self.panel2, -1, _('&Opciones'))
-		self.Bind(wx.EVT_BUTTON, self.abrir_opciones_audio, self.bt_opciones)
+		self.Bind(wx.EVT_BUTTON, self.abrir_opciones, self.bt_opciones)
 		self.bt_opciones.Enable(False)
 		self.cas_carpeta_origen = wx.CheckBox(self.panel2, -1, _('Guardar en carpeta de origen'))
 		self.cas_carpeta_origen.Enable(False)
@@ -495,12 +495,16 @@ class Frame(wx.Frame):
 	#abre la ventana de opciones
 	def abrir_opciones(self, event):
 		self.vn_opciones = vista.opciones.Opciones(self, _('Opciones'), opciones= self.controlador_opciones)
-		idioma_anterior = self.vn_opciones.com_idioma.GetValue()
+		evento = event.GetEventObject()
+		if isinstance(evento, wx.Button):
+			self.vn_opciones.libreta.SetSelection(1)
+		idioma_anterior = self.vn_opciones.pagina1.com_idioma.GetValue()
 		if self.vn_opciones.ShowModal() == wx.ID_OK:
-			self.vn_opciones.guardar_opciones()
-			idioma_posterior = self.vn_opciones.com_idioma.GetValue()
+			self.vn_opciones.pagina1.guardar_opciones()
+			idioma_posterior = self.vn_opciones.pagina1.com_idioma.GetValue()
 			if idioma_anterior != idioma_posterior:
 				wx.MessageBox(_('Debes reiniciar el programa para que los cambios de idioma surtan efecto.'), _('Atención'), style= wx.ICON_EXCLAMATION)
+
 
 	def abrir_documentacion(self, event):
 		if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':
@@ -678,10 +682,6 @@ class Frame(wx.Frame):
 		else:
 			self.bt_opciones.Enable(False)
 			self.cas_carpeta_origen.Enable(False)
-
-	def abrir_opciones_audio(self, event):
-		''' abre las opciones de audio '''
-		pass
 
 	def exportar_audio(self, event):
 		''' Exporta pistas por separado '''
