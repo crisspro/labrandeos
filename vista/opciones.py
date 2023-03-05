@@ -8,6 +8,7 @@ class Opciones(wx.Dialog):
 		self.Center()
 		self.controlador_app = controlador.configuracion.App()
 		self.controlador_opciones = opciones
+		self.Show()
 
 		self.libreta = wx.Notebook(self)
 		self.pagina1 = General(self.libreta, self.controlador_opciones)
