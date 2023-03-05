@@ -14,7 +14,7 @@ class Informacion_medios(wx.Dialog):
 		_('Formato: ') + self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('format'),
 		_('Tasa de bits: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('other_bit_rate')[0]),
 		_('Modo de taza de bits: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('bit_rate_mode')),
-		_('Velocidad de muestreo: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('sampling_rate')),
+		_('Velocidad de muestreo: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('sampling_rate')) + ' Hz',
 		_('Canales: ') + str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get('channel_s'))]
 		self.lista = wx.ListBox(self.panel, -1, choices= self.lista_datos)
 		self.lista.SetSelection(0)
