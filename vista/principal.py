@@ -191,7 +191,7 @@ class Frame(wx.Frame):
 		self.atajo_duracion= wx.AcceleratorEntry(wx.ACCEL_CTRL, ord ('d'), self.id_hablar_duracion)
 		self.bt_tiempo_actual= wx.Button(self.panel2, self.id_bt_tiempo_actual, _('tiempo actual'))
 		self.bt_tiempo_actual.Show(False)
-		self.Bind(wx.EVT_BUTTON, self.hablar_tiempo, self.id_bt_tiempo_actual)
+		self.Bind(wx.EVT_BUTTON, self.hablar_tiempo_actual, self.id_bt_tiempo_actual)
 		bt_detener= wx.Button(self.panel2, -1, _('&Detener'))
 		self.Bind(wx.EVT_BUTTON, self.detener, bt_detener)
 		l_volumen= wx.StaticText(self.panel2, -1, _('Volumen'))
@@ -613,15 +613,23 @@ class Frame(wx.Frame):
 		self.valores= (self.horas, self.minutos, self.segundos, self.marcos)
 		return self.valores
 
-# verbaliza el tiempo actual de reproducción
-	def hablar_tiempo (self, event):
-		self.lector.output(str(self.horas) + _('horas') + str(self.minutos) + _('minutos') + str(self.segundos) + _('segundos') + str(self.marcos) + _('marcos'))
+	def formatear_tiempo (self,horas, minutos, segundos, marcos):
+		''' Devuelve el tiempo formateado '''
+		horas = '{}'.format(str(horas) + _('horas') if horas != 1 else _('una hora'))
+		minutos = '{}'.format(str(minutos) + _('minutos') if minutos != 1 else _('un minuto'))
+		segundos = '{}'.format(str(segundos) + _('segundos') if segundos != 1 else _('un segundo'))
+		marcos = '{}'.format(str(marcos) + _('marcos') if marcos != 1 else _('un marco'))
+		return '{} {} {} {}'. format(horas if self.horas != 0 else '', minutos if self.minutos != 0 else '', segundos if self.segundos != 0 else '', marcos if self.marcos != 0 else '')
 
-# verbaliza el tiempo de duración del archivo de audio.
+	def hablar_tiempo_actual(self, event):
+		''' verbaliza el tiempo actual de la pista '''
+		self.lector.output(self.formatear_tiempo(self.horas, self.minutos, self.segundos, self.marcos))
+
 	def hablar_duracion (self, event):
+		''' verbaliza el tiempo de duración del archivo de audio. '''
 		self.duracion= self.reproductor.Length()
 		valores= self.calcular_tiempo(self.duracion)
-		self.lector.output(_('Duración de la pista. ') + str(valores[0]) + _('horas') + str(valores [1]) + _('minutos') + str(valores [2]) + _('segundos') + str(valores [3]) + _('marcos'))
+		self.lector.output(_('Duración de la pista. ') + self.formatear_tiempo(valores[0], valores[1], valores[2], valores[3]))
 
 	def marcar (self, event):
 		self.reproductor.Pause()
