@@ -12,6 +12,8 @@ setup.py
 *.iss
 *.exe
 *.bat
+*.code-workspace
+
 # C extensions
 *.so
 *.bak
