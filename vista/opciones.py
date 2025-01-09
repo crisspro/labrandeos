@@ -78,9 +78,8 @@ class General(wx.Panel):
         self.controlador_opciones.guardar_opciones('general', 'sonido_marca', str(self.cast_sonido_marca.GetValue()))
         self.controlador_opciones.guardar_opciones('general', 'sonido_exportar', str(self.cas_sonido_exportar.GetValue()))
 
-
     def completar_idioma(self):
-        prefijo = self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') 
+        prefijo = self.controlador_opciones.consultar_opciones('str', 'general', 'idioma')
         if prefijo == 'es':
             return _('Español')
         elif prefijo == 'en':
@@ -104,23 +103,29 @@ class Audio(wx.Panel):
         self.lista_formato = ['Automático', 'aac', 'flac', 'mp3', 'ogg', 'wav']
         self.com_formato = wx.ComboBox(self, -1, _('Automático'), choices= self.lista_formato, style= wx.CB_READONLY)
         self.Bind(wx.EVT_COMBOBOX, self.habilitar_formato, self.com_formato)
+        self.com_formato.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'formato'))
         self.l_taza_bit = wx.StaticText(self, -1, _('Taza de bit:'))
         self.lista_taza_bit = []
-        self.com_taza_bit = wx.ComboBox(self, -1, '192 kb/s', choices= self.lista_taza_bit, style= wx.CB_READONLY)
+        self.com_taza_bit = wx.ComboBox(self, -1, choices=self.lista_taza_bit, style=wx.CB_READONLY)
         self.com_taza_bit.Enable(False)
+        self.com_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit'))
         self.l_modo_taza_bit = wx.StaticText(self, -1, _('Modo de taza de bit:'))
         self.lista_modo_taza_bit = [_('Variable (vbr)'), _('Constante (cbr)')]
-        self.com_modo_taza_bit = wx.ComboBox(self, -1, _('Constante (cbr)'), choices= self.lista_modo_taza_bit, style= wx.CB_READONLY)
+        self.com_modo_taza_bit = wx.ComboBox(self, -1, _('Constante (cbr)'), choices= self.lista_modo_taza_bit, style=wx.CB_READONLY)
         self.com_modo_taza_bit.Enable(False)
+        self.com_modo_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'modo_taza_bit'))
         self.l_velocidad_muestreo = wx.StaticText(self, -1, _('Velocidad de muestreo:'))
         self.lista_velocidad_muestreo = ['6000 Hz', '8000 Hz', '16000 Hz', '22050 Hz', '24000 Hz', '32000 Hz', '44100 Hz', '48000 Hz', '88200 Hz', '96000 Hz', '176400 Hz', '192000 Hz']
-        self.com_velocidad_muestreo = wx.ComboBox(self, -1, '44100 Hz', choices= self.lista_velocidad_muestreo, style= wx.CB_READONLY)
+        self.com_velocidad_muestreo = wx.ComboBox(self, -1, '44100 Hz', choices=self.lista_velocidad_muestreo, style=wx.CB_READONLY)
         self.com_velocidad_muestreo.Enable(False)
+        self.com_velocidad_muestreo.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo'))
         self.cas_normalizar = wx.CheckBox(self, -1, 'Normalizar')
+        self.cas_normalizar.SetValue(self.controlador_opciones.consultar_opciones('bool', 'audio', 'normalizar'))
         self.cas_silencio = wx.CheckBox(self, -1, 'Añadir silencio al final de cada pista')
+        self.cas_silencio.SetValue(self.controlador_opciones.consultar_opciones('bool', 'audio', 'silencio'))
+        self.habilitar_formato(None)
 
         self.sz1 = wx.BoxSizer(wx.VERTICAL)
-        
         self.sz1.Add(self.l_formato)
         self.sz1.Add(self.com_formato)
         self.sz1.Add(self.l_taza_bit)
@@ -131,53 +136,117 @@ class Audio(wx.Panel):
         self.sz1.Add(self.com_velocidad_muestreo)
         self.sz1.Add(self.cas_normalizar)
         self.sz1.Add(self.cas_silencio)
-        
         self.SetSizer(self.sz1)
-
 
     def habilitar_formato(self, event):
         ''' habilita controles según formato escogido '''
         formato = self.com_formato.GetValue()
         if formato == _('Automático'):
-            self.com_modo_taza_bit.Enable(False)
-            self.com_taza_bit.Enable(False)
-            self.com_velocidad_muestreo.Enable(False)
-        elif formato  == 'aac':
-            self.com_modo_taza_bit.Enable(False)
-            self.l_taza_bit.SetLabel(_('Calidad:'))
-            self.lista_taza_bit = [_('0 (máxima calidad)'), '1', '2', '3', '4', '5', '6', '7', '8', '9 (menor calidad)']
-            self.com_taza_bit.Enable(True)
-            self.com_taza_bit.SetItems(self.lista_taza_bit)
-            self.com_taza_bit.SetValue(_('0 (máxima calidad)'))
-            self.com_velocidad_muestreo.Enable(True)
+            self.modificar_controles_automatico()
+        elif formato == 'aac':
+            self.modificar_controles_aac()
         elif formato == 'flac':
-            self.com_modo_taza_bit.Enable(False)
-            self.l_taza_bit.SetLabel(_('Compresión:'))
-            self.lista_taza_bit = [_('0 (más rápido)'), '1', '2', '3', '4', '5', '6', '7', '8', '9 (más pequeño)']
-            self.com_taza_bit.Enable(True)
-            self.com_taza_bit.SetItems(self.lista_taza_bit)
-            self.com_taza_bit.SetValue(_('0 (más rápido)'))
-            self.com_velocidad_muestreo.Enable(True)
+            self.modificar_controles_flac()
         elif formato == 'mp3':
-            self.com_modo_taza_bit.Enable(True)
-            self.l_taza_bit.SetLabel(_('Taza de bit:'))
-            self.lista_taza_bit = ['8 kb/s', '16 kb/s', '24 kb/s', '32 kb/s', '40 kb/s', '48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s',  '224 kb/s', '256 kb/s', '320 kb/s']
-            self.com_taza_bit.Enable(True)
-            self.com_taza_bit.SetItems(self.lista_taza_bit)
-            self.com_taza_bit.SetValue('192 kb/s')
-            self.com_velocidad_muestreo.Enable(True)
+            self.modificar_controles_mp3()
         elif formato == 'ogg':
-            self.com_modo_taza_bit.Enable(False)
-            self.l_taza_bit.SetLabel(_('Taza de bit:'))
-            self.lista_taza_bit = ['64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s',  '224 kb/s', '256 kb/s', '320 kb/s']
-            self.com_taza_bit.Enable(True)
-            self.com_taza_bit.SetItems(self.lista_taza_bit)
-            self.com_taza_bit.SetValue('192 kb/s')
-            self.com_velocidad_muestreo.Enable(True)
+            self.modificar_controles_ogg()
         elif formato == 'wav':
-            self.com_modo_taza_bit.Enable(False)
-            self.com_taza_bit.Enable(False)
-            self.com_velocidad_muestreo.Enable(True)
+            self.modificar_controles_wav()
+
+    def modificar_controles_automatico(self):
+        ''' Modifica los controles mostrados al elegir formato automático. '''
+        self.com_modo_taza_bit.Enable(False)
+        self.com_taza_bit.Enable(False)
+        self.com_velocidad_muestreo.Enable(False)
+
+    def modificar_controles_aac(self):
+        ''' Modifica los controles mostrados al elegir el formato aac. '''
+        self.com_modo_taza_bit.Enable(False)
+        self.l_taza_bit.SetLabel(_('Taza de bit:'))
+        self.lista_taza_bit = ['8 kb/s', '16 kb/s', '24 kb/s', '32 kb/s', '40 kb/s', '48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s',  '224 kb/s', '256 kb/s', '320 kb/s']
+        self.com_taza_bit.Enable(True)
+        self.com_taza_bit.SetItems(self.lista_taza_bit)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit') in self.lista_taza_bit:
+            self.com_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit'))
+        else:
+            self.com_taza_bit.SetValue('192 kb/s')
+        self.com_velocidad_muestreo.Enable(True)
+        self.lista_velocidad_muestreo = ['16000 Hz', '22050 Hz', '24000 Hz', '32000 Hz', '44100 Hz', '48000 Hz', '88200 Hz', '96000 Hz']
+        self.com_velocidad_muestreo.SetItems(self.lista_velocidad_muestreo)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo') in self.lista_velocidad_muestreo:
+            self.com_velocidad_muestreo.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo'))
+        else:
+            self.com_velocidad_muestreo.SetValue('44100 Hz')
+
+    def modificar_controles_flac(self):
+        ''' Modifica los controles mostrados al elegir el formato flac. '''
+        self.com_modo_taza_bit.Enable(False)
+        self.l_taza_bit.SetLabel(_('Compresión:'))
+        self.lista_taza_bit = [_('0 (más rápido)'), '1', '2', '3', '4', '5', '6', '7', _('8 (más pequeño)')]
+        self.com_taza_bit.Enable(True)
+        self.com_taza_bit.SetItems(self.lista_taza_bit)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit') in self.lista_taza_bit:
+            self.com_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit'))
+        else:
+            self.com_taza_bit.Select(0)
+        self.com_velocidad_muestreo.Enable(True)
+        self.lista_velocidad_muestreo = ['6000 Hz', '8000 Hz', '16000 Hz', '22050 Hz', '24000 Hz', '32000 Hz', '44100 Hz', '48000 Hz', '88200 Hz', '96000 Hz', '176400 Hz', '192000 Hz']
+        self.com_velocidad_muestreo.SetItems(self.lista_velocidad_muestreo)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo') in self.lista_velocidad_muestreo:
+            self.com_velocidad_muestreo.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo'))
+        else:
+            self.com_velocidad_muestreo.SetValue('44100 Hz')
+
+    def modificar_controles_mp3(self):
+        ''' Modifica los controles mostrados al elegir el formato mp3. '''
+        self.com_modo_taza_bit.Enable(True)
+        self.l_taza_bit.SetLabel(_('Taza de bit:'))
+        self.lista_taza_bit = ['8 kb/s', '16 kb/s', '24 kb/s', '32 kb/s', '40 kb/s', '48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s',  '224 kb/s', '256 kb/s', '320 kb/s']
+        self.com_taza_bit.Enable(True)
+        self.com_taza_bit.SetItems(self.lista_taza_bit)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit') in self.lista_taza_bit:
+            self.com_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit'))
+        else:
+            self.com_taza_bit.SetValue('192 kb/s')
+        self.com_velocidad_muestreo.Enable(True)
+        self.lista_velocidad_muestreo = ['32000 Hz', '44100 Hz', '48000 Hz']
+        self.com_velocidad_muestreo.SetItems(self.lista_velocidad_muestreo)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo') in self.lista_velocidad_muestreo:
+            self.com_velocidad_muestreo.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo'))
+        else:
+            self.com_velocidad_muestreo.SetValue('44100 Hz')
+
+    def modificar_controles_ogg(self):
+        ''' Modifica los controles mostrados al elegir el formato ogg. '''
+        self.com_modo_taza_bit.Enable(False)
+        self.l_taza_bit.SetLabel(_('Taza de bit:'))
+        self.lista_taza_bit = ['64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s',  '224 kb/s', '256 kb/s', '320 kb/s']
+        self.com_taza_bit.Enable(True)
+        self.com_taza_bit.SetItems(self.lista_taza_bit)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit') in self.lista_taza_bit:
+            self.com_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit'))
+        else:
+            self.com_taza_bit.SetValue('192 kb/s')
+        self.com_velocidad_muestreo.Enable(True)
+        self.lista_velocidad_muestreo = ['16000 Hz', '22050 Hz', '24000 Hz', '32000 Hz', '44100 Hz', '48000 Hz', '88200 Hz', '96000 Hz', '176400 Hz', '192000 Hz']
+        self.com_velocidad_muestreo.SetItems(self.lista_velocidad_muestreo)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo') in self.lista_velocidad_muestreo:
+            self.com_velocidad_muestreo.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo'))
+        else:
+            self.com_velocidad_muestreo.SetValue('44100 Hz')
+
+    def modificar_controles_wav(self):
+        ''' Modifica los controles mostrados al elegir el formato wav. '''
+        self.com_modo_taza_bit.Enable(False)
+        self.com_taza_bit.Enable(False)
+        self.com_velocidad_muestreo.Enable(True)
+        self.lista_velocidad_muestreo = ['6000 Hz', '8000 Hz', '16000 Hz', '22050 Hz', '24000 Hz', '32000 Hz', '44100 Hz', '48000 Hz', '88200 Hz', '96000 Hz', '176400 Hz', '192000 Hz']
+        self.com_velocidad_muestreo.SetItems(self.lista_velocidad_muestreo)
+        if self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo') in self.lista_velocidad_muestreo:
+            self.com_velocidad_muestreo.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo'))
+        else:
+            self.com_velocidad_muestreo.SetValue('44100 Hz')
 
     def guardar_opciones(self):
         self.controlador_opciones.guardar_opciones('audio', 'formato', str(self.com_formato.GetValue()))

@@ -498,7 +498,6 @@ class Frame(wx.Frame):
             if idioma_anterior != idioma_posterior:
                 wx.MessageBox(_('Debes reiniciar el programa para que los cambios de idioma surtan efecto.'), _('Atención'), style= wx.ICON_EXCLAMATION)
 
-
     def abrir_documentacion(self, event):
         if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':
             os.startfile(os.path.join('files', 'documentation', 'es.html'))
