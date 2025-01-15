@@ -12,7 +12,7 @@ class Configuracion():
         'sonido_marca': True,
         'sonido_exportar': True}
         self.dic_audio = {
-        'formato': 'mp3',
+        'formato': 'ogg',
         'taza_bit': '192000',
         'modo_taza_bit': 'vbr',
         'velocidad_muestreo': '44100',

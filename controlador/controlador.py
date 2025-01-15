@@ -6,7 +6,7 @@ from pydub import AudioSegment
 import pymediainfo
 
 from modelo.disco import Disco
-from modelo.marca import *
+from modelo.marca import Data, Marca
 from modelo.tiempo import Tiempo
 from modelo.pista import Pista
 from modelo.historial import Historial
@@ -137,7 +137,7 @@ class Controlador():
         marca = self.getMarcas()
         for marca in marca:
             archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
-            if indice == True:
+            if indice:
                 archivo.write('TITLE "' + str(marca.id).zfill(2) + ' ' + marca.titulo + '"\n')
             else:
                 archivo.write('TITLE "' + marca.titulo + '"\n')
@@ -146,40 +146,77 @@ class Controlador():
         archivo.close()
         return ruta_cue
 
-    def exportar_audio(self, formato, **KWARGS):
-        ''' exporta las marcas como pistas de audio separadas. '''
-        if formato == 'mp3':
-            self.exportar_mp3(KWARGS)
+    def seleccionar_audio_salida(self, carpeta, audio, nombre, formato, opciones, tags):
+        ''' Selecciona según el formato, la función de exportasión correspondiente. '''
+        if formato == 'automático' and self.pista.extension in ['.flac', '.mp3', '.ogg', '.opus', '.wav']:
+            formato = self.pista.extension[1:]
+            opciones = {'audio': {'formato': formato, 'taza_bit': str(self.pista.taza_bit), 'modo_taza_bit': self.pista.modo_taza_bit, 'velocidad_muestreo': str(self.pista.velocidad_muestreo   )}}
+        if formato == 'flac':
+            self.exportar_flac(carpeta, audio, nombre, opciones, tags)
+        elif formato == 'mp3':
+            self.exportar_mp3(carpeta, audio, nombre, opciones, tags)
         elif formato == 'ogg':
-            self.exportar_ogg(KWARGS)
-        elif formato == 'flac':
-            self.exportar_flac(KWARGS)
-        elif formato == 'aac':
-            self.exportar_aac(KWARGS)
+            self.exportar_ogg(carpeta, audio, nombre, opciones, tags)
+        elif formato == 'opus':
+            self.exportar_opus(carpeta, audio, nombre, opciones, tags)
         elif formato == 'wav':
-            self.exportar_wav(KWARGS)
-        else:
-            self.exportar_audio()
+            self.exportar_wav(carpeta, audio, nombre, opciones, tags)
 
-    def exportar_audio(self, **KWARGS):
+    def dividir_audio(self, opciones):
         ''' Exporta en formato de audio '''
         carpeta = '{} - {}'.format(self.data.titulo, self.data.autor)
-        os.makedirs(os.path.join(self.pista.direccion, carpeta))
+        os.makedirs(os.path.join(self.pista.direccion, carpeta), exist_ok=True)
         archivo = AudioSegment.from_file(self.pista.ruta)
         marca = self.getMarcas()
         fin = self.pista.duracion
         for marca in reversed(marca):
             segmento = archivo[marca.milesimas:fin]
             fin = marca.milesimas
-            nombre = '{} - {}'.format(str(marca.id).zfill(2), marca.titulo) if indice == True else marca.titulo
-            segmento.export(os.path.join(self.pista.direccion, carpeta, nombre + self.pista.extension), tags={'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id})
+            nombre = '{} - {}'.format(str(marca.id).zfill(2), marca.titulo) if opciones['general']['indice'] is True else marca.titulo
+            if opciones['audio']['normalizar'] is True:
+                segmento = segmento.normalize(headroom=-1.0)
+            if opciones['audio']['silencio'] is True:
+                segmento = segmento + segmento.silent(duration=2000)
+            tags = {'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id}
+            self.seleccionar_audio_salida(carpeta, segmento, nombre, opciones['audio']['formato'], opciones, tags)
         return os.path.join(self.pista.direccion, carpeta)
 
-    def exportar_mp3(self, taza_bit, modo_taza_bit, velocidad_muestreo, normalizar, silencio):
-        ''' exporta en formato mp3 '''
-        audio = AudioSegment.from_file(self.pista.ruta)
-        audio.frame_rate = velocidad_muestreo[:-3]
-        audio.export()
+    def exportar_audio_automatico(self, carpeta, audio, nombre, tags):
+        ''' Exporta audio dependiendo del formato de origen. '''
+        audio.export(os.path.join(self.pista.direccion, carpeta, f'{nombre}.{self.pista.extension}'), format=self.pista.extension, bitrate=self.pista.taza_bit, parameters=['-ar', self.pista.velocidad_muestreo], tags=tags)
+
+    def exportar_flac(self, carpeta, audio, nombre, opciones, tags):
+        ''' Exporta audio a formato flac. '''
+        compresion = opciones['audio']['taza_bit']
+        velocidad_muestreo = opciones['audio']['velocidad_muestreo']
+        audio.export(os.path.join(self.pista.direccion, carpeta, f'{nombre}.flac'), format='flac', parameters=['-q:a', compresion, '-ar', velocidad_muestreo], tags=tags)
+
+    def exportar_mp3(self, carpeta, audio, nombre, opciones, tags):
+        ''' Exporta audio a formato mp3. '''
+        taza_bit = opciones['audio']['taza_bit']
+        modo_taza_bit = opciones['audio']['modo_taza_bit']
+        velocidad_muestreo = opciones['audio']['velocidad_muestreo']
+        if modo_taza_bit == 'vbr':
+            audio.export(os.path.join(self.pista.direccion, carpeta, f'{nombre}.mp3'), format='mp3', bitrate=taza_bit, parameters=['-q:a', '0', '-ar', velocidad_muestreo], tags=tags)
+        elif modo_taza_bit == 'cbr':
+            audio.export(os.path.join(self.pista.direccion, carpeta, f'{nombre}.mp3'), format='mp3', bitrate=taza_bit, parameters=['-ar', velocidad_muestreo], tags=tags)
+
+    def exportar_ogg(self, carpeta, audio, nombre, opciones, tags):
+        ''' Exporta audio a formato ogg. '''
+        taza_bit = opciones['audio']['taza_bit']
+        velocidad_muestreo = opciones['audio']['velocidad_muestreo']
+        audio.export(os.path.join(self.pista.direccion, carpeta, f'{nombre}.ogg'), format='ogg', bitrate=taza_bit, parameters=['-ar', velocidad_muestreo], tags=tags)
+
+    def exportar_opus(self, carpeta, audio, nombre, opciones, tags):
+        ''' Exporta audio a formato opus. '''
+        taza_bit = opciones['audio']['taza_bit']
+        velocidad_muestreo = opciones['audio']['velocidad_muestreo']
+        audio.export(os.path.join(self.pista.direccion, carpeta, f'{nombre}.opus'), format='opus', bitrate=taza_bit, parameters=['-ar', velocidad_muestreo], tags=tags)
+
+    def exportar_wav(self, carpeta, audio, nombre, opciones, tags):
+        ''' Exporta audio a formato wav. '''
+        velocidad_muestreo = opciones['audio']['velocidad_muestreo']
+        audio.export(os.path.join(self.pista.direccion, carpeta, f'{nombre}.wav'), format='wav', parameters=['-ar', velocidad_muestreo], tags=tags)
 
     def crear_pista(self, nombre, extension, direccion, ruta, duracion):
         self.pista = Pista(nombre, extension, direccion, ruta, duracion)

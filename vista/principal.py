@@ -687,7 +687,7 @@ class Frame(wx.Frame):
         if self.com_modo.GetValue() == _('Imagen CUE'):
             exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
         elif self.com_modo.GetValue() == _('Pistas separadas'):
-            exportacion = self.controlador.exportar_automatico(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
+            exportacion = self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones())
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar'):
             wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'ok.wav'))
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):

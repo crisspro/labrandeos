@@ -1,4 +1,3 @@
-
 import psutil
 from configparser import ConfigParser
 from locale import getdefaultlocale
@@ -20,7 +19,7 @@ class App():
         self.sitio_app = 'https://github.com/crisspro/labrandeos'
         self.api_app = 'https://api.github.com/repos/crisspro/labrandeos/releases/latest'
         self.arquitectura_app = platform.architecture()[0]
-        self.version_app = 'v1.2'
+        self.version_app = 'v2.0'
         self.actualizado = True
 
     def verificarNuevaVersion(self):
@@ -92,12 +91,30 @@ class Opciones():
         self.configparser.write(archivo)
         archivo.close()
 
+    def convertir_valor(self, valor):
+        ''' Convierte a valores python cadenas de texto. '''
+        if valor == 'False':
+            return False
+        elif valor == 'True':
+            return True
+        elif valor == 'None':
+            return None
+        else:
+            return valor
+
     def consultar_opciones(self, tipo, seccion, clave):
         self.configparser.read(self.archivo_configuracion, encoding='utf-8')
         if tipo == 'bool':
             return self.configparser.getboolean(seccion, clave)
         elif tipo == 'str':
             return self.configparser.get(seccion, clave)
+
+    def consultar_todas_opciones(self):
+        ''' Debuelve un diccionario con todos los valores del .ini. '''
+        self.configparser.read(self.archivo_configuracion, encoding='utf-8')
+        dic_opciones = {section: dict(self.configparser.items(section)) for section in self.configparser.sections()}
+        dic_opciones = {section: {key: self.convertir_valor(value) for key, value in self.configparser.items(section)} for section in self.configparser.sections()}
+        return dic_opciones
 
     def refrescar_ini(self):
         self.configparser = ConfigParser()
