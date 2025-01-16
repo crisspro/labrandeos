@@ -40,6 +40,7 @@ class General(wx.Panel):
 #        self = wx.Panel(self)
         self.l_idioma = wx.StaticText(self, -1, _('Idioma'))
         self.lista_idioma = [_('Español'), _('Inglés')]
+        self.lista_idioma = sorted(self.lista_idioma)
         self.com_idioma = wx.ComboBox(self, -1, self.completar_idioma(), choices=self.lista_idioma, style=wx.CB_READONLY)
         self.com_idioma.SetFocus()
         self.cas_indice = wx.CheckBox(self, -1, _('Añadir índice al exportar marcas'))
@@ -52,7 +53,7 @@ class General(wx.Panel):
         self.cas_sonido_actualizacion.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'))
         self.cast_sonido_marca = wx.CheckBox(self, -1, _('Sonido al crear una nueva marca'))
         self.cast_sonido_marca.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'))
-        self.cas_sonido_exportar = wx.CheckBox(self, -1, _('Sonido al exportar el archivo CUE'))
+        self.cas_sonido_exportar = wx.CheckBox(self, -1, _('Sonido al exportar.'))
         self.cas_sonido_exportar.SetValue(self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar'))
 
 
@@ -101,7 +102,7 @@ class Audio(wx.Panel):
 #        self = wx.Panel(self)
         self.l_formato = wx.StaticText(self, -1, _('Formato:'))
         self.lista_formato = ['automático', 'flac', 'mp3', 'ogg', 'opus', 'wav']
-        self.com_formato = wx.ComboBox(self, -1, _('automático'), choices= self.lista_formato, style= wx.CB_READONLY)
+        self.com_formato = wx.ComboBox(self, -1, _('automático'), choices=self.lista_formato, style=wx.CB_READONLY)
         self.Bind(wx.EVT_COMBOBOX, self.habilitar_formato, self.com_formato)
         self.com_formato.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'formato'))
         self.l_taza_bit = wx.StaticText(self, -1, _('Taza de bit:'))
@@ -111,7 +112,7 @@ class Audio(wx.Panel):
         self.com_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit'))
         self.l_modo_taza_bit = wx.StaticText(self, -1, _('Modo de taza de bit:'))
         self.lista_modo_taza_bit = ['cbr', 'vbr']
-        self.com_modo_taza_bit = wx.ComboBox(self, -1, 'cbr', choices= self.lista_modo_taza_bit, style=wx.CB_READONLY)
+        self.com_modo_taza_bit = wx.ComboBox(self, -1, 'cbr', choices=self.lista_modo_taza_bit, style=wx.CB_READONLY)
         self.com_modo_taza_bit.Enable(False)
         self.com_modo_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'modo_taza_bit'))
         self.l_velocidad_muestreo = wx.StaticText(self, -1, _('Velocidad de muestreo:'))
@@ -119,9 +120,9 @@ class Audio(wx.Panel):
         self.com_velocidad_muestreo = wx.ComboBox(self, -1, '44100', choices=self.lista_velocidad_muestreo, style=wx.CB_READONLY)
         self.com_velocidad_muestreo.Enable(False)
         self.com_velocidad_muestreo.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo'))
-        self.cas_normalizar = wx.CheckBox(self, -1, 'Normalizar')
+        self.cas_normalizar = wx.CheckBox(self, -1, _('Normalizar'))
         self.cas_normalizar.SetValue(self.controlador_opciones.consultar_opciones('bool', 'audio', 'normalizar'))
-        self.cas_silencio = wx.CheckBox(self, -1, 'Añadir silencio al final de cada pista')
+        self.cas_silencio = wx.CheckBox(self, -1, _('Añadir silencio al final de cada pista'))
         self.cas_silencio.SetValue(self.controlador_opciones.consultar_opciones('bool', 'audio', 'silencio'))
         self.habilitar_formato(None)
 
@@ -183,7 +184,7 @@ class Audio(wx.Panel):
         ''' Modifica los controles mostrados al elegir el formato mp3. '''
         self.com_modo_taza_bit.Enable(True)
         self.l_taza_bit.SetLabel(_('Taza de bit:'))
-        self.lista_taza_bit = ['8 kb/s', '16 kb/s', '24 kb/s', '32 kb/s', '40 kb/s', '48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s',  '224 kb/s', '256 kb/s', '320 kb/s']
+        self.lista_taza_bit = ['8 kb/s', '16 kb/s', '24 kb/s', '32 kb/s', '40 kb/s', '48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s', '224 kb/s', '256 kb/s', '320 kb/s']
         self.com_taza_bit.Enable(True)
         self.com_taza_bit.SetItems(self.lista_taza_bit)
         if self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit') in self.lista_taza_bit:
@@ -203,7 +204,7 @@ class Audio(wx.Panel):
         self.com_modo_taza_bit.Enable(False)
         self.l_taza_bit.SetLabel(_('Taza de bit:'))
         self.com_taza_bit.Enable(True)
-        self.lista_taza_bit = ['48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s',  '224 kb/s', '256 kb/s', '320 kb/s']
+        self.lista_taza_bit = ['48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s', '224 kb/s', '256 kb/s', '320 kb/s']
         self.com_taza_bit.SetItems(self.lista_taza_bit)
         if self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit') in self.lista_taza_bit:
             self.com_taza_bit.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit'))
@@ -221,7 +222,7 @@ class Audio(wx.Panel):
         ''' Modifica los controles mostrados al elegir el formato opus. '''
         self.com_modo_taza_bit.Enable(False)
         self.l_taza_bit.SetLabel(_('Taza de bit:'))
-        self.lista_taza_bit = ['8 kb/s', '16 kb/s', '24 kb/s', '32 kb/s', '40 kb/s', '48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s',  '224 kb/s', '256 kb/s', '320 kb/s']
+        self.lista_taza_bit = ['8 kb/s', '16 kb/s', '24 kb/s', '32 kb/s', '40 kb/s', '48 kb/s', '56 kb/s', '64 kb/s', '80 kb/s', '96 kb/s', '112 kb/s', '128 kb/s', '160 kb/s', '192 kb/s', '224 kb/s', '256 kb/s', '320 kb/s']
         self.com_taza_bit.Enable(True)
         self.com_taza_bit.SetItems(self.lista_taza_bit)
         if self.controlador_opciones.consultar_opciones('str', 'audio', 'taza_bit') in self.lista_taza_bit:

@@ -150,7 +150,7 @@ class Controlador():
         ''' Selecciona según el formato, la función de exportasión correspondiente. '''
         if formato == 'automático' and self.pista.extension in ['.flac', '.mp3', '.ogg', '.opus', '.wav']:
             formato = self.pista.extension[1:]
-            opciones = {'audio': {'formato': formato, 'taza_bit': str(self.pista.taza_bit), 'modo_taza_bit': self.pista.modo_taza_bit, 'velocidad_muestreo': str(self.pista.velocidad_muestreo   )}}
+            opciones = {'audio': {'formato': formato, 'taza_bit': str(self.pista.taza_bit), 'modo_taza_bit': self.pista.modo_taza_bit, 'velocidad_muestreo': str(self.pista.velocidad_muestreo)}}
         if formato == 'flac':
             self.exportar_flac(carpeta, audio, nombre, opciones, tags)
         elif formato == 'mp3':

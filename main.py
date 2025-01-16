@@ -14,7 +14,7 @@ from vista.principal import Frame
 
 def crear_carpeta():
     ''' crea la carpeta Labrandeos en appdata del usuario'''
-    if os.path.exists(os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos')) == False:
+    if os.path.exists(os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos')) is False:
         os.makedirs(os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos'))
 
 
