@@ -209,8 +209,6 @@ class Frame(wx.Frame):
         self.bt_opciones = wx.Button(self.panel2, -1, _('&Opciones'))
         self.Bind(wx.EVT_BUTTON, self.abrir_opciones, self.bt_opciones)
         self.bt_opciones.Enable(False)
-        self.cas_carpeta_origen = wx.CheckBox(self.panel2, -1, _('Guardar en carpeta de origen'))
-        self.cas_carpeta_origen.Enable(False)
         self.bt_exportar = wx.Button(self.panel2, -1, _('E&XPORTAR'))
         self.bt_exportar.Enable(False)
         self.Bind(wx.EVT_BUTTON, self.exportar, self.bt_exportar)
@@ -247,7 +245,6 @@ class Frame(wx.Frame):
         self.sz3.Add(self.sz4)
         self.sz4.Add(self.com_modo)
         self.sz4.Add(self.bt_opciones)
-        self.sz4.Add(self.cas_carpeta_origen)
         self.sz4.Add(self.bt_exportar)
 
         self.panel2.SetSizer(self.sz1)
@@ -666,7 +663,7 @@ class Frame(wx.Frame):
             self.pausar(None)
 
     def seleccionar_modo(self, event):
-        ''' maneja controles y funciones según modo seleccionado '''
+        ''' maneja controles y funciones según modo seleccionado de exportación. '''
         if self.com_modo.GetValue() == _('Pistas separadas'):
             self.bt_opciones.Enable(True)
             self.cas_carpeta_origen.Enable(True)
@@ -676,16 +673,37 @@ class Frame(wx.Frame):
 
     def exportar(self, event):
         if self.com_modo.GetValue() == _('Imagen CUE'):
-            exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
+            ruta_exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
+            self.alertar_exportacion(ruta_exportacion)
         elif self.com_modo.GetValue() == _('Pistas separadas'):
-            exportacion = self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones())
+            ruta_exportacion = self.seleccionar_carpeta_exportacion()
+            if ruta_exportacion:
+                self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones())
+            self.alertar_exportacion(ruta_exportacion)
+
+    def alertar_exportacion(self, ruta_exportacion):
+        ''' Muestra alerta y sonido al finalizar la exportación. '''
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar'):
             wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'ok.wav'))
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
-            subprocess.Popen('explorer /select,"' + exportacion + '"')
+            subprocess.Popen(f'explorer /select,"{ruta_exportacion}"')
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar') is False and self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA') is False:
             msg = wx.adv.NotificationMessage('', _('Cue exportado exitosamente.'), self, wx.ICON_INFORMATION)
             msg.Show(5)
+
+    def seleccionar_carpeta_exportacion(self):
+        ''' Abre un diálogo para seleccionar la carpeta de destino al exportar pistas de audio separadas. '''
+        dialogo = wx.DirDialog(self, _('Selecciona la carpeta de destino'))
+        if dialogo.ShowModal() == wx.ID_OK:
+            nombre_carpeta = f'{self.controlador.data.titulo} - {self.controlador.data.autor}'
+            ruta_destino = dialogo.GetPath()
+            ruta_carpeta = os.path.join(ruta_destino, nombre_carpeta)
+            if os.path.exists(ruta_carpeta):
+                mensaje = wx.MessageBox(_('Ya existe una carpeta con el mismo nombre. ¿Deseas reemplazarla?'), _('Atención'), style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_EXCLAMATION)
+                if mensaje == wx.YES:
+                    return ruta_carpeta
+                else:
+                    return None
 
     def deshacer(self, event):
         self.controlador.deshacer()

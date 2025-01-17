@@ -1,6 +1,5 @@
 import psutil
 from configparser import ConfigParser
-from locale import getdefaultlocale
 import os
 import platform
 import webbrowser
@@ -69,7 +68,7 @@ class Opciones():
         self.modelo_configuracion = modelo.configuracion.Configuracion()
 
     def chequear_ini(self):
-        if os.path.isfile(self.archivo_configuracion) == False:
+        if os.path.isfile(self.archivo_configuracion) is False:
             self.guardar_defecto()
         if set(self.configparser['general']) != set(self.modelo_configuracion.dic_general.keys()):
             self.guardar_defecto()

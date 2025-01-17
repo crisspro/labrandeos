@@ -126,14 +126,14 @@ class Controlador():
     def exportar_cue(self, indice):
         tipo = self.pista.extension
         tipo = tipo[1:].upper()
-        ruta_cue = os.path.join(self.pista.direccion, self.data.titulo + ' - ' + self.data.autor + '.cue')
-        archivo = open(ruta_cue, 'w')
-        archivo.write('TITLE "' + self.disco.titulo + '"\n')
-        archivo.write('PERFORMER "' + self.disco.autor + '"\n')
-        archivo.write('REM GENRE "' + self.disco.genero + '"\n')
-        archivo.write('REM DATE "' + str(self.disco.fecha) + '"\n')
-        archivo.write('REM COMMENT "' + self.disco.comentarios + '"\n')
-        archivo.write('FILE "' + self.pista.nombre + self.pista.extension + '" ' + tipo + '\n')
+        ruta_cue = os.path.join(self.pista.direccion, f'{self.data.titulo} - {self.data.autor}.cue')
+        archivo = open(ruta_cue, 'w', encoding='utf-8')
+        archivo.write(f'TITLE "{self.disco.titulo}"\n')
+        archivo.write(f'PERFORMER "{self.disco.autor}"\n')
+        archivo.write(f'REM GENRE "{self.disco.genero}"\n')
+        archivo.write(f'REM DATE "{self.disco.fecha}"\n')
+        archivo.write(f'REM COMMENT "{self.disco.comentarios}"\n')
+        archivo.write(f'FILE "{self.pista.nombre}{self.pista.extension}" {tipo}\n')
         marca = self.getMarcas()
         for marca in marca:
             archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
@@ -163,23 +163,24 @@ class Controlador():
             self.exportar_wav(carpeta, audio, nombre, opciones, tags)
 
     def dividir_audio(self, opciones):
-        ''' Exporta en formato de audio '''
-        carpeta = '{} - {}'.format(self.data.titulo, self.data.autor)
-        os.makedirs(os.path.join(self.pista.direccion, carpeta), exist_ok=True)
+        ''' Divide la pista en segmentos de audio. '''
+        nombre_carpeta = f'{self.data.titulo} - {self.data.autor}'
+        ruta_carpeta = os.path.join(self.pista.direccion, nombre_carpeta)
+        os.makedirs(ruta_carpeta, exist_ok=True)
         archivo = AudioSegment.from_file(self.pista.ruta)
         marca = self.getMarcas()
         fin = self.pista.duracion
         for marca in reversed(marca):
             segmento = archivo[marca.milesimas:fin]
             fin = marca.milesimas
-            nombre = '{} - {}'.format(str(marca.id).zfill(2), marca.titulo) if opciones['general']['indice'] is True else marca.titulo
+            nombre = f'{marca.id:02} - {marca.titulo}' if opciones['general']['indice'] is True else marca.titulo
             if opciones['audio']['normalizar'] is True:
                 segmento = segmento.normalize(headroom=-1.0)
             if opciones['audio']['silencio'] is True:
                 segmento = segmento + segmento.silent(duration=2000)
             tags = {'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id}
-            self.seleccionar_audio_salida(carpeta, segmento, nombre, opciones['audio']['formato'], opciones, tags)
-        return os.path.join(self.pista.direccion, carpeta)
+            self.seleccionar_audio_salida(nombre_carpeta, segmento, nombre, opciones['audio']['formato'], opciones, tags)
+        return ruta_carpeta
 
     def exportar_audio_automatico(self, carpeta, audio, nombre, tags):
         ''' Exporta audio dependiendo del formato de origen. '''
