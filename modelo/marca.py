@@ -63,5 +63,5 @@ class Marca():
     def filtrar_tiempo_inicio_cue(self):
         tiempo = self.tiempo_inicio.split()
         minutos = int(tiempo[0]) * 60 + int(tiempo[2])
-        tiempo = f'{minutos:02}:{tiempo[4]:02}:{tiempo[6]:02}'
+        tiempo = f'{minutos}:{tiempo[4].zfill(2)}:{tiempo[6].zfill(2)}'
         return tiempo

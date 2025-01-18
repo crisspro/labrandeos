@@ -136,13 +136,13 @@ class Controlador():
         archivo.write(f'FILE "{self.pista.nombre}{self.pista.extension}" {tipo}\n')
         marca = self.getMarcas()
         for marca in marca:
-            archivo.write('TRACK ' + str(marca.id).zfill(2) + ' AUDIO' + '\n')
+            archivo.write(f'TRACK {marca.id:02} AUDIO\n')
             if indice:
-                archivo.write('TITLE "' + str(marca.id).zfill(2) + ' ' + marca.titulo + '"\n')
+                archivo.write(f'TITLE "{marca.id:02} {marca.titulo}"\n')
             else:
-                archivo.write('TITLE "' + marca.titulo + '"\n')
-            archivo.write('PERFORMER "' + marca.autor + '"\n')
-            archivo.write('INDEX 01 ' + str(marca.filtrar_tiempo_inicio_cue()) + '\n')
+                archivo.write(f'TITLE "{marca.titulo}"\n')
+            archivo.write(f'PERFORMER "{marca.autor}"\n')
+            archivo.write(f'INDEX 01 {marca.filtrar_tiempo_inicio_cue()} \n')
         archivo.close()
         return ruta_cue
 

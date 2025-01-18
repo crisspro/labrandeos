@@ -75,9 +75,10 @@ class Frame(wx.Frame):
         self.sub_mn_exportar = wx.Menu()
         self.mn_exportar = menu1.AppendSubMenu(self.sub_mn_exportar, _('&Exportar'))
         self.mn_exportar.Enable(False)
-        self.sub_mn_exportar.Append(-1, _('&Imagen CUE'))
-        self.sub_mn_exportar.Append(-1, _('&Pistas separadas'))
-        self.Bind(wx.EVT_MENU, self.exportar, self.mn_exportar)
+        self.mn_exportar_cue = self.sub_mn_exportar.Append(-1, _('&Imagen CUE'))
+        self.Bind(wx.EVT_MENU, self.exportar_cue, self.mn_exportar_cue)
+        self.mn_exportar_pistas_separadas = self.sub_mn_exportar.Append(-1, _('&Pistas separadas'))
+        self.Bind(wx.EVT_MENU, self.exportar_pistas_separadas, self.mn_exportar_pistas_separadas)
         salir = menu1.Append(-1, _('&Salir'))
         self.Bind(wx.EVT_MENU, self.cerrar, salir)
 
@@ -121,6 +122,8 @@ class Frame(wx.Frame):
         self.mn_documentacion = menu4.Append(self.id_mn_documentacion, _('&Documentación') + '\tF1')
         self.Bind(wx.EVT_MENU, self.abrir_documentacion, self.mn_documentacion)
         self.atajo_documentacion = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F1, self.id_mn_documentacion)
+        self.mn_novedades = menu4.Append(-1, _('&Novedades'))
+        self.Bind(wx.EVT_MENU, self.abrir_novedades, self.mn_novedades)
         self.mn_buscar_actualizacion = menu4.Append(-1, _('&Buscar actualizaciones'))
         self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
         acercade = menu4.Append(-1, _('Acerca de ') + self.controlador_app.nombre_app)
@@ -342,13 +345,13 @@ class Frame(wx.Frame):
 
     def cambiar_encabezado(self):
         if self.controlador.data.titulo != '' and self.controlador.data.autor == '':
-            self.l_encabezado.SetLabel(self.controlador.data.titulo + ' - ' + _('Sin autor'))
+            self.l_encabezado.SetLabel(f'{self.controlador.data.titulo} - {_("Sin autor")}')
         elif self.controlador.data.titulo == '' and self.controlador.data.autor != '':
-            self.l_encabezado.SetLabel(_('Sin título') + ' - ' + self.controlador.data.autor)
+            self.l_encabezado.SetLabel(f'{_("Sin título")} - {self.controlador.data.autor}')
         elif self.controlador.data.titulo != '' and self.controlador.data.autor != '':
-            self.l_encabezado.SetLabel(self.controlador.data.titulo + ' - ' + self.controlador.data.autor)
+            self.l_encabezado.SetLabel(f'{self.controlador.data.titulo} - {self.controlador.data.autor}')
         else:
-            self.l_encabezado.SetLabel(_('Sin título') + ' - ' + _('Sin autor'))
+            self.l_encabezado.SetLabel(f'{_("Sin título")} - {_("Sin autor")}')
 
     def abrir_archivo(self, event):
         ''' Abre la ventana de diálogo para cargar un archivo de audio al proyecto. '''
@@ -484,9 +487,16 @@ class Frame(wx.Frame):
 
     def abrir_documentacion(self, event):
         if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':
-            os.startfile(os.path.join('files', 'documentation', 'es.html'))
+            os.startfile(os.path.join('files', 'documentation', 'help', 'es.html'))
         else:
-            os.startfile(os.path.join('files', 'documentation', 'en.html'))
+            os.startfile(os.path.join('files', 'documentation', 'help', 'en.html'))
+
+    def abrir_novedades(self, event):
+        ''' Abre el documento con las novedades. '''
+        if self.controlador_opciones.consultar_opciones('str', 'general', 'idioma') == 'es':
+            os.startfile(os.path.join('files', 'documentation', 'news', 'es.html'))
+        else:
+            os.startfile(os.path.join('files', 'documentation', 'news', 'en.html'))
 
     def alertar_instancia(self):
         ''' Muestra alerta si se abre una nueva instancia del programa '''
@@ -644,6 +654,7 @@ class Frame(wx.Frame):
         item = self.lista.GetFocusedItem()
         marca = self.controlador.consultar_datos(item)
         self.editar2.getTiempo(marca.milesimas)
+        item_enfocado = self.lista.GetFocusedItem()
         if self.editar2.ShowModal() == wx.ID_OK:
             self.pausar(None)
             marca = self.controlador.editarMarca(
@@ -659,6 +670,7 @@ class Frame(wx.Frame):
             self.lista.SetItem(item, 3, marca.tiempo_inicio)
             self.refrescar_lista()
             self.habilitar_controles()
+            self.lista.Focus(item_enfocado)
         else:
             self.pausar(None)
 
@@ -666,19 +678,27 @@ class Frame(wx.Frame):
         ''' maneja controles y funciones según modo seleccionado de exportación. '''
         if self.com_modo.GetValue() == _('Pistas separadas'):
             self.bt_opciones.Enable(True)
-            self.cas_carpeta_origen.Enable(True)
         else:
             self.bt_opciones.Enable(False)
             self.cas_carpeta_origen.Enable(False)
 
     def exportar(self, event):
         if self.com_modo.GetValue() == _('Imagen CUE'):
-            ruta_exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
-            self.alertar_exportacion(ruta_exportacion)
+            self.exportar_cue(event)
         elif self.com_modo.GetValue() == _('Pistas separadas'):
-            ruta_exportacion = self.seleccionar_carpeta_exportacion()
-            if ruta_exportacion:
-                self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones())
+            self.exportar_pistas_separadas(event)
+
+
+    def exportar_cue(self, event):
+        ''' Exporta en formato cue. '''
+        ruta_exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
+        self.alertar_exportacion(ruta_exportacion)
+
+    def exportar_pistas_separadas(self, event):
+        ''' Exporta audio como pistas separadas. '''
+        ruta_exportacion = self.seleccionar_carpeta_exportacion()
+        if ruta_exportacion:
+            self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones())
             self.alertar_exportacion(ruta_exportacion)
 
     def alertar_exportacion(self, ruta_exportacion):
@@ -700,10 +720,12 @@ class Frame(wx.Frame):
             ruta_carpeta = os.path.join(ruta_destino, nombre_carpeta)
             if os.path.exists(ruta_carpeta):
                 mensaje = wx.MessageBox(_('Ya existe una carpeta con el mismo nombre. ¿Deseas reemplazarla?'), _('Atención'), style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_EXCLAMATION)
-                if mensaje == wx.YES:
-                    return ruta_carpeta
-                else:
+                if mensaje == wx.NO:
                     return None
+                elif mensaje == wx.YES:
+                    return ruta_carpeta
+            else:
+                return ruta_carpeta
 
     def deshacer(self, event):
         self.controlador.deshacer()
