@@ -1,3 +1,4 @@
+import pdb
 import copy
 import os
 import pickle
@@ -162,15 +163,17 @@ class Controlador():
         elif formato == 'wav':
             self.exportar_wav(carpeta, audio, nombre, opciones, tags)
 
-    def dividir_audio(self, opciones):
+    def dividir_audio(self, opciones, actualizar_progreso_exportacion):
         ''' Divide la pista en segmentos de audio. '''
         nombre_carpeta = f'{self.data.titulo} - {self.data.autor}'
         ruta_carpeta = os.path.join(self.pista.direccion, nombre_carpeta)
         os.makedirs(ruta_carpeta, exist_ok=True)
         archivo = AudioSegment.from_file(self.pista.ruta)
-        marca = self.getMarcas()
+        marcas = self.getMarcas()
         fin = self.pista.duracion
-        for marca in reversed(marca):
+        cantidad_marcas = len(marcas)
+        actualizar_progreso_exportacion(0, cantidad_marcas)
+        for i, marca in enumerate(reversed(marcas)):
             segmento = archivo[marca.milesimas:fin]
             fin = marca.milesimas
             nombre = f'{marca.id:02} - {marca.titulo}' if opciones['general']['indice'] is True else marca.titulo
@@ -180,6 +183,7 @@ class Controlador():
                 segmento = segmento + segmento.silent(duration=2000)
             tags = {'title': marca.titulo, 'artist': marca.autor, 'album': self.disco.titulo, 'year': self.disco.fecha, 'genre': self.disco.genero, 'comment': self.disco.comentarios, 'track_number': marca.id}
             self.seleccionar_audio_salida(nombre_carpeta, segmento, nombre, opciones['audio']['formato'], opciones, tags)
+            actualizar_progreso_exportacion(i + 1, cantidad_marcas)
         return ruta_carpeta
 
     def exportar_audio_automatico(self, carpeta, audio, nombre, tags):

@@ -501,7 +501,7 @@ class Frame(wx.Frame):
     def alertar_instancia(self):
         ''' Muestra alerta si se abre una nueva instancia del programa '''
         if self.controlador_app.verificar_instancia():
-            wx.MessageBox(self.controlador_app.nombre_app + _(' ya se está ejecutando.'), _('Aviso'), style=wx.ICON_INFORMATION)
+            wx.MessageBox(f'{self.controlador_app.nombre_app} {_("ya se está ejecutando.")}', _('Aviso'), style=wx.ICON_INFORMATION)
             sys.exit(1)
 
     def detectar_actualizacion(self):
@@ -688,7 +688,6 @@ class Frame(wx.Frame):
         elif self.com_modo.GetValue() == _('Pistas separadas'):
             self.exportar_pistas_separadas(event)
 
-
     def exportar_cue(self, event):
         ''' Exporta en formato cue. '''
         ruta_exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
@@ -698,7 +697,8 @@ class Frame(wx.Frame):
         ''' Exporta audio como pistas separadas. '''
         ruta_exportacion = self.seleccionar_carpeta_exportacion()
         if ruta_exportacion:
-            self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones())
+            self.iniciar_progreso_exportacion(len(self.controlador.getMarcas()))
+            self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones(), self.actualizar_progreso_exportacion)
             self.alertar_exportacion(ruta_exportacion)
 
     def alertar_exportacion(self, ruta_exportacion):
@@ -726,6 +726,23 @@ class Frame(wx.Frame):
                     return ruta_carpeta
             else:
                 return ruta_carpeta
+
+    def iniciar_progreso_exportacion(self, cantidad_marcas):
+        ''' Inicia la barra de progreso al exportar pistas de audio separadas. '''
+        self.barra_progreso = wx.ProgressDialog('Exportando Audio', 'Exportando segmentos de audio...', cantidad_marcas, style=wx.PD_CAN_ABORT | wx.PD_AUTO_HIDE)
+
+    def actualizar_progreso_exportacion(self, progreso, cantidad_marcas):
+        ''' Actualiza la barra de progreso. '''
+        if self.barra_progreso:
+            self.barra_progreso.Update(progreso)
+            if self.barra_progreso.WasCancelled():
+                self.finalizar_progreso_exportacion()
+
+    def finalizar_progreso_exportacion(self):
+        ''' Finaliza la barra de progreso de la exportación. '''
+        if self.barra_progreso:
+            self.barra_progreso.Destroy()
+            self.barra_progreso = None
 
     def deshacer(self, event):
         self.controlador.deshacer()
