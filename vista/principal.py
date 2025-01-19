@@ -696,17 +696,18 @@ class Frame(wx.Frame):
     def exportar_pistas_separadas(self, event):
         ''' Exporta audio como pistas separadas. '''
         ruta_exportacion = self.seleccionar_carpeta_exportacion()
+        ruta_final = os.path.join(ruta_exportacion, f'{self.controlador.data.titulo} - {self.controlador.data.autor}')
         if ruta_exportacion:
             self.iniciar_progreso_exportacion(len(self.controlador.getMarcas()))
-            self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones(), self.actualizar_progreso_exportacion)
-            self.alertar_exportacion(ruta_exportacion)
+            self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones(), ruta_exportacion, self.actualizar_progreso_exportacion)
+            self.alertar_exportacion(ruta_final)
 
-    def alertar_exportacion(self, ruta_exportacion):
+    def alertar_exportacion(self, ruta_final):
         ''' Muestra alerta y sonido al finalizar la exportación. '''
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar'):
             wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'ok.wav'))
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA'):
-            subprocess.Popen(f'explorer /select,"{ruta_exportacion}"')
+            subprocess.Popen(f'explorer /select,"{ruta_final}"')
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_exportar') is False and self.controlador_opciones.consultar_opciones('bool', 'general', 'ABRIR_CARPETA') is False:
             msg = wx.adv.NotificationMessage('', _('Cue exportado exitosamente.'), self, wx.ICON_INFORMATION)
             msg.Show(5)
@@ -723,9 +724,9 @@ class Frame(wx.Frame):
                 if mensaje == wx.NO:
                     return None
                 elif mensaje == wx.YES:
-                    return ruta_carpeta
+                    return ruta_destino
             else:
-                return ruta_carpeta
+                return ruta_destino
 
     def iniciar_progreso_exportacion(self, cantidad_marcas):
         ''' Inicia la barra de progreso al exportar pistas de audio separadas. '''
