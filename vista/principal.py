@@ -7,12 +7,17 @@ import wx.media
 import wx
 import wx.adv
 
+from controlador.traductor import Traductor
+
 import vista.disco
 import vista.opciones
 from .editar import Editar
 from .editar import Editar2
 from .acerca_de import Acerca_de
 from .informacion_medios import Informacion_medios
+
+traductor = Traductor()
+_ = traductor._
 
 
 class Frame(wx.Frame):

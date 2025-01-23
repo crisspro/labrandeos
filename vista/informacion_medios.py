@@ -1,5 +1,10 @@
 import wx
 
+from controlador.traductor import Traductor
+
+traductor = Traductor()
+_ = traductor._
+
 
 class Informacion_medios(wx.Dialog):
     def __init__(self, parent, title, controlador):

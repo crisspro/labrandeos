@@ -188,8 +188,8 @@ class Controlador():
         return ruta_carpeta
 
     def exportar_audio_automatico(self, ruta_carpeta, audio, nombre, tags):
-        ''' Exporta audio a formato ogg en caso de que el formato de entrada no sea soportado como formato de salida. '''
-        audio.export(os.path.join(ruta_carpeta, f'{nombre}.ogg'), format='ogg', bitrate='320 k', parameters=['-ar', '48000'], tags=tags)
+        ''' Exporta audio a formato mp3 en caso de que el formato de entrada no sea soportado como formato de salida. '''
+        audio.export(os.path.join(ruta_carpeta, f'{nombre}.mp3'), format='mp3', bitrate='320 k', parameters=['-ar', '48000'], tags=tags)
 
     def exportar_flac(self, ruta_carpeta, audio, nombre, opciones, tags):
         ''' Exporta audio a formato flac. '''

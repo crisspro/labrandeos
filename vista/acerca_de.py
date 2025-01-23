@@ -1,5 +1,9 @@
 ﻿import wx
 import controlador.configuracion
+from controlador.traductor import Traductor
+
+traductor = Traductor()
+_ = traductor._
 
 
 class Acerca_de(wx.Dialog):
@@ -25,5 +29,3 @@ class Acerca_de(wx.Dialog):
         ''' Llamado aFunciones. '''
     def visitar_sitio(self, event):
         wx.LaunchDefaultBrowser(self.controlador_app.sitio_app)
-
-

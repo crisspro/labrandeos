@@ -1,6 +1,11 @@
 import wx
 import wx.adv
 
+from controlador.traductor import Traductor
+
+traductor = Traductor()
+_ = traductor._
+
 
 class Editar(wx.Dialog):
     def __init__(self, parent, title, controlador, reproductor):

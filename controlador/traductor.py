@@ -6,17 +6,13 @@ import controlador.configuracion
 
 
 class Traductor():
-    def __init__(self, modulo):
+    def __init__(self):
         self.controlador_opciones = controlador.configuracion.Opciones()
         self.idioma = self.controlador_opciones.consultar_opciones('str', 'general', 'idioma')
-        self.modulo = modulo
         self.ruta = os.path.join('locale')
-        self.traducir()
-
-    def traducir(self):
-        t = gettext.translation(self.modulo, localedir=self.ruta, languages=[self.idioma])
-        t.install()
-        _ = t.gettext
+        self.t = gettext.translation('labrandeos', localedir=self.ruta, languages=[self.idioma])
+        self.t.install()
+        self._ = self.t.gettext
 
     def consultar_idioma_defecto(self):
         return getdefaultlocale()[0]

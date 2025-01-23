@@ -1,7 +1,10 @@
-import pdb
 import wx
 
 import controlador.configuracion
+from controlador.traductor import Traductor
+
+traductor = Traductor()
+_ = traductor._
 
 
 class Opciones(wx.Dialog):
@@ -163,7 +166,7 @@ class Audio(wx.Panel):
         for id, data in enumerate(listdata):
             combobox.SetClientData(id, data)
 
-    def encontrar_indice_data(self, combobox,lista_elementos, data):
+    def encontrar_indice_data(self, combobox, lista_elementos, data):
         ''' Encuentra el valor del elemento del combobox que corresponde con el valor de la data. '''
         if combobox.GetCount() > -1:
             id = -1
