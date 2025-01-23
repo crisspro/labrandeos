@@ -1,4 +1,3 @@
-import pdb
 import copy
 import os
 import pickle
@@ -149,7 +148,7 @@ class Controlador():
 
     def seleccionar_audio_salida(self, ruta_carpeta, audio, nombre, formato, opciones, tags):
         ''' Selecciona según el formato, la función de exportasión correspondiente. '''
-        if formato == 'automático' and self.pista.extension in ['.flac', '.mp3', '.ogg', '.opus', '.wav']:
+        if formato == 'auto' and self.pista.extension in ['.flac', '.mp3', '.ogg', '.opus', '.wav']:
             formato = self.pista.extension[1:]
             opciones = {'audio': {'formato': formato, 'taza_bit': str(self.pista.taza_bit), 'modo_taza_bit': self.pista.modo_taza_bit, 'velocidad_muestreo': str(self.pista.velocidad_muestreo)}}
         if formato == 'flac':
@@ -162,6 +161,8 @@ class Controlador():
             self.exportar_opus(ruta_carpeta, audio, nombre, opciones, tags)
         elif formato == 'wav':
             self.exportar_wav(ruta_carpeta, audio, nombre, opciones, tags)
+        else:
+            self.exportar_audio_automatico(ruta_carpeta, audio, nombre, tags)
 
     def dividir_audio(self, opciones, ruta_exportacion, actualizar_progreso_exportacion):
         ''' Divide la pista en segmentos de audio. '''
@@ -187,8 +188,8 @@ class Controlador():
         return ruta_carpeta
 
     def exportar_audio_automatico(self, ruta_carpeta, audio, nombre, tags):
-        ''' Exporta audio dependiendo del formato de origen. '''
-        audio.export(os.path.join(ruta_carpeta, f'{nombre}.{self.pista.extension}'), format=self.pista.extension, bitrate=self.pista.taza_bit, parameters=['-ar', self.pista.velocidad_muestreo], tags=tags)
+        ''' Exporta audio a formato ogg en caso de que el formato de entrada no sea soportado como formato de salida. '''
+        audio.export(os.path.join(ruta_carpeta, f'{nombre}.ogg'), format='ogg', bitrate='320 k', parameters=['-ar', '48000'], tags=tags)
 
     def exportar_flac(self, ruta_carpeta, audio, nombre, opciones, tags):
         ''' Exporta audio a formato flac. '''
@@ -201,9 +202,9 @@ class Controlador():
         taza_bit = opciones['audio']['taza_bit']
         modo_taza_bit = opciones['audio']['modo_taza_bit']
         velocidad_muestreo = opciones['audio']['velocidad_muestreo']
-        if modo_taza_bit == 'vbr':
+        if modo_taza_bit == 'VBR':
             audio.export(os.path.join(ruta_carpeta, f'{nombre}.mp3'), format='mp3', bitrate=taza_bit, parameters=['-q:a', '0', '-ar', velocidad_muestreo], tags=tags)
-        elif modo_taza_bit == 'cbr':
+        elif modo_taza_bit == 'CBR':
             audio.export(os.path.join(ruta_carpeta, f'{nombre}.mp3'), format='mp3', bitrate=taza_bit, parameters=['-ar', velocidad_muestreo], tags=tags)
 
     def exportar_ogg(self, ruta_carpeta, audio, nombre, opciones, tags):
@@ -242,7 +243,6 @@ class Controlador():
                 return 'audio', info
             if track.track_type == 'Video':
                 return 'otro'
-                break
 
     def aplicar_informacion_medios(self, archivo):
         ''' agrega información de medios al modelo de la pista '''

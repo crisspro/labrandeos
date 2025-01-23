@@ -9,11 +9,11 @@ class Informacion_medios(wx.Dialog):
         self.controlador.tiempo.convertir(self.controlador.pista.duracion)
         self.panel = wx.Panel(self)
         self.lista_datos = [
-            f'{_("Fichero:")} {self.controlador.pista.nombre}{self.controlador.pista.extension}',
+            f'{_("Origen:")} {self.controlador.pista.nombre}{self.controlador.pista.extension}',
             f'{_("Duración:")} {str(self.controlador.tiempo.horas)} {_("horas")} {str(self.controlador.tiempo.minutos)} {_("minutos")} {str(self.controlador.tiempo.segundos)} {_("segundos")} {str(self.controlador.tiempo.marcos)} {_("marcos")}',
             f'{_("Formato:")} {self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get("format")}',
             f'{_("Tasa de bits:")} {str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get("other_bit_rate")[0])}',
-            f'{_("Modo de taza de bits")} {str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get("bit_rate_mode"))}',
+            f'{_("Modo de taza de bits:")} constante' if str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get("bit_rate_mode")) == 'CBR' else f'{_("Modo de taza de bits")}: variable',
             f'{_("Velocidad de muestreo:")} {str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get("sampling_rate"))} Hz',
             f'{_("Canales:")} {str(self.controlador.comprobar_medios(self.controlador.pista.ruta)[1].get("channel_s"))}'
         ]

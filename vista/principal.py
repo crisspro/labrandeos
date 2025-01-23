@@ -730,7 +730,7 @@ class Frame(wx.Frame):
 
     def iniciar_progreso_exportacion(self, cantidad_marcas):
         ''' Inicia la barra de progreso al exportar pistas de audio separadas. '''
-        self.barra_progreso = wx.ProgressDialog('Exportando Audio', 'Exportando segmentos de audio...', cantidad_marcas, style=wx.PD_CAN_ABORT | wx.PD_AUTO_HIDE)
+        self.barra_progreso = wx.ProgressDialog(_('Exportando pistas'), _('Espere un momento...'), cantidad_marcas, style=wx.PD_CAN_ABORT | wx.PD_AUTO_HIDE)
 
     def actualizar_progreso_exportacion(self, progreso, cantidad_marcas):
         ''' Actualiza la barra de progreso. '''

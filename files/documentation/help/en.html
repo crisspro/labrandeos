@@ -1,15 +1,14 @@
 <!doctype html>
-
 <h1> Labrandeos </h1>
 
 <h2> Introduction </h2>
 
 <p>
-Labrandeos, is a software for export CUE files to split an audio track: songs from an album, podcast sections, chapters of an audiobook, etc.
+Labrandeos allows you to split an audio file into different tracks, being able to export them as separate audio files or a single image in CUE format. Songs from an album, sections of a podcast, chapters of audiobooks, among others, are examples of the different situations where Labrandeos can be useful.
 </p>
 
 <p>
-Labrandeos is developed under the GPL 3.0 license.
+Labrandeos is developed under GPL 3.0 license.
 </p>
 
 <p>
@@ -17,22 +16,39 @@ Copyright (C) Crisspro &lt; crisspro@hotmail.com &gt;
 </p>
 
 <p>
-<a href= "https://github.com/crisspro/labrandeos"> Visit project site  </a>
+<a href="https://github.com/crisspro/labrandeos"> Visit the project site </a>
 </p>
-
 <h2> System requirements </h2>
 <ul>
 <li> Windows 10 or higher, 32 or 64 bits. </li>
+<li>Codecs installed on your system for the audio formats you want to play. K-Lite Codec Pack Standard or higher is recommended.</li>
 </ul>
 
 <h2> Usage</h2>
 
 <ol>
-<li> Load audio file to split it </li>
-<li> Complete album metadata </li>
-<li> Play and make a mark where you want.  </li>
-<li>When you have created all the marks, press the "export Cue" button. The file will be saved in the folder where the audio file was loaded. </li>
+<li> Load the audio file you want to split </li>
+<li> Fill in the album metadata </li>
+<li> Play the audio track and create a marker right at the point you want </li>
+<li> Once you have created all the markers you need, choose whether to export as a CUE image or as separate audio tracks </li>
+<li> Press the "export" button to generate the result. </li>
 </ol>
+<p>
+    <ul>
+        <li> When exporting as a CUE image, the resulting image will be saved in the same folder as the original audio. </li>
+        <li> When choosing separate audio tracks, you can configure the output format by clicking the "options" button. </li>
+    </ul>
+</p>
+
+<h2>Options</h2>
+<p>In the tools menu, click on "options" to access the settings of Labrandeos.</p>
+<h3>General</h3>
+<p>In this tab, you can select the preferred language, configure export features, as well as options related to Labrandeos updates and select sound alerts for certain actions.</p>
+<h3>Audio</h3>
+<p>This section contains the settings for different output formats when exporting as separate tracks.</p>
+<p>The default value is set to "automatic." This means Labrandeos will detect the format and other properties of the loaded audio, such as bitrate, bitrate mode, and sampling rate, in order to apply the same values to the exported tracks. If the input format is not supported as an output format, the program will attempt to export in OGG format with a bitrate of 320 kb/s and a sampling rate of 48000 Hz. If you prefer, you can manually choose the output format for the loaded audio.</p>
+<p>By checking the "normalize" option, each exported audio track will be normalized to -1.0 dB, meaning the maximum volume of each track will have this value.</p>
+<p>By checking the "add silence at the end of each track" option, a two-second silence will be added at the end of each resulting audio file.</p>
 
 <h2> Keyboard shortcuts </h2>
 
@@ -148,5 +164,5 @@ Copyright (C) Crisspro &lt; crisspro@hotmail.com &gt;
 </tr>
 
 </table>  
-  
+ 
  </html>

@@ -1,10 +1,9 @@
-import psutil
 from configparser import ConfigParser
 import os
 import platform
 import webbrowser
 
-
+import psutil
 import requests
 
 import modelo.configuracion
@@ -14,6 +13,7 @@ class App():
     def __init__(self):
         self.nombre_app = 'Labrandeos'
         self.autor_app = 'Crisspro'
+        self.anio = '2025'
         self.licencia_app = 'GPL 3.0'
         self.sitio_app = 'https://github.com/crisspro/labrandeos'
         self.api_app = 'https://api.github.com/repos/crisspro/labrandeos/releases/latest'

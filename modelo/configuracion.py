@@ -14,10 +14,10 @@ class Configuracion():
             'sonido_exportar': True
         }
         self.dic_audio = {
-            'formato': 'ogg',
-            'taza_bit': '192000',
-            'modo_taza_bit': 'vbr',
-            'velocidad_muestreo': '44100',
+            'formato': 'auto',
+            'taza_bit': '',
+            'modo_taza_bit': '',
+            'velocidad_muestreo': '',
             'canales': 2,
             'normalizar': False,
             'silencio': False

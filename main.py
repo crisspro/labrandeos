@@ -1,5 +1,5 @@
 # título: Labrandeos
-# Copyriht (C) 2025 Crisspro <crisspro@hotmail.com>
+# Copyriht (C) 2021 - 2025 Crisspro <crisspro@hotmail.com>
 # lisencia: GPL-3.0
 
 import os
