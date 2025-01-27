@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+import logging
 import os
 import platform
 import webbrowser
@@ -24,8 +25,8 @@ class App():
     def verificarNuevaVersion(self):
         try:
             coneccion = requests.get(self.api_app, timeout=5)
-        except:
-            print('No hay conección')
+        except Exception:
+            logging.error("La conexión ha superado el tiempo de espera.")
         else:
             try:
                 v = coneccion.json()['tag_name']
@@ -34,7 +35,7 @@ class App():
                 else:
                     self.actualizado = True
             except KeyError:
-                print('No se ha podido establecer la conexión', 'Error.')
+                logging.error('No se ha podido realizar la conexión a los datos del servidor.')
 
     def descargar_version(self):
         coneccion = requests.get(self.api_app, timeout=5)
@@ -119,3 +120,10 @@ class Opciones():
         self.configparser = ConfigParser()
         self.archivo_configuracion = os.path.join('files', 'user.ini')
         self.configparser.read(self.archivo_configuracion, encoding='utf-8')
+
+
+class LoggingConfig():
+    @staticmethod
+    def instalar_logging():
+        archivo_log = os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos', 'labrandeos.log')
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler(archivo_log), logging.StreamHandler()])

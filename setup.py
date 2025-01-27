@@ -43,9 +43,9 @@ icon_file = os.path.join(base_dir, "files", "labrandeos.ico")
 exe = Executable(
     script=os.path.join(base_dir, "main.py"),
     base="Win32GUI",
-    targetName=exe_name,
     icon=icon_file,
-    copyright=copyright
+    copyright=copyright,
+    target_name=f'{exe_name}.exe'
 )
 
 # Configuración del setup
@@ -58,13 +58,3 @@ setup(
     executables=[exe]
 )
 
-
-# postcompilación
-'''
-# Eliminar los  archivos .po de las traducciones
-os.remove(os.path.join('build', 'locale', 'en', 'LC_MESSAGES', 'labrandeos.po'))
-os.remove(os.path.join('build', 'locale', 'es', 'LC_MESSAGES', 'labrandeos.po'))
-
-# Eliminar el archivo llamado "frozen_application_license.txt" dentro de la carpeta de compilación
-os.remove(os.path.join('build', 'frozen_application_license.txt'))
-'''

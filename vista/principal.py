@@ -1,3 +1,4 @@
+import logging
 import os
 import subprocess
 import sys
@@ -73,7 +74,6 @@ class Frame(wx.Frame):
         self.mn_guardar = menu1.Append(self.id_mn_guardar, _('&Guardar') + '\tCtrl+S')
         self.mn_guardar.Enable(False)
         self.Bind(wx.EVT_MENU, self.guardar, self.mn_guardar)
-        self.atajo_guardar = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord('s'), self.id_mn_guardar)
         self.mn_guardar_como = menu1.Append(-1, _('G&uardar como...'))
         self.mn_guardar_como.Enable(False)
         self.Bind(wx.EVT_MENU, self.guardar_proyecto, self.mn_guardar_como)
@@ -131,6 +131,8 @@ class Frame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.abrir_novedades, self.mn_novedades)
         self.mn_buscar_actualizacion = menu4.Append(-1, _('&Buscar actualizaciones'))
         self.Bind(wx.EVT_MENU, self.buscar_actualizacion, self.mn_buscar_actualizacion)
+        self.mn_registro = menu4.Append(-1, _('&Registro'))
+        self.Bind(wx.EVT_MENU, self.abrir_registro, self.mn_registro)
         acercade = menu4.Append(-1, _('Acerca de ') + self.controlador_app.nombre_app)
         self.Bind(wx.EVT_MENU, self.mg_acerca, acercade)
 
@@ -193,7 +195,7 @@ class Frame(wx.Frame):
         self.bt_marcar.Enable(False)
         self.Bind(wx.EVT_BUTTON, self.marcar, self.bt_marcar)
         self.atajo_tiempo_actual = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord('t'), self.id_bt_tiempo_actual)
-        self.entradas_atajos = [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_guardar, self.atajo_deshacer, self.atajo_rehacer, self.atajo_mn_nuevo_proyecto, self.atajo_abrir_proyecto, self.atajo_metadatos_disco, self.atajo_opciones, self.atajo_documentacion, self.atajo_editar_marca, self.atajo_informacion]
+        self.entradas_atajos = [self.atajo_enfocar_lista, self.atajo_enfocar_linea_tiempo, self.atajo_tiempo_actual, self.atajo_duracion, self.atajo_deshacer, self.atajo_rehacer, self.atajo_mn_nuevo_proyecto, self.atajo_abrir_proyecto, self.atajo_metadatos_disco, self.atajo_opciones, self.atajo_documentacion, self.atajo_editar_marca, self.atajo_informacion]
         self.tabla_atajos = wx.AcceleratorTable(self.entradas_atajos)
         self.SetAcceleratorTable(self.tabla_atajos)
 
@@ -273,7 +275,7 @@ class Frame(wx.Frame):
 
     def refrescar_principal(self):
         ''' Refresca la interfáz principal. '''
-        self.refrescar_lista()
+        self.lista.DeleteAllItems()
         self.panel1.Destroy()
         self.graficar()
         self.Show()
@@ -314,6 +316,7 @@ class Frame(wx.Frame):
         self.lista.SetItemState(item - 1, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
         self.lista.EnsureVisible(item - 1)
         if cantidad != 0:
+            logging.info(_('marca eliminada.'))
             self.lector.output(_('Eliminado'))
 
     def desplegar_contextual(self, event):
@@ -325,10 +328,13 @@ class Frame(wx.Frame):
         if self.controlador.pista is not None:
             self.detectar_cambios()
             self.controlador.limpiar_temporal()
+            self.timer.Stop()
             self.Destroy()
+            logging.info(_('Finalizada la ejecución de Labrandeos.'))
         else:
             self.controlador.limpiar_temporal()
             self.Destroy()
+            logging.info(_('Finalizada la ejecución de Labrandeos.'))
 
     def guardar_disco(self, event):
         ''' Abre el diálogo para guardar los metadatos del disco. '''
@@ -366,6 +372,7 @@ class Frame(wx.Frame):
             tipo_archivo = self.controlador.comprobar_medios(self.path)
             if tipo_archivo is None or tipo_archivo[0] != 'audio':
                 wx.MessageBox(_('No es posible cargar el fichero, sólo se admiten archivos de audio.'), caption='Atención', style=wx.ICON_ERROR)
+                logging.warning(_('Se intenta cargar un archivo que no es de audio.'))
             else:
                 self.reproductor.Load(self.path)
                 self.controlador.crear_proyecto()
@@ -399,15 +406,17 @@ class Frame(wx.Frame):
         if self.controlador.data is not None:
             self.mn_exportar.Enable(True)
             self.mn_guardar.Enable(True)
+            self.atajo_guardar = wx.AcceleratorEntry(wx.ACCEL_CTRL, ord('s'), self.id_mn_guardar)
+            self.entradas_atajos.append(self.atajo_guardar)
             self.mn_guardar_como.Enable(True)
             self.com_modo.Enable(True)
             self.bt_exportar.Enable(True)
-        if self.controlador.data.lista_marcas != []:
+        if self.controlador.data is not None and self.controlador.data.lista_marcas != []:
             self.mn_eliminar.Enable(True)
             self.mn_marca.Enable(True)
 
-    # desactiva controles
     def desactivar_controles(self):
+        ''' desactiva controles '''
         if self.controlador.pista is not None:
             self.bt_abrir.Enable(False)
             self.mn_cargar_audio.Enable(False)
@@ -435,37 +444,44 @@ class Frame(wx.Frame):
         if self.controlador.comparar_modelo() is not True:
             mensaje = wx.MessageBox(_('¿Deseas guardar los cambios realizados?'), _('Guardar'), style=wx.YES_NO | wx.CANCEL | wx.YES_DEFAULT | wx.ICON_QUESTION)
             if mensaje == wx.YES and self.controlador.es_temporal() is True:
+                logging.info(_('El usuario acepta guardar los cambios realizados. Se inicia el guardado en un nuevo proyecto.'))
                 self.guardar_proyecto(None)
             elif mensaje == wx.YES and self.controlador.es_temporal() is False:
+                logging.info(_('El usuario acepta guardar los cambios realizados en el proyecto existente.'))
                 self.guardar(None)
             elif mensaje == wx.CANCEL:
+                logging.info(_('El usuario no acepta guardar los cambios realizados al proyecto.'))
                 raise Exception('Cancelado')
 
     def crear_proyecto(self, event):
         ''' Crea un nuevo proyecto '''
         self.detectar_cambios()
         self.controlador.limpiar_temporal()
-        self.controlador.load()
         self.path = ''
-        self.controlador.limpiar_proyecto()
         self.controlador.crear_proyecto()
         self.controlador.save()
-        self.habilitar_controles()
+        self.controlador.limpiar_proyecto()
+#        self.habilitar_controles()
         self.refrescar_principal()
         self.lector.output(_('Nuevo proyecto'))
 
     def guardar(self, event):
         ''' guardar cambios en proyecto actual '''
-        self.controlador.save()
-        self.lector.output(_('guardado'))
+        if os.path.basename(self.controlador.ruta_proyecto) == 'temp.proyecto.lap':
+            self.guardar_proyecto(None)
+        else:
+            self.controlador.save()
+            self.lector.output(_('guardado'))
 
     def guardar_proyecto(self, event):
         ''' guarda el proyecto en una ruta específica '''
         self.dialogo_guardar = wx.FileDialog(self, _('Guardar proyecto'), style=wx.FD_SAVE, wildcard='*.lap')
         if self.dialogo_guardar.ShowModal() == wx.ID_OK:
             if os.path.isfile(self.dialogo_guardar.GetPath()):
+                logging.warning(_('El directorio en el cual se intenta guardar el proyecto, ya contiene un archivo con el mismo nombre.'))
                 mensaje = wx.MessageBox(_('Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?'), _('Atención'), style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_EXCLAMATION)
                 if mensaje == 2:
+                    logging.info(_('El usuario acepta sobreescribir el proyecto del mismo nombre.'))
                     self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
                     self.controlador.save()
                     self.controlador.limpiar_temporal()
@@ -475,6 +491,7 @@ class Frame(wx.Frame):
                 self.controlador.limpiar_temporal()
         else:
             raise Exception('Cancelado')
+        logging.info(_('El usuario no acepta sobreescribir el archivo existente del proyecto con el mismo nombre.'))
 
     def abrir_opciones(self, event):
         ''' abre la ventana de opciones '''
@@ -502,6 +519,10 @@ class Frame(wx.Frame):
             os.startfile(os.path.join('files', 'documentation', 'news', 'es.html'))
         else:
             os.startfile(os.path.join('files', 'documentation', 'news', 'en.html'))
+
+    def abrir_registro(self, event):
+        ''' Abre el registro de eventos (log). '''
+        os.startfile(os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos', 'labrandeos.log'))
 
     def alertar_instancia(self):
         ''' Muestra alerta si se abre una nueva instancia del programa '''
@@ -537,8 +558,8 @@ class Frame(wx.Frame):
     def enfocar_lista(self, event):
         self.lista.SetFocus()
 
-# reproduce o pausa la pista.
     def reproducir_pausar(self, event):
+        ''' Reproduce o pausa la pista. '''
         self.estado = self.reproductor.GetState()
         if self.estado == 1 or self.estado == 0:
             self.reproductor.Play()
@@ -685,7 +706,6 @@ class Frame(wx.Frame):
             self.bt_opciones.Enable(True)
         else:
             self.bt_opciones.Enable(False)
-            self.cas_carpeta_origen.Enable(False)
 
     def exportar(self, event):
         if self.com_modo.GetValue() == _('Imagen CUE'):
@@ -695,17 +715,21 @@ class Frame(wx.Frame):
 
     def exportar_cue(self, event):
         ''' Exporta en formato cue. '''
+        logging.info(_('Inicia la exportación del proyecto como imagen CUE.'))
         ruta_exportacion = self.controlador.exportar_cue(self.controlador_opciones.consultar_opciones('bool', 'general', 'indice'))
         self.alertar_exportacion(ruta_exportacion)
+        logging.info(_('Finaliza exportación del Proyecto como imagen CUE'))
 
     def exportar_pistas_separadas(self, event):
         ''' Exporta audio como pistas separadas. '''
+        logging.info(_('Inicia la exportación del proyecto como pistas de audio separadas.'))
         ruta_exportacion = self.seleccionar_carpeta_exportacion()
-        ruta_final = os.path.join(ruta_exportacion, f'{self.controlador.data.titulo} - {self.controlador.data.autor}')
         if ruta_exportacion:
+            ruta_final = os.path.join(ruta_exportacion, f'{self.controlador.data.titulo} - {self.controlador.data.autor}')
             self.iniciar_progreso_exportacion(len(self.controlador.getMarcas()))
             self.controlador.dividir_audio(self.controlador_opciones.consultar_todas_opciones(), ruta_exportacion, self.actualizar_progreso_exportacion)
             self.alertar_exportacion(ruta_final)
+            logging.info(_('Finaliza la exportación del proyecto como pistas de audio separadas.'))
 
     def alertar_exportacion(self, ruta_final):
         ''' Muestra alerta y sonido al finalizar la exportación. '''
@@ -725,10 +749,12 @@ class Frame(wx.Frame):
             ruta_destino = dialogo.GetPath()
             ruta_carpeta = os.path.join(ruta_destino, nombre_carpeta)
             if os.path.exists(ruta_carpeta):
+                logging.warning(_('Se intenta exportar en un directorio que ya contiene una carpeta con el mismo nombre del proyecto.'))
                 mensaje = wx.MessageBox(_('Ya existe una carpeta con el mismo nombre. ¿Deseas reemplazarla?'), _('Atención'), style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_EXCLAMATION)
                 if mensaje == wx.NO:
                     return None
                 elif mensaje == wx.YES:
+                    logging.info(_('El usuario acepta  sobreescribir la carpeta con el mismo nombre del proyecto.'))
                     return ruta_destino
             else:
                 return ruta_destino
@@ -752,6 +778,7 @@ class Frame(wx.Frame):
 
     def deshacer(self, event):
         self.controlador.deshacer()
+        logging.info(_('Se deshacen cambios realizados.'))
         self.lector.output(_('Deshacer'))
         self.refrescar_lista()
         self.controlar_deshacer_reahcer()
@@ -759,6 +786,7 @@ class Frame(wx.Frame):
     def rehacer(self, event):
         if self.controlador.historial.es_vacia()[1] is False:
             self.controlador.rehacer()
+            logging.info(_('Se recuperan cambios deshechos'))
             self.refrescar_lista()
             self.lector.output(_('Rehacer'))
         self.controlar_deshacer_reahcer()

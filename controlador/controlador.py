@@ -1,4 +1,5 @@
 import copy
+import logging
 import os
 import pickle
 
@@ -73,6 +74,7 @@ class Controlador():
             self.reproductor = pickle.load(f)
             f.close()
         except FileNotFoundError:
+            logging.error('No se encuentra el archivo con los datos del proyecto.')
             self.data = Data()
             self.disco = Disco()
             self.pista = None
