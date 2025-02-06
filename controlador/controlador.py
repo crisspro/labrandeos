@@ -260,11 +260,11 @@ class Controlador():
         return self.ruta_proyecto == os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos', 'temp.proyecto.lap')
 
     def comparar_modelo(self, ):
-        f = open(self.ruta_proyecto, "rb")
-        data = pickle.load(f)
-        pista = pickle.load(f)
-        disco = pickle.load(f)
-        f.close()
+        archivo = open(self.ruta_proyecto, "rb")
+        data = pickle.load(archivo)
+        pista = pickle.load(archivo)
+        disco = pickle.load(archivo)
+        archivo.close()
         return disco == self.disco and pista == self.pista and data == self.data
 
     def deshacer(self):

@@ -35,7 +35,7 @@ class Frame(wx.Frame):
 
     # creación de controles
     def graficar(self):
-        # creación de lector
+        ''' Construlle los elementos de la interfáz gráfica. '''
         self.lector = accessible_output2.outputs.auto.Auto()
 
         # ID personalizados
@@ -200,7 +200,7 @@ class Frame(wx.Frame):
         self.SetAcceleratorTable(self.tabla_atajos)
 
         self.Bind(wx.EVT_CLOSE, self.cerrar)
-# Construcción de lista
+        # Construcción de lista
         self.l_lista = wx.StaticText(self.panel2, -1, _('Marcas'))
         self.lista = wx.ListCtrl(self.panel2, -1, style=wx.LC_REPORT | wx.LC_VRULES | wx.LC_SINGLE_SEL)
         self.lista.InsertColumn(0, 'N°')
@@ -210,7 +210,6 @@ class Frame(wx.Frame):
         self.Bind(wx.EVT_LIST_KEY_DOWN, self.detectar_tecla_lista, self.lista)
         self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.desplegar_contextual, self.lista)
         self.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.posicionar_marca, self.lista)
-#        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.seleccionar_multiple, self.lista)
         self.l_formato = wx.StaticText(self.panel2, -1, _('Modo de exportación'))
         self.lista_formatos = [_('Imagen CUE'), _('Pistas separadas')]
         self.com_modo = wx.ComboBox(self.panel2, -1, _('Imagen CUE'), choices=self.lista_formatos, style=wx.CB_READONLY)
@@ -223,9 +222,7 @@ class Frame(wx.Frame):
         self.bt_exportar.Enable(False)
         self.Bind(wx.EVT_BUTTON, self.exportar, self.bt_exportar)
 
-
-# creación de sizers
-
+        # creación de sizers
         self.sz0 = wx.BoxSizer(wx.VERTICAL)
         self.sz0.Add(self.l_abrir)
         self.sz0.Add(self.bt_abrir)
@@ -276,6 +273,7 @@ class Frame(wx.Frame):
     def refrescar_principal(self):
         ''' Refresca la interfáz principal. '''
         self.lista.DeleteAllItems()
+        self.timer.Stop()
         self.panel1.Destroy()
         self.graficar()
         self.Show()
@@ -316,8 +314,8 @@ class Frame(wx.Frame):
         self.lista.SetItemState(item - 1, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
         self.lista.EnsureVisible(item - 1)
         if cantidad != 0:
-            logging.info(_('marca eliminada.'))
             self.lector.output(_('Eliminado'))
+            logging.info(_('marca eliminada.'))
 
     def desplegar_contextual(self, event):
         ''' Despliega el menú contextual de la lista de marcas '''
@@ -350,6 +348,7 @@ class Frame(wx.Frame):
             self.mn_metadatos_disco.Enable(True)
             self.mn_deshacer.Enable(True)
             self.vn_disco.guardar_datos()
+            logging.info(_('Guardados metadatos del álbum'))
             self.cambiar_encabezado()
         else:
             self.cambiar_encabezado()
@@ -381,6 +380,7 @@ class Frame(wx.Frame):
                 self.habilitar_controles()
                 self.desactivar_controles()
                 self.linea_tiempo.SetFocus()
+                logging.info(_(f'Cargado archivo de audio en el proyecto desde: {self.path}.'))
 
     def registrar_pista(self):
         direccion = os.path.dirname(self.path)
@@ -427,8 +427,9 @@ class Frame(wx.Frame):
         if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
             mensaje = 0
             if self.controlador.pista is not None:
-                mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Atención'), style=wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_EXCLAMATION)
-            if self.controlador.pista is None or mensaje == 2:
+                mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Atención'), style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_EXCLAMATION)
+                logging.warning(_('Se intenta abrir un nuevo proyecto sin guardar los cambios del proyecto actual. Se pregunta al usuario si desea continuar.'))
+            if self.controlador.pista is None or mensaje == wx.YES:
                 self.controlador.limpiar_temporal()
                 self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
                 self.controlador.crear_proyecto()
@@ -438,20 +439,22 @@ class Frame(wx.Frame):
                 self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
                 self.habilitar_controles()
                 self.desactivar_controles()
+                logging.info(_(f'Abierto proyecto desde: {self.controlador.ruta_proyecto}'))
 
     def detectar_cambios(self):
         ''' Detecta si se han hecho cambios en el proyecto actual para que sean guardados '''
         if self.controlador.comparar_modelo() is not True:
             mensaje = wx.MessageBox(_('¿Deseas guardar los cambios realizados?'), _('Guardar'), style=wx.YES_NO | wx.CANCEL | wx.YES_DEFAULT | wx.ICON_QUESTION)
+            logging.warning(_('Se consulta al usuario si desea guardar los cambios realizados en el proyecto actual'))
             if mensaje == wx.YES and self.controlador.es_temporal() is True:
                 logging.info(_('El usuario acepta guardar los cambios realizados. Se inicia el guardado en un nuevo proyecto.'))
                 self.guardar_proyecto(None)
             elif mensaje == wx.YES and self.controlador.es_temporal() is False:
-                logging.info(_('El usuario acepta guardar los cambios realizados en el proyecto existente.'))
+                logging.info(_('El usuario acepta guardar los cambios realizados en el proyecto actual.'))
                 self.guardar(None)
             elif mensaje == wx.CANCEL:
-                logging.info(_('El usuario no acepta guardar los cambios realizados al proyecto.'))
-                raise Exception('Cancelado')
+                logging.info(_('El usuario cancela la consulta'))
+                raise BaseException('Cancelado')
 
     def crear_proyecto(self, event):
         ''' Crea un nuevo proyecto '''
@@ -461,9 +464,9 @@ class Frame(wx.Frame):
         self.controlador.crear_proyecto()
         self.controlador.save()
         self.controlador.limpiar_proyecto()
-#        self.habilitar_controles()
         self.refrescar_principal()
         self.lector.output(_('Nuevo proyecto'))
+        logging.info(_('Creado un nuevo proyecto vacío.'))
 
     def guardar(self, event):
         ''' guardar cambios en proyecto actual '''
@@ -472,6 +475,7 @@ class Frame(wx.Frame):
         else:
             self.controlador.save()
             self.lector.output(_('guardado'))
+            logging.info(_('Guardados los cambios realizados en el proyecto.'))
 
     def guardar_proyecto(self, event):
         ''' guarda el proyecto en una ruta específica '''
@@ -481,17 +485,13 @@ class Frame(wx.Frame):
                 logging.warning(_('El directorio en el cual se intenta guardar el proyecto, ya contiene un archivo con el mismo nombre.'))
                 mensaje = wx.MessageBox(_('Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?'), _('Atención'), style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_EXCLAMATION)
                 if mensaje == 2:
-                    logging.info(_('El usuario acepta sobreescribir el proyecto del mismo nombre.'))
                     self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
                     self.controlador.save()
-                    self.controlador.limpiar_temporal()
+                    logging.info(_(f'El usuario acepta sobreescribir el proyecto del mismo nombre en: {self.controlador.ruta_proyecto}'))
             else:
                 self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
                 self.controlador.save()
-                self.controlador.limpiar_temporal()
-        else:
-            raise Exception('Cancelado')
-        logging.info(_('El usuario no acepta sobreescribir el archivo existente del proyecto con el mismo nombre.'))
+                logging.info(_(f'Proyecto guardado en: {self.controlador.ruta_proyecto}'))
 
     def abrir_opciones(self, event):
         ''' abre la ventana de opciones '''
@@ -503,6 +503,7 @@ class Frame(wx.Frame):
         if self.vn_opciones.ShowModal() == wx.ID_OK:
             self.vn_opciones.pagina1.guardar_opciones()
             self.vn_opciones.pagina2.guardar_opciones()
+            logging.info(_('Guardadas las opciones de configuración.'))
             idioma_posterior = self.vn_opciones.pagina1.com_idioma.GetValue()
             if idioma_anterior != idioma_posterior:
                 wx.MessageBox(_('Debes reiniciar el programa para que los cambios de idioma surtan efecto.'), _('Atención'), style=wx.ICON_EXCLAMATION)
@@ -536,18 +537,24 @@ class Frame(wx.Frame):
 
     def buscar_actualizacion(self, event):
         ''' Muestra mensajes si hay o no actualizaciones '''
+        logging.info(_('Buscando si hay nuevas actualizaciones de Labrandeos.'))
+        logging.info(_('Buscando si hay nuevas actualizaciones de Labrandeos.'))
         self.controlador_app.verificarNuevaVersion()
         if self.controlador_app.actualizado is False:
+            logging.info(_('Se ha encontrado  una nueva versión disponible de Labrandeos.'))
             if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'):
                 wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'nueva_version.wav'))
             res = wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), _('Actualización'), style=wx.YES_NO | wx.ICON_ASTERISK)
+            logging.warning(_('Se consulta al usuario si desea descargar la nueva versión disponible de labrandeos.'))
             if res == wx.YES:
                 self.controlador_app.descargar_version()
+                logging.info(_('Descargada la última versión disponible de Labrandeos.'))
         elif self.controlador_app.actualizado is True and event is not None:
             wx.MessageBox(_('No hay ninguna nueva versión disponible'), _('Aviso'), style=wx.ICON_INFORMATION)
+            logging.info(_('No se ha encontrado ningúna nueva versión disponible de labrandeos.'))
 
-# muestra información acerca del programa
     def mg_acerca(self, event):
+        ''' muestra información acerca del programa '''
         dlg = Acerca_de(self, title=_('Acerca de ') + self.controlador_app.nombre_app)
         if dlg.ShowModal() == wx.ID_OK:
             dlg.close()
@@ -648,7 +655,9 @@ class Frame(wx.Frame):
         self.bt_reproducir.SetLabel(_('&Reproducir'))
         if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_marca'):
             wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'marca.wav'))
-        self.vn_editar()
+        valor = self.vn_editar()
+        if valor:
+            logging.info(_('Creada nueva marca.'))
 
     def vn_editar(self):
         self.editar = Editar(self, _('Crear marca'), self.controlador, self.reproductor)
@@ -671,8 +680,10 @@ class Frame(wx.Frame):
             self.lista.SetItem(id, 3, marca.tiempo_inicio)
             self.refrescar_lista()
             self.habilitar_controles()
+            return True
         else:
             self.pausar(None)
+            return None
 
     def editar_marca(self, event):
         self.editar2 = Editar2(self, _('Editar marca'), self.controlador, self.reproductor)
@@ -697,6 +708,7 @@ class Frame(wx.Frame):
             self.refrescar_lista()
             self.habilitar_controles()
             self.lista.Focus(item_enfocado)
+            logging.info(_('Marca editada.'))
         else:
             self.pausar(None)
 
@@ -754,9 +766,10 @@ class Frame(wx.Frame):
                 if mensaje == wx.NO:
                     return None
                 elif mensaje == wx.YES:
-                    logging.info(_('El usuario acepta  sobreescribir la carpeta con el mismo nombre del proyecto.'))
+                    logging.info(_(f'El usuario acepta  sobreescribir la carpeta con el mismo nombre del proyecto. en: {ruta_destino}'))
                     return ruta_destino
             else:
+                logging.info(_(f'Seleccionada como ruta de destino: {ruta_destino}'))
                 return ruta_destino
 
     def iniciar_progreso_exportacion(self, cantidad_marcas):
