@@ -65,8 +65,16 @@ class Opciones():
     def __init__(self):
         self.configparser = ConfigParser()
         self.archivo_configuracion = os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos', 'user.ini')
-        self.configparser.read(self.archivo_configuracion, encoding='utf-8')
+        self.cargar_archivo_configuracion()
         self.modelo_configuracion = modelo.configuracion.Configuracion()
+
+    def cargar_archivo_configuracion(self):
+        ''' Carga el archivo de configuración para su lectura. '''
+        try:
+            self.configparser.read(self.archivo_configuracion, encoding='utf-8')
+        except Exception as e:
+            logging.error(e)
+            self.guardar_defecto()
 
     def chequear_ini(self):
         if os.path.isfile(self.archivo_configuracion) is False:
@@ -103,6 +111,7 @@ class Opciones():
             return valor
 
     def consultar_opciones(self, tipo, seccion, clave):
+        ''' hace una consulta al archivo de configuración. '''
         self.configparser.read(self.archivo_configuracion, encoding='utf-8')
         if tipo == 'bool':
             return self.configparser.getboolean(seccion, clave)
@@ -126,4 +135,4 @@ class LoggingConfig():
     @staticmethod
     def instalar_logging():
         archivo_log = os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos', 'labrandeos.log')
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler(archivo_log), logging.StreamHandler()])
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler(archivo_log, mode='w'), logging.StreamHandler()])

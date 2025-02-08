@@ -380,7 +380,7 @@ class Frame(wx.Frame):
                 self.habilitar_controles()
                 self.desactivar_controles()
                 self.linea_tiempo.SetFocus()
-                logging.info(_(f'Cargado archivo de audio en el proyecto desde: {self.path}.'))
+                logging.info(f'{_("Cargado archivo de audio en el proyecto desde:")} {self.path}')
 
     def registrar_pista(self):
         direccion = os.path.dirname(self.path)
@@ -439,7 +439,7 @@ class Frame(wx.Frame):
                 self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
                 self.habilitar_controles()
                 self.desactivar_controles()
-                logging.info(_(f'Abierto proyecto desde: {self.controlador.ruta_proyecto}'))
+                logging.info(f'{_("Abierto proyecto desde:")} {self.controlador.ruta_proyecto}')
 
     def detectar_cambios(self):
         ''' Detecta si se han hecho cambios en el proyecto actual para que sean guardados '''
@@ -487,11 +487,11 @@ class Frame(wx.Frame):
                 if mensaje == 2:
                     self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
                     self.controlador.save()
-                    logging.info(_(f'El usuario acepta sobreescribir el proyecto del mismo nombre en: {self.controlador.ruta_proyecto}'))
+                    logging.info(f'{_("El usuario acepta sobreescribir el proyecto del mismo nombre en:")} {self.controlador.ruta_proyecto}')
             else:
                 self.controlador.ruta_proyecto = self.dialogo_guardar.GetPath()
                 self.controlador.save()
-                logging.info(_(f'Proyecto guardado en: {self.controlador.ruta_proyecto}'))
+                logging.info(f'{_("Proyecto guardado en:")} {self.controlador.ruta_proyecto}')
 
     def abrir_opciones(self, event):
         ''' abre la ventana de opciones '''
@@ -551,13 +551,13 @@ class Frame(wx.Frame):
                 logging.info(_('Descargada la última versión disponible de Labrandeos.'))
         elif self.controlador_app.actualizado is True and event is not None:
             wx.MessageBox(_('No hay ninguna nueva versión disponible'), _('Aviso'), style=wx.ICON_INFORMATION)
-            logging.info(_('No se ha encontrado ningúna nueva versión disponible de labrandeos.'))
+            logging.info(_('No se ha encontrado ninguna nueva versión disponible de labrandeos.'))
 
     def mg_acerca(self, event):
         ''' muestra información acerca del programa '''
         dlg = Acerca_de(self, title=_('Acerca de ') + self.controlador_app.nombre_app)
         if dlg.ShowModal() == wx.ID_OK:
-            dlg.close()
+            dlg.Close()
 
     def enfocar_linea_tiempo(self, event):
         self.linea_tiempo.SetFocus()
@@ -766,10 +766,10 @@ class Frame(wx.Frame):
                 if mensaje == wx.NO:
                     return None
                 elif mensaje == wx.YES:
-                    logging.info(_(f'El usuario acepta  sobreescribir la carpeta con el mismo nombre del proyecto. en: {ruta_destino}'))
+                    logging.info(f'{_("El usuario acepta  sobreescribir la carpeta con el mismo nombre del proyecto. en:")} {ruta_destino}')
                     return ruta_destino
             else:
-                logging.info(_(f'Seleccionada como ruta de destino: {ruta_destino}'))
+                logging.info(f'{_("Seleccionada como ruta de destino:")} {ruta_destino}')
                 return ruta_destino
 
     def iniciar_progreso_exportacion(self, cantidad_marcas):

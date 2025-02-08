@@ -6,12 +6,16 @@ import pickle
 from pydub import AudioSegment
 import pymediainfo
 
+from controlador.traductor import Traductor
 from modelo.disco import Disco
 from modelo.marca import Data, Marca
 from modelo.tiempo import Tiempo
 from modelo.pista import Pista
 from modelo.historial import Historial
 from modelo.reproductor import Reproductor
+
+traductor = Traductor()
+_ = traductor._
 
 
 class Controlador():
@@ -74,7 +78,7 @@ class Controlador():
             self.reproductor = pickle.load(f)
             f.close()
         except FileNotFoundError:
-            logging.error('No se encuentra el archivo con los datos del proyecto.')
+            logging.error(_('No se encuentra el archivo con los datos del proyecto.'))
             self.data = Data()
             self.disco = Disco()
             self.pista = None

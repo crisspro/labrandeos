@@ -7,9 +7,9 @@ import os
 
 import wx
 
+import controlador.configuracion
 from controlador.traductor import Traductor
 from controlador.controlador import Controlador
-import controlador.configuracion
 from vista.principal import Frame
 
 
@@ -18,19 +18,20 @@ def crear_carpeta():
     ruta_carpeta = os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos')
     if os.path.exists(ruta_carpeta) is False:
         os.makedirs(os.path.join(os.environ['LOCALAPPDATA'], 'Labrandeos'))
-        logging.info(_(f'Creada carpeta de configuración en: {ruta_carpeta}'))
+        logging.info(f'{_("Creada carpeta de configuración en:")} {ruta_carpeta}')
 
 
 traductor = Traductor()
 _ = traductor._
 controlador.configuracion.LoggingConfig.instalar_logging()
 
+crear_carpeta()
+
 App = wx.App()
 logging.info(_('Inicia el arranque de la aplicación'))
 controlador_app = controlador.configuracion.App()
 controlador_controlador = Controlador()
 controlador_opciones = controlador.configuracion.Opciones()
-crear_carpeta()
 controlador_opciones.chequear_ini()
 logging.info(_('Chequeado archivo de configuración.'))
 controlador_opciones.guardar_idioma()
