@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Labrandeos 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 22:54-0300\n"
-"PO-Revision-Date: 2025-02-07 23:06-0300\n"
+"POT-Creation-Date: 2025-02-14 13:02-0300\n"
+"PO-Revision-Date: 2025-02-14 13:27-0300\n"
 "Last-Translator: \n"
 "Language-Team: crisspro\n"
 "Language: en\n"
@@ -26,33 +26,61 @@ msgstr ""
 "X-Poedit-SearchPath-6: main.py\n"
 "X-Poedit-SearchPath-7: controlador/controlador.py\n"
 
-#: main.py:21
-msgid "Creada carpeta de configuración en:"
-msgstr "Created configuration folder at:"
-
-#: main.py:31
+#: main.py:18
 msgid "Inicia el arranque de la aplicación"
 msgstr "Starting the application"
 
-#: main.py:36
-msgid "Chequeado archivo de configuración."
-msgstr "Checking configuration file."
-
-#: main.py:38
+#: main.py:23
 msgid "Realizadas las configuraciones de idioma"
 msgstr "Made the language settings"
 
-#: main.py:40
+#: main.py:26
 msgid "Ejecutada limpieza de archivo temporal de proyecto."
 msgstr "Executed Project Temporary File Cleaning."
 
-#: main.py:42
+#: main.py:28
 msgid "Guardado nuevo archivo temporal de proyecto."
 msgstr "New Project Temporary File Save."
 
-#: main.py:44
+#: main.py:30
 msgid "Labrandeos iniciado con éxito."
 msgstr "Labrandeos started successfully."
+
+#: update.py:60
+msgid "Error al descargar:"
+msgstr "Error while downloading:"
+
+#: update.py:60 update.py:69 update.py:85 update.py:113
+msgid "Error"
+msgstr "Error"
+
+#: update.py:69
+msgid "No se pudo determinar el tamaño del archivo"
+msgstr "Could not determine the file size"
+
+#: update.py:85
+msgid "Error durante la descarga:"
+msgstr "Error during download:"
+
+#: update.py:94
+msgid "Descarga completada! ¿Desea continuar con la instalación?"
+msgstr "Download completed! Do you want to continue with the installation?"
+
+#: update.py:95
+msgid "Instalación"
+msgstr "Installation"
+
+#: update.py:101
+msgid "Por favor, cierre Labrandeos antes de continuar con la instalación."
+msgstr "Please close you before continuing with the installation."
+
+#: update.py:102
+msgid "Proceso en ejecución"
+msgstr "Process in execution"
+
+#: update.py:113
+msgid "Error al verificar el proceso:"
+msgstr "Error verifying the process:"
 
 #: vista\principal.py:64
 msgid "&Archivo"

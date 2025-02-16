@@ -545,10 +545,8 @@ class Frame(wx.Frame):
             if self.controlador_opciones.consultar_opciones('bool', 'general', 'sonido_actualizacion'):
                 wx.adv.Sound.PlaySound(os.path.join('files', 'sounds', 'nueva_version.wav'))
             res = wx.MessageBox(_('Hay una nueva versión disponible. ¿Deseas descargarla ahora?'), _('Actualización'), style=wx.YES_NO | wx.ICON_ASTERISK)
-            logging.warning(_('Se consulta al usuario si desea descargar la nueva versión disponible de labrandeos.'))
             if res == wx.YES:
                 self.controlador_app.descargar_version()
-                logging.info(_('Descargada la última versión disponible de Labrandeos.'))
         elif self.controlador_app.actualizado is True and event is not None:
             wx.MessageBox(_('No hay ninguna nueva versión disponible'), _('Aviso'), style=wx.ICON_INFORMATION)
             logging.info(_('No se ha encontrado ninguna nueva versión disponible de labrandeos.'))
