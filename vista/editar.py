@@ -1,10 +1,7 @@
 import wx
 import wx.adv
 
-from controlador.traductor import Traductor
-
-traductor = Traductor()
-_ = traductor._
+from controlador.traductor import _
 
 
 class Editar(wx.Dialog):

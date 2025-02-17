@@ -8,7 +8,7 @@ import wx.media
 import wx
 import wx.adv
 
-from controlador.traductor import Traductor
+from controlador.traductor import _
 
 import vista.disco
 import vista.opciones
@@ -16,9 +16,6 @@ from .editar import Editar
 from .editar import Editar2
 from .acerca_de import Acerca_de
 from .informacion_medios import Informacion_medios
-
-traductor = Traductor()
-_ = traductor._
 
 
 class Frame(wx.Frame):
@@ -422,7 +419,7 @@ class Frame(wx.Frame):
             self.mn_cargar_audio.Enable(False)
 
     def abrir_proyecto(self, event):
-        ''' abre un proyecto existente '''
+        ''' Despliega un diálogo para cargar un proyecto existente. '''
         self.dialogo_abrir_proyecto = wx.FileDialog(self, _('Abrir proyecto'), style=wx.FD_OPEN, wildcard='*.lap')
         if self.dialogo_abrir_proyecto.ShowModal() == wx.ID_OK:
             mensaje = 0
@@ -430,16 +427,21 @@ class Frame(wx.Frame):
                 mensaje = wx.MessageBox(_('Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se perderán. \n ¿Deseas continuar?'), _('Atención'), style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_EXCLAMATION)
                 logging.warning(_('Se intenta abrir un nuevo proyecto sin guardar los cambios del proyecto actual. Se pregunta al usuario si desea continuar.'))
             if self.controlador.pista is None or mensaje == wx.YES:
-                self.controlador.limpiar_temporal()
-                self.controlador.ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
-                self.controlador.crear_proyecto()
-                self.controlador.load()
-                self.reproductor.Load(self.controlador.pista.ruta)
-                self.refrescar_lista()
-                self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
-                self.habilitar_controles()
-                self.desactivar_controles()
-                logging.info(f'{_("Abierto proyecto desde:")} {self.controlador.ruta_proyecto}')
+                ruta_proyecto = self.dialogo_abrir_proyecto.GetPath()
+                self.cargar_proyecto(ruta_proyecto)
+
+    def cargar_proyecto(self, ruta_proyecto):
+        ''' Carga un proyecto. '''
+        self.controlador.limpiar_temporal()
+        self.controlador.ruta_proyecto = ruta_proyecto
+        self.controlador.crear_proyecto()
+        self.controlador.load()
+        self.reproductor.Load(self.controlador.pista.ruta)
+        self.refrescar_lista()
+        self.l_encabezado.SetLabel(self.controlador.disco.titulo + ' - ' + self.controlador.disco.autor)
+        self.habilitar_controles()
+        self.desactivar_controles()
+        logging.info(f'{_("Abierto proyecto desde:")} {self.controlador.ruta_proyecto}')
 
     def detectar_cambios(self):
         ''' Detecta si se han hecho cambios en el proyecto actual para que sean guardados '''

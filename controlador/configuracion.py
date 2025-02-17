@@ -27,7 +27,7 @@ class App():
         try:
             coneccion = requests.get(self.api_app, timeout=5)
         except Exception:
-            logging.error("La conexión ha superado el tiempo de espera.")
+            logging.error(_('La conexión ha superado el tiempo de espera.'))
         else:
             try:
                 v = coneccion.json()['tag_name']
@@ -35,7 +35,7 @@ class App():
                     self.actualizado = False
                 else:
                     self.actualizado = True
-            except KeyError:
+            except (KeyError) as e:
                 logging.error('No se ha podido realizar la conexión a los datos del servidor.')
 
     def descargar_version(self):

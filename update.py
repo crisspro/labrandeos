@@ -1,17 +1,15 @@
 ﻿import logging
 import os
 import platform
+import psutil
 import requests
 import wx
 import subprocess
 import threading
 
+from controlador.traductor import _
 from controlador.configuracion import LoggingConfig
-from controlador.traductor import Traductor
-
 LoggingConfig.instalar_logging()
-traductor = Traductor()
-_ = traductor._
 
 
 class Update(wx.Dialog):
@@ -23,7 +21,8 @@ class Update(wx.Dialog):
         # Crear elementos de la interfaz
         self.mensaje = wx.StaticText(self, -1, mensaje)
         self.dlg_progreso = wx.Gauge(self, range=maximo)
-        self.bt_cancelar = wx.Button(self, -1, '&Cancelar')
+        self.bt_cancelar = wx.Button(self, -1, _('&Cancelar'))
+        self.bt_cancelar.SetFocus()
         self.porcentaje = wx.StaticText(self, -1, '0%')
         # Bindear eventos
         self.Bind(wx.EVT_BUTTON, self.cancelar, self.bt_cancelar)
@@ -43,6 +42,7 @@ class Update(wx.Dialog):
 
     def cancelar(self, event):
         self.cancelado = True
+        logging.info(_('Descarga cancelada.'))
         self.Destroy()
 
     def actualizar_progreso(self, porcentaje):
@@ -58,14 +58,16 @@ class Update(wx.Dialog):
                 url = i['browser_download_url']
                 if ('x64' in url and self.arquitectura_app == '64bit') or \
                    ('x86' in url and self.arquitectura_app == '32bit'):
+                    logging.info(f'{_("Descargando Labrandeos para")} {self.arquitectura_app}')
                     self.download_file(url)
                     break
         except Exception as e:
-            wx.CallAfter(wx.MessageBox, f'{_("Error al descargar:")} {e}', _('Error'), wx.OK | wx.ICON_ERROR)
             logging.error(f'{_("Error al descargar:")} {e}')
+            wx.CallAfter(wx.MessageBox, f'{_("Error al descargar:")} {e}', _('Error'), wx.OK | wx.ICON_ERROR)
             wx.CallAfter(self.Destroy)
 
     def download_file(self, url):
+        ''' Descarga la última versión de Labrandeos. '''
         try:
             response = requests.get(url, stream=True)
             temp_file_path = os.path.join(os.getenv('TEMP'), url.split('/')[-1])
@@ -83,9 +85,9 @@ class Update(wx.Dialog):
                     f.write(data)
                     progress = int((bytes_downloaded * 100) // total_length)
                     self.actualizar_progreso(progress)
-
             if not self.cancelado:
                 wx.CallAfter(self.finalizar_descarga, temp_file_path)
+                logging.info(_('Completada la descarga de Labrandeos.'))
         except Exception as e:
             wx.CallAfter(wx.MessageBox, f'{_("Error durante la descarga:")} {e}', _('Error'), wx.OK | wx.ICON_ERROR)
             logging.error(f'{_("Error durante la descarga:")} {e}')
@@ -110,7 +112,9 @@ class Update(wx.Dialog):
             return False
 
     def run_installer(self, installer_path):
+        ''' Arranca la instalación de Labrandeos. '''
         subprocess.Popen(installer_path, shell=True)
+        logging.info(_('Iniciada la instalación de Labrandeos.'))
 
 
 class DialogoAdvertencia(wx.Dialog):
@@ -146,19 +150,19 @@ class DialogoAdvertencia(wx.Dialog):
 
     def finalizar_proceso(self):
         ''' Función que finalizará el proceso Labrandeos.exe '''
-        try:
-            os.system('taskkill /f /im Labrandeos.exe')
-        except Exception as e:
-            logging.error(f'{_("No se pudo finalizar el proceso:")} {e}')
+        for process in psutil.process_iter(['name']):
+            try:
+                if process.info['name'] == 'Labrandeos.exe':
+                    logging.info(f'{_("Cerrando el proceso:")} {process.info['name']} (PID: {process.pid})')
+                    process.terminate()  # Cierra el proceso
+                    process.wait()  # Espera a que el proceso se cierre
+                    logging.info(_('Proceso cerrado.'))
+                    return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
+                logging.error(f'{_("Error al intentar acceder al proceso 'Labrandeos.exe':")} {e}')
 
 
 if __name__ == '__main__':
     app = wx.App()
-    update = Update(None, 'Descarga', 'Descargando Labrandeos...', maximo=100)
-    update.Show()
+    update = Update(None, _('Descarga'), _('Descargando Labrandeos...'), maximo=100)
     app.MainLoop()
-
-if __name__ == '__main__':
-    app = wx.App(False)  # Primero crea la aplicación wxPython
-    update = Update(None, _('Actualización de Labrandeos'), _('Descargando nueva versión...'), maximo=100)  # Luego crea el diálogo
-    app.MainLoop()  # Inicia el ciclo de eventos de wxPython

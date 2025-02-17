@@ -1,9 +1,6 @@
 import wx
 
-from controlador.traductor import Traductor
-
-traductor = Traductor()
-_ = traductor._
+from controlador.traductor import _
 
 
 class Disco(wx.Dialog):

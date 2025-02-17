@@ -1,10 +1,7 @@
 import wx
 
 import controlador.configuracion
-from controlador.traductor import Traductor
-
-traductor = Traductor()
-_ = traductor._
+from controlador.traductor import _
 
 
 class Opciones(wx.Dialog):

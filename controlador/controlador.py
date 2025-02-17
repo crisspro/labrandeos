@@ -6,16 +6,13 @@ import pickle
 from pydub import AudioSegment
 import pymediainfo
 
-from controlador.traductor import Traductor
+from controlador.traductor import _
 from modelo.disco import Disco
 from modelo.marca import Data, Marca
 from modelo.tiempo import Tiempo
 from modelo.pista import Pista
 from modelo.historial import Historial
 from modelo.reproductor import Reproductor
-
-traductor = Traductor()
-_ = traductor._
 
 
 class Controlador():
