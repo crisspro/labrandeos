@@ -27,7 +27,7 @@ class Traductor:
             opciones = Opciones()
             self._current_language = opciones.consultar_opciones('str', 'general', 'idioma')
         except Exception as e:
-            logging.error(f"Error al cargar configuración de idioma: {e}")
+            logging.error(f'{_("Error al cargar configuración de idioma:")} {e}')
             self._current_language = 'es'  # Idioma por defecto
 
         self._setup_translation()
@@ -44,7 +44,7 @@ class Traductor:
             )
             self._translation_func = translation.gettext
         except Exception as e:
-            logging.error(f"Error al configurar traducción: {e}")
+            logging.error(f'{_("Error al configurar traducción:")} {e}')
             self._translation_func = lambda x: x  # Fallback a no traducción
 
     def change_language(self, language_code: str) -> None:

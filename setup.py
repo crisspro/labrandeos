@@ -2,10 +2,12 @@
 import accessible_output2
 from cx_Freeze import setup, Executable
 
+
 def incluir_accesible_output2():
     origen = os.path.join(accessible_output2.__path__[0], 'lib')
     destino = os.path.join('accessible_output2', 'lib')
     return (origen, destino)
+
 
 # Nombre de la aplicación
 app_name = "Labrandeos"

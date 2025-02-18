@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Labrandeos 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-17 17:02-0300\n"
-"PO-Revision-Date: 2025-02-17 17:27-0300\n"
+"POT-Creation-Date: 2025-02-18 14:38-0300\n"
+"PO-Revision-Date: 2025-02-18 14:43-0300\n"
 "Last-Translator: \n"
 "Language-Team: crisspro\n"
 "Language: en\n"
@@ -30,31 +30,31 @@ msgstr ""
 msgid "Inicia el arranque de la aplicación"
 msgstr "Starting the application"
 
-#: main.py:26
+#: main.py:25
 msgid "Realizadas las configuraciones de idioma"
-msgstr "Made the language settings"
+msgstr "Language settings configured"
 
-#: main.py:31
+#: main.py:30
 msgid "Ejecutada limpieza de archivo temporal de proyecto."
-msgstr "Executed Project Temporary File Cleaning."
+msgstr "Project temporary file cleaning executed."
 
-#: main.py:33
+#: main.py:32
 msgid "Guardado nuevo archivo temporal de proyecto."
-msgstr "New Project Temporary File Save."
+msgstr "New Project Temporary File Saved."
 
-#: main.py:41
+#: main.py:40
 msgid "Labrandeos iniciado con éxito."
-msgstr "Labrandeos started successfully."
+msgstr "Labrandeos has started successfully."
 
-#: main.py:52
+#: main.py:51
 msgid "Error al abrir el proyecto:"
 msgstr "Error opening the project:"
 
-#: main.py:54
+#: main.py:53
 msgid "No se pudo abrir el proyecto."
-msgstr "The project could not be opened."
+msgstr "Unable to open the project."
 
-#: main.py:55 update.py:66 update.py:76 update.py:92 update.py:110
+#: main.py:54 update.py:66 update.py:76 update.py:92 update.py:110
 msgid "Error"
 msgstr "Error"
 
@@ -168,7 +168,7 @@ msgstr "&Separate tracks"
 msgid "&Salir"
 msgstr "&Quit"
 
-#: vista\principal.py:89 vista\principal.py:828
+#: vista\principal.py:89 vista\principal.py:827
 msgid "&Editar"
 msgstr "&Edit"
 
@@ -224,7 +224,7 @@ msgstr "&Updates"
 msgid "&Registro"
 msgstr "&Log"
 
-#: vista\principal.py:133 vista\principal.py:558
+#: vista\principal.py:133 vista\principal.py:557
 msgid "Acerca de "
 msgstr "About "
 
@@ -240,8 +240,8 @@ msgstr "New project"
 msgid "Línea de tiempo"
 msgstr "Timeline"
 
-#: vista\principal.py:164 vista\principal.py:578 vista\principal.py:585
-#: vista\principal.py:592 vista\principal.py:594 vista\principal.py:655
+#: vista\principal.py:164 vista\principal.py:577 vista\principal.py:584
+#: vista\principal.py:591 vista\principal.py:593 vista\principal.py:654
 #: vista\editar.py:42 vista\editar.py:140
 msgid "&Reproducir"
 msgstr "&Play"
@@ -272,7 +272,7 @@ msgstr "Volume"
 
 #: vista\principal.py:191
 msgid "&Marcar"
-msgstr "&Bookmarck"
+msgstr "&Mark"
 
 #: vista\principal.py:201
 msgid "Marcas"
@@ -294,11 +294,11 @@ msgstr "Start time"
 msgid "Modo de exportación"
 msgstr "Export mode"
 
-#: vista\principal.py:211 vista\principal.py:212 vista\principal.py:723
+#: vista\principal.py:211 vista\principal.py:212 vista\principal.py:722
 msgid "Imagen CUE"
 msgstr "CUE image"
 
-#: vista\principal.py:211 vista\principal.py:717 vista\principal.py:725
+#: vista\principal.py:211 vista\principal.py:716 vista\principal.py:724
 msgid "Pistas separadas"
 msgstr "Export mode"
 
@@ -366,7 +366,7 @@ msgstr ""
 "Do you want to go out?"
 
 #: vista\principal.py:427 vista\principal.py:488 vista\principal.py:511
-#: vista\principal.py:765
+#: vista\principal.py:764
 msgid "Atención"
 msgstr "Warning"
 
@@ -375,8 +375,8 @@ msgid ""
 "Se intenta abrir un nuevo proyecto sin guardar los cambios del proyecto "
 "actual. Se pregunta al usuario si desea continuar."
 msgstr ""
-"It is tried to open a new project without saving the changes of the current "
-"project. He wonders the user if you want to continue."
+"Attempting to open a new project without saving changes to the current "
+"project."
 
 #: vista\principal.py:444
 msgid "Abierto proyecto desde:"
@@ -395,19 +395,18 @@ msgid ""
 "Se consulta al usuario si desea guardar los cambios realizados en el "
 "proyecto actual"
 msgstr ""
-"The user is consult if you want to save the changes made in the current "
-"project"
+"The user is asked if they want to save the changes made in the current "
+"project. project"
 
 #: vista\principal.py:452
 msgid ""
 "El usuario acepta guardar los cambios realizados. Se inicia el guardado en "
 "un nuevo proyecto."
-msgstr ""
-"The user accepts to save the changes made. The saved in a new project begins."
+msgstr "The user accepts saving the changes. Saving begins in a new project."
 
 #: vista\principal.py:455
 msgid "El usuario acepta guardar los cambios realizados en el proyecto actual."
-msgstr "The user accepts to save the changes made in the current project."
+msgstr "The user accepts saving the changes made in the current project."
 
 #: vista\principal.py:458
 msgid "El usuario cancela la consulta"
@@ -434,8 +433,8 @@ msgid ""
 "El directorio en el cual se intenta guardar el proyecto, ya contiene un "
 "archivo con el mismo nombre."
 msgstr ""
-"The directory in which the project is tried to save, already contains a file "
-"with the same name."
+"The directory where the project is being saved already contains a file with "
+"the same name."
 
 #: vista\principal.py:488
 msgid "Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?"
@@ -466,169 +465,169 @@ msgstr "Restart the program to change language."
 
 #: vista\principal.py:533
 msgid "ya se está ejecutando."
-msgstr "It is already running."
+msgstr "is already running."
 
-#: vista\principal.py:533 vista\principal.py:553
+#: vista\principal.py:533 vista\principal.py:552
 msgid "Aviso"
 msgstr "Message"
 
-#: vista\principal.py:542 vista\principal.py:543
+#: vista\principal.py:542
 msgid "Buscando si hay nuevas actualizaciones de Labrandeos."
-msgstr "Looking for new updates."
+msgstr "Checking for new updates."
 
-#: vista\principal.py:546
+#: vista\principal.py:545
 msgid "Se ha encontrado  una nueva versión disponible de Labrandeos."
 msgstr "A new version available of Labrandeos  has been found."
 
-#: vista\principal.py:549
+#: vista\principal.py:548
 msgid "Hay una nueva versión disponible. ¿Deseas descargarla ahora?"
-msgstr "There is a new version. Do you want to download it?"
+msgstr "A new version is available. Do you want to download it?"
 
-#: vista\principal.py:549
+#: vista\principal.py:548
 msgid "Actualización"
 msgstr "Update"
 
-#: vista\principal.py:553
+#: vista\principal.py:552
 msgid "No hay ninguna nueva versión disponible"
 msgstr "No updates"
 
-#: vista\principal.py:554
+#: vista\principal.py:553
 msgid "No se ha encontrado ninguna nueva versión disponible de labrandeos."
 msgstr "No new version of labrandeos has been found."
 
-#: vista\principal.py:573
+#: vista\principal.py:572
 msgid "&Pausar"
 msgstr "&Pause"
 
-#: vista\principal.py:637 vista\informacion_medios.py:15
+#: vista\principal.py:636 vista\informacion_medios.py:15
 msgid "horas"
 msgstr "hours"
 
-#: vista\principal.py:637
+#: vista\principal.py:636
 msgid "una hora"
 msgstr "one hour"
 
-#: vista\principal.py:638 vista\informacion_medios.py:15
+#: vista\principal.py:637 vista\informacion_medios.py:15
 msgid "minutos"
 msgstr "minutes"
 
-#: vista\principal.py:638
+#: vista\principal.py:637
 msgid "un minuto"
 msgstr "one minute"
 
-#: vista\principal.py:639 vista\informacion_medios.py:15
+#: vista\principal.py:638 vista\informacion_medios.py:15
 msgid "segundos"
 msgstr "seconds"
 
-#: vista\principal.py:639
+#: vista\principal.py:638
 msgid "un segundo"
 msgstr "one second"
 
-#: vista\principal.py:640 vista\informacion_medios.py:15
+#: vista\principal.py:639 vista\informacion_medios.py:15
 msgid "marcos"
 msgstr "frames"
 
-#: vista\principal.py:640
+#: vista\principal.py:639
 msgid "un marco"
 msgstr "one frame"
 
-#: vista\principal.py:651
+#: vista\principal.py:650
 msgid "Duración de la pista. "
 msgstr "Track's time. "
 
-#: vista\principal.py:660
+#: vista\principal.py:659
 msgid "Creada nueva marca."
 msgstr "Created new mark."
 
-#: vista\principal.py:663
+#: vista\principal.py:662
 msgid "Crear marca"
 msgstr "Create mark"
 
-#: vista\principal.py:689
+#: vista\principal.py:688
 msgid "Editar marca"
 msgstr "Edit mark"
 
-#: vista\principal.py:711
+#: vista\principal.py:710
 msgid "Marca editada."
 msgstr "Edited mark."
 
-#: vista\principal.py:730
+#: vista\principal.py:729
 msgid "Inicia la exportación del proyecto como imagen CUE."
 msgstr "Starts the export of the project as a CUE image."
 
-#: vista\principal.py:733
+#: vista\principal.py:732
 msgid "Finaliza exportación del Proyecto como imagen CUE"
 msgstr "Export of the Project as a CUE image is completed"
 
-#: vista\principal.py:737
+#: vista\principal.py:736
 msgid "Inicia la exportación del proyecto como pistas de audio separadas."
 msgstr "Start the export of the project as separate audio tracks."
 
-#: vista\principal.py:744
+#: vista\principal.py:743
 msgid "Finaliza la exportación del proyecto como pistas de audio separadas."
 msgstr "Finalizes the export of the project as separate audio tracks."
 
-#: vista\principal.py:753
+#: vista\principal.py:752
 msgid "Cue exportado exitosamente."
 msgstr "Successfully exported CUE."
 
-#: vista\principal.py:758
+#: vista\principal.py:757
 msgid "Selecciona la carpeta de destino"
 msgstr "Select the destination folder"
 
-#: vista\principal.py:764
+#: vista\principal.py:763
 msgid ""
 "Se intenta exportar en un directorio que ya contiene una carpeta con el "
 "mismo nombre del proyecto."
 msgstr ""
-"It is tried to export in a directory that already contains a folder with the "
-"same name of the project."
+"Attempting to export to a directory that already contains a folder with the "
+"same name as the project."
 
-#: vista\principal.py:765
+#: vista\principal.py:764
 msgid "Ya existe una carpeta con el mismo nombre. ¿Deseas reemplazarla?"
-msgstr "A folder with the same name already exists. Do you want to replace it?"
+msgstr ""
+"A folder with the same name already exists. Do you want to overwrite it?"
 
-#: vista\principal.py:769
+#: vista\principal.py:768
 msgid ""
 "El usuario acepta  sobreescribir la carpeta con el mismo nombre del "
 "proyecto. en:"
 msgstr ""
-"The user accepts overwriting the folder with the same name of the project. "
-"in:"
+"The user accepts overwriting the folder with the same name as the project in:"
 
-#: vista\principal.py:772
+#: vista\principal.py:771
 msgid "Seleccionada como ruta de destino:"
 msgstr "Selected as a destination route:"
 
-#: vista\principal.py:777
+#: vista\principal.py:776
 msgid "Exportando pistas"
 msgstr "Exporting tracks"
 
-#: vista\principal.py:777
+#: vista\principal.py:776
 msgid "Espere un momento..."
 msgstr "Wait a moment..."
 
-#: vista\principal.py:794
+#: vista\principal.py:793
 msgid "Se deshacen cambios realizados."
 msgstr "Changes made are undone."
 
-#: vista\principal.py:795
+#: vista\principal.py:794
 msgid "Deshacer"
 msgstr "Undo"
 
-#: vista\principal.py:802
+#: vista\principal.py:801
 msgid "Se recuperan cambios deshechos"
 msgstr "Changes are recovered"
 
-#: vista\principal.py:804
+#: vista\principal.py:803
 msgid "Rehacer"
 msgstr "Redo"
 
-#: vista\principal.py:819
+#: vista\principal.py:818
 msgid "Información de medios"
 msgstr "Media information"
 
-#: vista\principal.py:831
+#: vista\principal.py:830
 msgid "E&liminar"
 msgstr "&Delete"
 
@@ -840,3 +839,19 @@ msgstr "The file is not found with the project data."
 #: controlador\configuracion.py:30
 msgid "La conexión ha superado el tiempo de espera."
 msgstr "The connection has overcome the waiting time."
+
+#: controlador\configuracion.py:40
+msgid "No se ha podido realizar la conexión a los datos del servidor."
+msgstr "It has not been possible to connect to the server data."
+
+#: controlador\configuracion.py:48
+msgid "Error al intentar ejecutar el actualizador:"
+msgstr "Error trying to execute the update:"
+
+#: controlador\traductor.py:30
+msgid "Error al cargar configuración de idioma:"
+msgstr "Error loading language configuration:"
+
+#: controlador\traductor.py:47
+msgid "Error al configurar traducción:"
+msgstr "Error when configuring translation:"

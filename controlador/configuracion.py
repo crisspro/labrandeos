@@ -3,7 +3,6 @@ import logging
 import os
 import platform
 import subprocess
-import sys
 
 import psutil
 import requests
@@ -27,6 +26,7 @@ class App():
         try:
             coneccion = requests.get(self.api_app, timeout=5)
         except Exception:
+            from controlador.traductor import _
             logging.error(_('La conexión ha superado el tiempo de espera.'))
         else:
             try:
@@ -35,15 +35,17 @@ class App():
                     self.actualizado = False
                 else:
                     self.actualizado = True
-            except (KeyError) as e:
-                logging.error('No se ha podido realizar la conexión a los datos del servidor.')
+            except KeyError:
+                from controlador.traductor import _
+                logging.error(_('No se ha podido realizar la conexión a los datos del servidor.'))
 
     def descargar_version(self):
         ''' Llama al ejecutable que descarga la última versión del programa. '''
         try:
-            subprocess.Popen([sys.executable, 'update.py'], creationflags=subprocess.CREATE_NEW_PROCESS_GROUP, start_new_session=True)
+            subprocess.Popen(['update.exe'], creationflags=subprocess.CREATE_NEW_PROCESS_GROUP, start_new_session=True)
         except Exception as e:
-            logging.error(f'Error al intentar ejecutar el actualizador: {e}')
+            from controlador.traductor import _
+            logging.error(f'{_("Error al intentar ejecutar el actualizador:")} {e}')
 
     def verificar_instancia(self):
         ''' Verifica si se está ejecutando otra instancia del programa '''

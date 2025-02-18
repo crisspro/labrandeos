@@ -540,7 +540,6 @@ class Frame(wx.Frame):
     def buscar_actualizacion(self, event):
         ''' Muestra mensajes si hay o no actualizaciones '''
         logging.info(_('Buscando si hay nuevas actualizaciones de Labrandeos.'))
-        logging.info(_('Buscando si hay nuevas actualizaciones de Labrandeos.'))
         self.controlador_app.verificarNuevaVersion()
         if self.controlador_app.actualizado is False:
             logging.info(_('Se ha encontrado  una nueva versión disponible de Labrandeos.'))

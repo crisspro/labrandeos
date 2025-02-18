@@ -17,7 +17,6 @@ from vista.principal import Frame
 def main():
     App = wx.App()
     logging.info(_('Inicia el arranque de la aplicación'))
-
     # Configuraciones iniciales
     controlador_app = controlador.configuracion.App()
     controlador_opciones = controlador.configuracion.Opciones()

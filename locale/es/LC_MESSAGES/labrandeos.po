@@ -5,8 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Labrandeos 2.0\n"
-"POT-Creation-Date: 2025-01-18 17:44-0300\n"
-"PO-Revision-Date: 2025-01-18 17:54-0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-17 19:29-0300\n"
+"PO-Revision-Date: 2025-02-17 19:45-0300\n"
 "Last-Translator: \n"
 "Language-Team: crisspro\n"
 "Language: es\n"
@@ -17,531 +18,814 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.5\n"
 
-#: acerca_de.py:11
-msgid "Licencia GPL 3.0"
+#: main.py:19
+msgid "Inicia el arranque de la aplicación"
 msgstr ""
 
-#: acerca_de.py:11
-msgid "Versión"
+#: main.py:26
+msgid "Realizadas las configuraciones de idioma"
 msgstr ""
 
-#: acerca_de.py:12
-msgid "&Visitar sitio del proyecto"
+#: main.py:31
+msgid "Ejecutada limpieza de archivo temporal de proyecto."
 msgstr ""
 
-#: acerca_de.py:14 informacion_medios.py:22
-msgid "&Cerrar"
+#: main.py:33
+msgid "Guardado nuevo archivo temporal de proyecto."
 msgstr ""
 
-#: disco.py:13 editar.py:17
-msgid "Título:"
+#: main.py:41
+msgid "Labrandeos iniciado con éxito."
 msgstr ""
 
-#: disco.py:16 editar.py:21
-msgid "Autor:"
+#: main.py:52
+msgid "Error al abrir el proyecto:"
 msgstr ""
 
-#: disco.py:20
-msgid "Año:"
+#: main.py:54
+msgid "No se pudo abrir el proyecto."
 msgstr ""
 
-#: disco.py:24
-msgid "Género:"
+#: main.py:55 update.py:66 update.py:76 update.py:92 update.py:110
+msgid "Error"
 msgstr ""
 
-#: disco.py:27
-msgid "Comentarios:"
-msgstr ""
-
-#: disco.py:29 editar.py:42 opciones.py:20
-msgid "&Aceptar"
-msgstr ""
-
-#: disco.py:31 editar.py:45 opciones.py:22
+#: update.py:24 update.py:132 vista\opciones.py:23 vista\editar.py:47
+#: vista\disco.py:33
 msgid "&Cancelar"
 msgstr ""
 
-#: disco.py:76 principal.py:350 principal.py:354
-msgid "Sin título"
+#: update.py:45
+msgid "Descarga cancelada."
 msgstr ""
 
-#: disco.py:80 principal.py:348 principal.py:354
-msgid "Sin autor"
+#: update.py:61
+msgid "Descargando Labrandeos para"
 msgstr ""
 
-#: disco.py:88
-msgid "Aviso:"
+#: update.py:65 update.py:66
+msgid "Error al descargar:"
 msgstr ""
 
-#: disco.py:88
-msgid "Solo se admiten números"
+#: update.py:76 update.py:77
+msgid "No se pudo determinar el tamaño del archivo"
 msgstr ""
 
-#: editar.py:24
-msgid "Horas"
+#: update.py:90
+msgid "Completada la descarga de Labrandeos."
 msgstr ""
 
-#: editar.py:28
-msgid "Minutos"
+#: update.py:92 update.py:93
+msgid "Error durante la descarga:"
 msgstr ""
 
-#: editar.py:32
-msgid "Segundos"
+#: update.py:110 update.py:111
+msgid "Error al verificar el proceso:"
 msgstr ""
 
-#: editar.py:36
-msgid "Marcos"
+#: update.py:117
+msgid "Iniciada la instalación de Labrandeos."
 msgstr ""
 
-#: editar.py:40 editar.py:138 principal.py:160 principal.py:545
-#: principal.py:552 principal.py:559 principal.py:561 principal.py:622
-msgid "&Reproducir"
+#: update.py:127
+msgid ""
+"Para continuar con la instalación, por favor, guarde los cambios que haya "
+"realizado en el proyecto. Labrandeos se cerrará si decide continuar con la "
+"instalación."
 msgstr ""
 
-#: editar.py:92
-msgid "Debes ingresar un autor."
+#: update.py:131
+msgid "C&ontinuar con la instalación"
 msgstr ""
 
-#: editar.py:92 editar.py:94
-msgid "Alerta."
+#: update.py:156
+msgid "Cerrando el proceso:"
 msgstr ""
 
-#: editar.py:94
-msgid "Debes ingresar un título."
+#: update.py:159
+msgid "Proceso cerrado."
 msgstr ""
 
-#: editar.py:121
-msgid "Advertencia."
+#: update.py:162
+msgid "Error al intentar acceder al proceso 'Labrandeos.exe':"
 msgstr ""
 
-#: editar.py:121
-msgid "El tiempo ingresado supera el tiempo de duración del audio."
+#: update.py:167
+msgid "Descarga"
 msgstr ""
 
-#: editar.py:135 principal.py:182
-msgid "&Detener"
+#: update.py:167
+msgid "Descargando Labrandeos..."
 msgstr ""
 
-#: informacion_medios.py:12
-msgid "Fichero:"
-msgstr ""
-
-#: informacion_medios.py:13
-msgid "Duración:"
-msgstr ""
-
-#: informacion_medios.py:13 principal.py:604
-msgid "horas"
-msgstr ""
-
-#: informacion_medios.py:13 principal.py:605
-msgid "minutos"
-msgstr ""
-
-#: informacion_medios.py:13 principal.py:606
-msgid "segundos"
-msgstr ""
-
-#: informacion_medios.py:13 principal.py:607
-msgid "marcos"
-msgstr ""
-
-#: informacion_medios.py:14 opciones.py:103
-msgid "Formato:"
-msgstr ""
-
-#: informacion_medios.py:15
-msgid "Tasa de bits:"
-msgstr ""
-
-#: informacion_medios.py:16
-msgid "Modo de taza de bits"
-msgstr ""
-
-#: informacion_medios.py:17 opciones.py:118
-msgid "Velocidad de muestreo:"
-msgstr ""
-
-#: informacion_medios.py:18
-msgid "Canales:"
-msgstr ""
-
-#: opciones.py:17
-msgid "General"
-msgstr ""
-
-#: opciones.py:18
-msgid "Audio"
-msgstr ""
-
-#: opciones.py:41
-msgid "Idioma"
-msgstr ""
-
-#: opciones.py:42 opciones.py:85 opciones.py:91
-msgid "Español"
-msgstr ""
-
-#: opciones.py:42 opciones.py:87 opciones.py:93
-msgid "Inglés"
-msgstr ""
-
-#: opciones.py:46
-msgid "Añadir índice al exportar marcas"
-msgstr ""
-
-#: opciones.py:48
-msgid "Abrir carpeta de destino al exportar"
-msgstr ""
-
-#: opciones.py:50
-msgid "Detectar si hay actualizaciones al iniciar"
-msgstr ""
-
-#: opciones.py:52
-msgid "Sonido al detectar nueva actualización"
-msgstr ""
-
-#: opciones.py:54
-msgid "Sonido al crear una nueva marca"
-msgstr ""
-
-#: opciones.py:56
-msgid "Sonido al exportar."
-msgstr ""
-
-#: opciones.py:105 opciones.py:145
-msgid "automático"
-msgstr ""
-
-#: opciones.py:108 opciones.py:186 opciones.py:205 opciones.py:224
-msgid "Taza de bit:"
-msgstr ""
-
-#: opciones.py:113
-msgid "Modo de taza de bit:"
-msgstr ""
-
-#: opciones.py:123
-msgid "Normalizar"
-msgstr ""
-
-#: opciones.py:125
-msgid "Añadir silencio al final de cada pista"
-msgstr ""
-
-#: opciones.py:167
-msgid "Compresión:"
-msgstr ""
-
-#: opciones.py:168
-msgid "0 (más rápido)"
-msgstr ""
-
-#: opciones.py:168
-msgid "8 (más pequeño)"
-msgstr ""
-
-#: principal.py:58
+#: vista\principal.py:61
 msgid "&Archivo"
 msgstr ""
 
-#: principal.py:59
+#: vista\principal.py:62
 msgid "&Nuevo proyecto"
 msgstr ""
 
-#: principal.py:63 principal.py:136
+#: vista\principal.py:66 vista\principal.py:140
 msgid "&Cargar audio"
 msgstr ""
 
-#: principal.py:65
+#: vista\principal.py:68
 msgid "&Abrir proyecto"
 msgstr ""
 
-#: principal.py:68
+#: vista\principal.py:71
 msgid "&Guardar"
 msgstr ""
 
-#: principal.py:72
+#: vista\principal.py:74
 msgid "G&uardar como..."
 msgstr ""
 
-#: principal.py:76
+#: vista\principal.py:78
 msgid "&Exportar"
 msgstr ""
 
-#: principal.py:78
+#: vista\principal.py:80
 msgid "&Imagen CUE"
 msgstr ""
 
-#: principal.py:80
+#: vista\principal.py:82
 msgid "&Pistas separadas"
 msgstr ""
 
-#: principal.py:82
+#: vista\principal.py:84
 msgid "&Salir"
 msgstr ""
 
-#: principal.py:87 principal.py:764
+#: vista\principal.py:89 vista\principal.py:828
 msgid "&Editar"
 msgstr ""
 
-#: principal.py:88
+#: vista\principal.py:90
 msgid "&Deshacer"
 msgstr ""
 
-#: principal.py:92
+#: vista\principal.py:94
 msgid "&Rehacer"
 msgstr ""
 
-#: principal.py:96
+#: vista\principal.py:98
 msgid "&Eliminar"
 msgstr ""
 
-#: principal.py:99
+#: vista\principal.py:101
 msgid "&Marca"
 msgstr ""
 
-#: principal.py:106
+#: vista\principal.py:108
 msgid "&Herramientas"
 msgstr ""
 
-#: principal.py:107
+#: vista\principal.py:109
 msgid "&Metadatos del álbum"
 msgstr ""
 
-#: principal.py:111
+#: vista\principal.py:113
 msgid "&Información de medios"
 msgstr ""
 
-#: principal.py:115 principal.py:212
+#: vista\principal.py:117 vista\principal.py:215
 msgid "&Opciones"
 msgstr ""
 
-#: principal.py:121
+#: vista\principal.py:123
 msgid "A&yuda"
 msgstr ""
 
-#: principal.py:122
+#: vista\principal.py:124
 msgid "&Documentación"
 msgstr ""
 
-#: principal.py:125
+#: vista\principal.py:127
 msgid "&Novedades"
 msgstr ""
 
-#: principal.py:127
+#: vista\principal.py:129
 msgid "&Buscar actualizaciones"
 msgstr ""
 
-#: principal.py:129 principal.py:525
+#: vista\principal.py:131
+msgid "&Registro"
+msgstr ""
+
+#: vista\principal.py:133 vista\principal.py:558
 msgid "Acerca de "
 msgstr ""
 
-#: principal.py:135
+#: vista\principal.py:139
 msgid "Carga el archivo de audio que quieres procesar."
 msgstr ""
 
-#: principal.py:144 principal.py:450
+#: vista\principal.py:148 vista\principal.py:470
 msgid "Nuevo proyecto"
 msgstr ""
 
-#: principal.py:153
+#: vista\principal.py:157
 msgid "Línea de tiempo"
 msgstr ""
 
-#: principal.py:167
+#: vista\principal.py:164 vista\principal.py:578 vista\principal.py:585
+#: vista\principal.py:592 vista\principal.py:594 vista\principal.py:655
+#: vista\editar.py:42 vista\editar.py:140
+msgid "&Reproducir"
+msgstr ""
+
+#: vista\principal.py:171
 msgid "línea de tiempo"
 msgstr ""
 
-#: principal.py:171
+#: vista\principal.py:175
 msgid "enfocar lista"
 msgstr ""
 
-#: principal.py:175
+#: vista\principal.py:179
 msgid "Duración"
 msgstr ""
 
-#: principal.py:179
+#: vista\principal.py:183
 msgid "tiempo actual"
 msgstr ""
 
-#: principal.py:184
+#: vista\principal.py:186 vista\editar.py:137
+msgid "&Detener"
+msgstr ""
+
+#: vista\principal.py:188
 msgid "Volumen"
 msgstr ""
 
-#: principal.py:187
+#: vista\principal.py:191
 msgid "&Marcar"
 msgstr ""
 
-#: principal.py:197
+#: vista\principal.py:201
 msgid "Marcas"
 msgstr ""
 
-#: principal.py:200
+#: vista\principal.py:204
 msgid "Título"
 msgstr ""
 
-#: principal.py:201
+#: vista\principal.py:205
 msgid "Autor"
 msgstr ""
 
-#: principal.py:202
+#: vista\principal.py:206
 msgid "Tiempo de inicio"
 msgstr ""
 
-#: principal.py:207
+#: vista\principal.py:210
 msgid "Modo de exportación"
 msgstr ""
 
-#: principal.py:208 principal.py:209 principal.py:686
+#: vista\principal.py:211 vista\principal.py:212 vista\principal.py:723
 msgid "Imagen CUE"
 msgstr ""
 
-#: principal.py:208 principal.py:679 principal.py:688
+#: vista\principal.py:211 vista\principal.py:717 vista\principal.py:725
 msgid "Pistas separadas"
 msgstr ""
 
-#: principal.py:215
+#: vista\principal.py:218
 msgid "E&XPORTAR"
 msgstr ""
 
-#: principal.py:312
+#: vista\principal.py:314
 msgid "Eliminado"
 msgstr ""
 
-#: principal.py:330
+#: vista\principal.py:315
+msgid "marca eliminada."
+msgstr ""
+
+#: vista\principal.py:328 vista\principal.py:332
+msgid "Finalizada la ejecución de Labrandeos."
+msgstr ""
+
+#: vista\principal.py:336
 msgid "Metadatos del álbum"
 msgstr ""
 
-#: principal.py:358
+#: vista\principal.py:348
+msgid "Guardados metadatos del álbum"
+msgstr ""
+
+#: vista\principal.py:355 vista\principal.py:361 vista\disco.py:82
+msgid "Sin autor"
+msgstr ""
+
+#: vista\principal.py:357 vista\principal.py:361 vista\disco.py:78
+msgid "Sin título"
+msgstr ""
+
+#: vista\principal.py:365
 msgid "Cargar audio"
 msgstr ""
 
-#: principal.py:363
+#: vista\principal.py:370
 msgid "No es posible cargar el fichero, sólo se admiten archivos de audio."
 msgstr ""
 
-#: principal.py:412
+#: vista\principal.py:371
+msgid "Se intenta cargar un archivo que no es de audio."
+msgstr ""
+
+#: vista\principal.py:380
+msgid "Cargado archivo de audio en el proyecto desde:"
+msgstr ""
+
+#: vista\principal.py:423
 msgid "Abrir proyecto"
 msgstr ""
 
-#: principal.py:416
+#: vista\principal.py:427
 msgid ""
 "Estás a punto de abrir un nuevo proyecto. Los cambios que hayas hecho se "
 "perderán. \n"
 " ¿Deseas continuar?"
 msgstr ""
 
-#: principal.py:416 principal.py:462 principal.py:486 principal.py:722
+#: vista\principal.py:427 vista\principal.py:488 vista\principal.py:511
+#: vista\principal.py:765
 msgid "Atención"
 msgstr ""
 
-#: principal.py:431
-msgid "Guardar"
+#: vista\principal.py:428
+msgid ""
+"Se intenta abrir un nuevo proyecto sin guardar los cambios del proyecto "
+"actual. Se pregunta al usuario si desea continuar."
 msgstr ""
 
-#: principal.py:431
+#: vista\principal.py:444
+msgid "Abierto proyecto desde:"
+msgstr ""
+
+#: vista\principal.py:449
 msgid "¿Deseas guardar los cambios realizados?"
 msgstr ""
 
-#: principal.py:455
+#: vista\principal.py:449
+msgid "Guardar"
+msgstr ""
+
+#: vista\principal.py:450
+msgid ""
+"Se consulta al usuario si desea guardar los cambios realizados en el "
+"proyecto actual"
+msgstr ""
+
+#: vista\principal.py:452
+msgid ""
+"El usuario acepta guardar los cambios realizados. Se inicia el guardado en "
+"un nuevo proyecto."
+msgstr ""
+
+#: vista\principal.py:455
+msgid "El usuario acepta guardar los cambios realizados en el proyecto actual."
+msgstr ""
+
+#: vista\principal.py:458
+msgid "El usuario cancela la consulta"
+msgstr ""
+
+#: vista\principal.py:471
+msgid "Creado un nuevo proyecto vacío."
+msgstr ""
+
+#: vista\principal.py:479
 msgid "guardado"
 msgstr ""
 
-#: principal.py:459
+#: vista\principal.py:480
+msgid "Guardados los cambios realizados en el proyecto."
+msgstr ""
+
+#: vista\principal.py:484
 msgid "Guardar proyecto"
 msgstr ""
 
-#: principal.py:462
+#: vista\principal.py:487
+msgid ""
+"El directorio en el cual se intenta guardar el proyecto, ya contiene un "
+"archivo con el mismo nombre."
+msgstr ""
+
+#: vista\principal.py:488
 msgid "Ya existe un fichero con este nombre. ¿Deseas reemplazarlo?"
 msgstr ""
 
-#: principal.py:476
+#: vista\principal.py:492
+msgid "El usuario acepta sobreescribir el proyecto del mismo nombre en:"
+msgstr ""
+
+#: vista\principal.py:496
+msgid "Proyecto guardado en:"
+msgstr ""
+
+#: vista\principal.py:500
 msgid "Opciones"
 msgstr ""
 
-#: principal.py:486
+#: vista\principal.py:508
+msgid "Guardadas las opciones de configuración."
+msgstr ""
+
+#: vista\principal.py:511
 msgid ""
 "Debes reiniciar el programa para que los cambios de idioma surtan efecto."
 msgstr ""
 
-#: principal.py:504
+#: vista\principal.py:533
 msgid "ya se está ejecutando."
 msgstr ""
 
-#: principal.py:504 principal.py:521
+#: vista\principal.py:533 vista\principal.py:553
 msgid "Aviso"
 msgstr ""
 
-#: principal.py:517
-msgid "Actualización"
+#: vista\principal.py:542 vista\principal.py:543
+msgid "Buscando si hay nuevas actualizaciones de Labrandeos."
 msgstr ""
 
-#: principal.py:517
+#: vista\principal.py:546
+msgid "Se ha encontrado  una nueva versión disponible de Labrandeos."
+msgstr ""
+
+#: vista\principal.py:549
 msgid "Hay una nueva versión disponible. ¿Deseas descargarla ahora?"
 msgstr ""
 
-#: principal.py:521
+#: vista\principal.py:549
+msgid "Actualización"
+msgstr ""
+
+#: vista\principal.py:553
 msgid "No hay ninguna nueva versión disponible"
 msgstr ""
 
-#: principal.py:540
+#: vista\principal.py:554
+msgid "No se ha encontrado ninguna nueva versión disponible de labrandeos."
+msgstr ""
+
+#: vista\principal.py:573
 msgid "&Pausar"
 msgstr ""
 
-#: principal.py:604
+#: vista\principal.py:637 vista\informacion_medios.py:15
+msgid "horas"
+msgstr ""
+
+#: vista\principal.py:637
 msgid "una hora"
 msgstr ""
 
-#: principal.py:605
+#: vista\principal.py:638 vista\informacion_medios.py:15
+msgid "minutos"
+msgstr ""
+
+#: vista\principal.py:638
 msgid "un minuto"
 msgstr ""
 
-#: principal.py:606
+#: vista\principal.py:639 vista\informacion_medios.py:15
+msgid "segundos"
+msgstr ""
+
+#: vista\principal.py:639
 msgid "un segundo"
 msgstr ""
 
-#: principal.py:607
+#: vista\principal.py:640 vista\informacion_medios.py:15
+msgid "marcos"
+msgstr ""
+
+#: vista\principal.py:640
 msgid "un marco"
 msgstr ""
 
-#: principal.py:618
+#: vista\principal.py:651
 msgid "Duración de la pista. "
 msgstr ""
 
-#: principal.py:628
+#: vista\principal.py:660
+msgid "Creada nueva marca."
+msgstr ""
+
+#: vista\principal.py:663
 msgid "Crear marca"
 msgstr ""
 
-#: principal.py:652
+#: vista\principal.py:689
 msgid "Editar marca"
 msgstr ""
 
-#: principal.py:711
+#: vista\principal.py:711
+msgid "Marca editada."
+msgstr ""
+
+#: vista\principal.py:730
+msgid "Inicia la exportación del proyecto como imagen CUE."
+msgstr ""
+
+#: vista\principal.py:733
+msgid "Finaliza exportación del Proyecto como imagen CUE"
+msgstr ""
+
+#: vista\principal.py:737
+msgid "Inicia la exportación del proyecto como pistas de audio separadas."
+msgstr ""
+
+#: vista\principal.py:744
+msgid "Finaliza la exportación del proyecto como pistas de audio separadas."
+msgstr ""
+
+#: vista\principal.py:753
 msgid "Cue exportado exitosamente."
 msgstr ""
 
-#: principal.py:716
+#: vista\principal.py:758
 msgid "Selecciona la carpeta de destino"
 msgstr ""
 
-#: principal.py:722
-msgid "Ya existe una carpeta con el mismo nombre. /n ¿Deseas reemplazarla?"
+#: vista\principal.py:764
+msgid ""
+"Se intenta exportar en un directorio que ya contiene una carpeta con el "
+"mismo nombre del proyecto."
 msgstr ""
 
-#: principal.py:732
+#: vista\principal.py:765
+msgid "Ya existe una carpeta con el mismo nombre. ¿Deseas reemplazarla?"
+msgstr ""
+
+#: vista\principal.py:769
+msgid ""
+"El usuario acepta  sobreescribir la carpeta con el mismo nombre del "
+"proyecto. en:"
+msgstr ""
+
+#: vista\principal.py:772
+msgid "Seleccionada como ruta de destino:"
+msgstr ""
+
+#: vista\principal.py:777
+msgid "Exportando pistas"
+msgstr ""
+
+#: vista\principal.py:777
+msgid "Espere un momento..."
+msgstr ""
+
+#: vista\principal.py:794
+msgid "Se deshacen cambios realizados."
+msgstr ""
+
+#: vista\principal.py:795
 msgid "Deshacer"
 msgstr ""
 
-#: principal.py:740
+#: vista\principal.py:802
+msgid "Se recuperan cambios deshechos"
+msgstr ""
+
+#: vista\principal.py:804
 msgid "Rehacer"
 msgstr ""
 
-#: principal.py:755
+#: vista\principal.py:819
 msgid "Información de medios"
 msgstr ""
 
-#: principal.py:767
+#: vista\principal.py:831
 msgid "E&liminar"
+msgstr ""
+
+#: vista\opciones.py:18
+msgid "General"
+msgstr ""
+
+#: vista\opciones.py:19
+msgid "Audio"
+msgstr ""
+
+#: vista\opciones.py:21 vista\editar.py:44 vista\disco.py:31
+msgid "&Aceptar"
+msgstr ""
+
+#: vista\opciones.py:42
+msgid "Idioma"
+msgstr ""
+
+#: vista\opciones.py:43 vista\opciones.py:86 vista\opciones.py:92
+msgid "Español"
+msgstr ""
+
+#: vista\opciones.py:43 vista\opciones.py:88 vista\opciones.py:94
+msgid "Inglés"
+msgstr ""
+
+#: vista\opciones.py:47
+msgid "Añadir índice al exportar marcas"
+msgstr ""
+
+#: vista\opciones.py:49
+msgid "Abrir carpeta de destino al exportar"
+msgstr ""
+
+#: vista\opciones.py:51
+msgid "Detectar si hay actualizaciones al iniciar"
+msgstr ""
+
+#: vista\opciones.py:53
+msgid "Reproducir sonido al detectar una nueva actualización"
+msgstr ""
+
+#: vista\opciones.py:55
+msgid "Reproducir sonido al crear una nueva marca"
+msgstr ""
+
+#: vista\opciones.py:57
+msgid "Reproducir sonido al finalizar la exportación."
+msgstr ""
+
+#: vista\opciones.py:103 vista\informacion_medios.py:16
+msgid "Formato:"
+msgstr ""
+
+#: vista\opciones.py:104 vista\opciones.py:106 vista\opciones.py:148
+msgid "automático"
+msgstr ""
+
+#: vista\opciones.py:110 vista\opciones.py:214 vista\opciones.py:241
+#: vista\opciones.py:263
+msgid "Taza de bit:"
+msgstr ""
+
+#: vista\opciones.py:115
+msgid "Modo de taza de bit:"
+msgstr ""
+
+#: vista\opciones.py:116 vista\opciones.py:118 vista\opciones.py:235
+msgid "constante"
+msgstr ""
+
+#: vista\opciones.py:116
+msgid "variable"
+msgstr ""
+
+#: vista\opciones.py:121 vista\informacion_medios.py:19
+msgid "Velocidad de muestreo:"
+msgstr ""
+
+#: vista\opciones.py:126
+msgid "Normalizar"
+msgstr ""
+
+#: vista\opciones.py:128
+msgid "Añadir silencio al final de cada pista"
+msgstr ""
+
+#: vista\opciones.py:192
+msgid "Compresión:"
+msgstr ""
+
+#: vista\opciones.py:193
+msgid "0 (más rápido)"
+msgstr ""
+
+#: vista\opciones.py:193
+msgid "8 (más pequeño)"
+msgstr ""
+
+#: vista\editar.py:19 vista\disco.py:15
+msgid "Título:"
+msgstr ""
+
+#: vista\editar.py:23 vista\disco.py:18
+msgid "Autor:"
+msgstr ""
+
+#: vista\editar.py:26
+msgid "Horas"
+msgstr ""
+
+#: vista\editar.py:30
+msgid "Minutos"
+msgstr ""
+
+#: vista\editar.py:34
+msgid "Segundos"
+msgstr ""
+
+#: vista\editar.py:38
+msgid "Marcos"
+msgstr ""
+
+#: vista\editar.py:94
+msgid "Debes ingresar un autor."
+msgstr ""
+
+#: vista\editar.py:94 vista\editar.py:96
+msgid "Alerta."
+msgstr ""
+
+#: vista\editar.py:96
+msgid "Debes ingresar un título."
+msgstr ""
+
+#: vista\editar.py:123
+msgid "El tiempo ingresado supera el tiempo de duración del audio."
+msgstr ""
+
+#: vista\editar.py:123
+msgid "Advertencia."
+msgstr ""
+
+#: vista\acerca_de.py:12
+msgid "Versión"
+msgstr ""
+
+#: vista\acerca_de.py:12
+msgid "Licencia GPL 3.0"
+msgstr ""
+
+#: vista\acerca_de.py:13
+msgid "&Visitar sitio del proyecto"
+msgstr ""
+
+#: vista\acerca_de.py:15 vista\informacion_medios.py:24
+msgid "&Cerrar"
+msgstr ""
+
+#: vista\disco.py:22
+msgid "Año:"
+msgstr ""
+
+#: vista\disco.py:26
+msgid "Género:"
+msgstr ""
+
+#: vista\disco.py:29
+msgid "Comentarios:"
+msgstr ""
+
+#: vista\disco.py:90
+msgid "Aviso:"
+msgstr ""
+
+#: vista\disco.py:90
+msgid "Solo se admiten números"
+msgstr ""
+
+#: vista\informacion_medios.py:14
+msgid "Origen:"
+msgstr ""
+
+#: vista\informacion_medios.py:15
+msgid "Duración:"
+msgstr ""
+
+#: vista\informacion_medios.py:17
+msgid "Tasa de bits:"
+msgstr ""
+
+#: vista\informacion_medios.py:18
+msgid "Modo de taza de bits:"
+msgstr ""
+
+#: vista\informacion_medios.py:18
+msgid "Modo de taza de bits"
+msgstr ""
+
+#: vista\informacion_medios.py:20
+msgid "Canales:"
+msgstr ""
+
+#: controlador\controlador.py:78
+msgid "No se encuentra el archivo con los datos del proyecto."
+msgstr ""
+
+#: controlador\configuracion.py:30
+msgid "La conexión ha superado el tiempo de espera."
+msgstr ""
+
+#: controlador\configuracion.py:40
+msgid "No se ha podido realizar la conexión a los datos del servidor."
+msgstr ""
+
+#: controlador\configuracion.py:48
+msgid "Error al intentar ejecutar el actualizador:"
+msgstr ""
+
+#: controlador\traductor.py:30
+msgid "Error al cargar configuración de idioma:"
+msgstr ""
+
+#: controlador\traductor.py:47
+msgid "Error al configurar traducción:"
 msgstr ""
