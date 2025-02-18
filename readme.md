@@ -78,16 +78,23 @@ traducir.bat
 6. Poedit guarda el archivo .po y la compilación .mo en el mismo directorio, de no ser así, solo compila como .mo desde Poedit y lo guardas en la ruta ya mencionada.
 7. Ahora cuando quieras actualizar tus traducciones, solo edita el archivo .po del idioma correspondiente, actualiza desde el archivo .pot solo si has modificado las cadenas en el código fuente, para finalmente guardar los cambios realizados.
   
-## Instrucciones para compilar (cx-Freeze)
+## Instrucciones para compilar con cx-Freeze
 
-1. Ejecuta el archivo "setup.py":
+Para compilar el proyecto en un ejecutable .exe, puedes usar la librería de Python cx-Freeze. 
+
+1. Si utilizaste el archivo "requirements.txt" para instalar las dependencias del proyecto, cx-Freeze ya está instalado en tu entorno, de lo contrario instálalo usando pip.
+```bash
+pip install cx-freeze
+```
+
+2.  Ejecuta el archivo "setup.py":
    ```bash
    python.exe -m setup.py build
    ```
 
-2. Si tienes diferentes entornos para las arquitecturas de 32 bits y 64 bits, realiza el paso anterior en cada entorno para compilar para cada arquitectura.
+3. Si tienes diferentes entornos para las arquitecturas de 32 bits y 64 bits, realiza el paso anterior en cada entorno para compilar para cada arquitectura.
 
-3. Abre la carpeta "build" en el directorio raíz del proyecto.
+4. Abre la carpeta "build" en el directorio raíz del proyecto, allí encontrarás el subdirectorio que contiene todos los archivos de la compilación.
 
 ## Crear un instalador con Inno Setup
 
@@ -180,16 +187,25 @@ traducir.bat
 6. Poedit saves both the .po file and the compiled .mo file in the same directory. If not, just compile the .mo file from Poedit and save it in the path mentioned earlier.  
 7. Now, when you want to update your translations, just edit the corresponding .po file, update from the .pot file only if you have modified the strings in the source code, and finally save the changes made.
 
-## Compiling Instructions (cx-Freeze)
+## Compiling with cx-Freeze
 
-1. Run the "setup.py" file:
+Here is the translated text:
+
+To compile the project into an executable .exe, you can use the Python library cx-Freeze.
+
+1. If you used the "requirements.txt" file to install the project dependencies, cx-Freeze is already installed in your environment. Otherwise, install it using pip.
+```bash
+pip install cx-freeze
+```
+
+2. Run the "setup.py" file:
    ```bash
    python.exe -m setup.py build
    ```
 
-2. If you have different environments for 32-bit and 64-bit architectures, perform the above step in each environment to compile for each architecture.
+3. If you have different environments for 32-bit and 64-bit architectures, perform the previous step in each environment to compile for each architecture.
 
-3. Open the "build" folder in the root project directory.
+4. Open the "build" folder in the project's root directory, there you will find the subdirectory containing all the compiled files.
 
 ## Create an Installer with Inno Setup
 

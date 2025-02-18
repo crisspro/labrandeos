@@ -8,7 +8,6 @@
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
 
 [Setup]
-ArchitecturesInstallIn32BitMode=x86
 MinVersion=10.0
 AppId={{0ADF5CAD-AACB-4B5C-9F22-2BA42A27B55C}
 AppName={#MyAppName}
@@ -43,8 +42,8 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\criss\Desktop\proyectos python\Labrandeos\build\exe.win-amd32-3.12\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion sign
-Source: "C:\Users\criss\Desktop\proyectos python\Labrandeos\build\exe.win-amd32-3.12\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\criss\Desktop\proyectos python\Labrandeos\build\exe.win32-3.12\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion sign
+Source: "C:\Users\criss\Desktop\proyectos python\Labrandeos\build\exe.win32-3.12\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\criss\Desktop\proyectos python\Labrandeos\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 
 [Registry]

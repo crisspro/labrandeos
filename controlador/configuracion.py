@@ -3,6 +3,7 @@ import logging
 import os
 import platform
 import subprocess
+import sys
 
 import psutil
 import requests
@@ -42,7 +43,10 @@ class App():
     def descargar_version(self):
         ''' Llama al ejecutable que descarga la última versión del programa. '''
         try:
-            subprocess.Popen(['update.exe'], creationflags=subprocess.CREATE_NEW_PROCESS_GROUP, start_new_session=True)
+            if os.path.exists('update.exe'):
+                subprocess.Popen(['update.exe'], creationflags=subprocess.CREATE_NEW_PROCESS_GROUP, start_new_session=True)
+            else:
+                subprocess.Popen([sys.executable, 'update.py'], creationflags=subprocess.CREATE_NEW_PROCESS_GROUP, start_new_session=True)
         except Exception as e:
             from controlador.traductor import _
             logging.error(f'{_("Error al intentar ejecutar el actualizador:")} {e}')
