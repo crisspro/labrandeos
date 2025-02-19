@@ -35,7 +35,7 @@ class Traductor:
     def _setup_translation(self):
         """Configura la traducción para el idioma actual"""
         try:
-            locale_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'locale')
+            locale_path = os.path.join('locale')
             translation = gettext.translation(
                 'labrandeos',
                 localedir=locale_path,
