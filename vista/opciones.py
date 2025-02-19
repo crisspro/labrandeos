@@ -271,12 +271,12 @@ class Audio(wx.Panel):
         else:
             self.com_taza_bit.SetValue('192 kb/s')
         self.com_velocidad_muestreo.Enable(True)
-        self.lista_velocidad_muestreo = ['8000', '12000', '16000', '22050', '24000', '32000', '44100', '48000']
+        self.lista_velocidad_muestreo = ['8000', '12000', '16000', '24000', '48000']
         self.com_velocidad_muestreo.SetItems(self.lista_velocidad_muestreo)
         if self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo') in self.lista_velocidad_muestreo:
             self.com_velocidad_muestreo.SetValue(self.controlador_opciones.consultar_opciones('str', 'audio', 'velocidad_muestreo'))
         else:
-            self.com_velocidad_muestreo.SetValue('44100')
+            self.com_velocidad_muestreo.SetValue('48000')
 
     def modificar_controles_wav(self):
         ''' Modifica los controles mostrados al elegir el formato wav. '''
